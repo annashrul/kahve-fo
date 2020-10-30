@@ -1,0 +1,103 @@
+/*****************
+ * isLading
+*****************/
+export const LOADING = {
+  IS_LOADING: "IS_LOADING"
+}
+
+/****************
+      TOKEN
+*****************/
+export const TOKEN = {
+  GET: "GET_TOKEN"
+}
+
+export const HEADERS ={
+  URL: atob(document.getElementById("hellyeah").value),
+  TOKEN:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwY2RiN2M5OC0wNWNmLTQ4NDgtOGM3Yy0yZTFiYTczZGUwNmYiLCJpYXQiOjE1NzAxNzM0ODYsImV4cCI6MTU3MDc3ODI4Nn0.1NiWtt2luG83am8FJSvWpL5p35Oxd8GSJJTwhFmAdgw",
+  USERNAME: "netindo",
+  PASSWORD: "$2b$08$hLMU6rEvNILCMaQbthARK.iCmDRO7jNbUB8CcvyRStqsHD4UQxjDO"
+}
+
+/****************
+      PASSWORD MODAL ADD LOCATION
+*****************/
+export const LOC_VERIF ={
+  password: "bmV0aW4xMjM0YSE="
+}
+
+/****************
+      MODAL
+*****************/
+export const MODALS = {
+  IS_MODAL_OPEN: 'IS_MODAL_OPEN',
+  MODAL_TYPE : 'MODAL_TYPE'
+}
+
+/****************
+      AUTH
+*****************/
+export const AUTH = {
+  FETCH_DATAS:'FETCH_DATAS',
+  GET_ERRORS:'GET_ERRORS',
+  TEST_DISPATCH:'TEST_DISPATCH',
+  SET_CURRENT_USER:'SET_CURRENT_USER',
+  SET_LOGGED_USER:'SET_LOGGED_USER'
+}
+export const REGISTER = {
+  PROCESS: 'SET_REGISTER_PROCESS',
+  SUCCESS: 'SET_REGISTER_SUCCESS',
+  FAILED: 'SET_REGISTER_FAILED',
+  SETEMAIL: 'SET_EMAIL',
+}
+
+/****************
+    USERS
+*****************/
+export const USER_LIST = {
+  LOADING: 'SET_USER_LIST_LOADING',
+  SUCCESS: 'SUCCESS_USER_LIST',
+  FAILED: 'FAILED_USER_LIST',
+  DETAIL: 'DETAIL_USER_LIST',
+  EDIT: 'EDIT_USER_LIST'
+}
+
+/****************
+ DASHBOARD
+ *****************/
+export const DASHBOARD = {
+    LOADING: 'SET_DASHBOARD_LOADING',
+    SUCCESS: 'SET_DASHBOARD_SUCCESS',
+    SUCCESS_NEWEST: 'SET_DASHBOARD_SUCCESS_NEWEST',
+    FAILED: 'SET_DASHBOARD_FAILED',
+    DETAIL: 'SET_DASHBOARD_DETAIL',
+    POST_LOADING: 'SET_DASHBOARD_POST_LOADING'
+}
+/****************
+ SITE SECTION
+ *****************/
+export const SITE = {
+    LOADING: 'SET_SITE_LOADING',
+    SUCCESS: 'SET_SITE_SUCCESS',
+    SUCCESS_LIST: 'SET_SITE_SUCCESS_LIST',
+    SUCCESS_FOLDER: 'SET_SITE_SUCCESS_FOLDER',
+    SUCCESS_TABLES: 'SET_SITE_SUCCESS_TABLES',
+    FAILED: 'SET_SITE_FAILED',
+    DETAIL: 'SET_SITE_DETAIL',
+    SUCCESS_CHECK: 'SET_SITE_SUCCESS_CHECK',
+    TRIGGER_ECAPS: 'SET_TRIGGER_ECAPS',
+    DOWNLOAD_TXT: 'SET_DOWNLOAD_TXT',
+    TRIGGER_MOBILE_ECAPS: 'SET_TRIGGER_MOBILE_ECAPS'
+}
+
+/****************
+ SLOT
+ *****************/
+export const SLOT = {
+    LOADING: 'SET_SLOT_LOADING',
+    SUCCESS: 'SET_SLOT_SUCCESS',
+    SUCCESS_NEWEST: 'SET_SLOT_SUCCESS_NEWEST',
+    FAILED: 'SET_SLOT_FAILED',
+    DETAIL: 'SET_SLOT_DETAIL',
+    POST_LOADING: 'SET_SLOT_POST_LOADING'
+}
