@@ -17,7 +17,7 @@ export const dashboardReducer = (state = initialState, action) => {
             return Object.assign({}, state, {
                 status: action.data.status,
                 msg: action.data.msg,
-                data: action.data.result,
+                data: action.data,
             });
         case DASHBOARD.FAILED:
             return Object.assign({}, state, {

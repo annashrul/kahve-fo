@@ -36,63 +36,51 @@ export function setDashboardFailed(data = []) {
     }
 }
 
-export const FetchDashboard = () => {
-    return (dispatch) => {
+// export const FetchDashboard = () => {
+//     return (dispatch) => {
+//         dispatch(setLoading(true));
+//         const headers = {
+//         headers: {
+//             'Content-Type': 'application/x-www-form-urlencoded'
+//         }
+//         }
+//         axios.get(HEADERS.URL + "chartdata", headers)
+//         .then(function (response) {
+//             const data = response.data
+//             dispatch(setDashboard(data))
+//             dispatch(setLoading(false));
+//         })
+//         .catch(function (error) {
+//             // handle error
+            
+//         })
+
+//     }
+// }
+
+export const FetchDashboard = () =>
+    async dispatch =>{
         dispatch(setLoading(true));
-        const headers = {
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
-        }
-        axios.get(HEADERS.URL + "chartdata", headers)
-        .then(function (response) {
-            const data = response.data
+
+        axios.post(HEADERS.URL + 'transaction/dashboard', {"kdreff": "123123"})
+        .then(res=>{
+            const data = res.data
             dispatch(setDashboard(data))
             dispatch(setLoading(false));
-        })
-        .catch(function (error) {
-            // handle error
+        }).catch(err =>{
+            // if (err.message === 'Network Error') {
+            //      Swal.fire(
+            //          'Server tidak tersambung!.',
+            //          'Periksa koneksi internet anda.',
+            //          'error'
+            //      )
+            // }else{
+            //     Swal.fire(
+            //         err.response.data.msg,
+            //         '',
+            //         'error'
+            //     )
+            // }
             
-        })
-
+        });
     }
-}
-
-export const FetchNewest = () => {
-    return (dispatch) => {
-        const headers = {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        }
-        axios.get(HEADERS.URL + "newest", headers)
-            .then(function (response) {
-                const data = response.data
-                dispatch(setNewest(data))
-            })
-            .catch(function (error) {
-                // handle error
-            })
-
-    }
-}
-
-export const FetchStock = () => {
-    return (dispatch) => {
-        dispatch(setLoading(true));
-        let url = '';
-        url = `site/get_out_stock`;
-        
-        
-        axios.get(HEADERS.URL+`${url}`)
-            .then(function(response){
-                
-                const data = response.data;
-                
-                dispatch(setDashboard(data));
-                dispatch(setLoading(false));
-            }).catch(function(error){
-            
-        })
-    }
-}

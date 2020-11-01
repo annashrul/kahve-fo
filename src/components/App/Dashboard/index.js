@@ -3,135 +3,55 @@ import {connect} from 'react-redux';
 import Layout from 'components/Layout';
 import moment from 'moment';
 import {toRp} from "helper";
-import {FetchStock} from 'redux/actions/dashboard/dashboard.action'
+import {FetchDashboard} from 'redux/actions/dashboard/dashboard.action'
 import 'bootstrap-daterangepicker/daterangepicker.css';
 import socketIOClient from "socket.io-client";
 import {HEADERS} from 'redux/actions/_constants'
 
 import Cards from './src/Cards'
-import Charts from './src/charts'
-import Filter from './src/Filter'
+import Slot from './src/slot'
+import Balance from './src/balance'
 import Info from './src/Info'
-const socket = socketIOClient(HEADERS.URL);
+import Monthly from './src/monthlySlot'
+// const socket = socketIOClient(HEADERS.URL);
 
 class Dashboard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            startDate:localStorage.getItem("startDateDashboard")===null?moment(new Date()).format("yyyy-MM-DD"):localStorage.getItem("startDateDashboard"),
-            endDate:localStorage.getItem("endDateDashboard")===null?moment(new Date()).format("yyyy-MM-DD"):localStorage.getItem("endDateDashboard"),
-
-            grossSales:"0",
-            wGrossSales:110,
-            netSales:"0",
-            wNetSales:110,
-            trxNum:"0",
-            wTrxNum:110,
-            avgTrx:"0",
-            wAvgTrx:110,
-
-            location_data:[],
-            location:"-",
-
-            lokasi_sales: {
-                    options: {
-                        chart: {
-                            id: "basic-bar"
-                        },
-                        xaxis: {
-                            categories: []
-                        }
-                    },
-                    series: [{
-                            name: "Bulan Lalu",
-                            data: []
-                        },
-                        {
-                            name: "Bulan Sekarang",
-                            data: []
-                        }
-                    ],
-                },
-            lokasi_tr: {
-                    options: {
-                        chart: {
-                            id: "basic-bar"
-                        },
-                        xaxis: {
-                            categories: []
-                        }
-                    },
-                    series: [{
-                            name: "Bulan Lalu",
-                            data: []
-                        },
-                        {
-                            name: "Bulan Sekarang",
-                            data: []
-                        }
-                    ],
-                },
+            assets:[],
+            reff:0,
+            saldo:[],
+            slot:[],
+            withdraw:[]
         };
 
-        // socket.on('refresh_dashboard',(data)=>{
-        //     this.refreshData();
-        // })
-        
-        // socket.on("set_dashboard", (data) => {
-        //     this.setState({
-        //         grossSales:toRp(parseInt(data.header.penjualan,10)),
-        //         netSales:toRp(parseInt(data.header.net_sales,10)),
-        //         trxNum:data.header.transaksi,
-        //         avgTrx:toRp(parseInt(data.header.avg,10)),
-        //         lokasi_sales: data.lokasi_sales,
-        //         lokasi_tr: data.lokasi_tr,
-        //         hourly: data.hourly,
-        //         daily: data.daily,
-        //         top_item_qty: data.top_item_qty,
-        //         top_item_sale: data.top_item_sale,
-        //         top_cat_qty: data.top_cat_qty,
-        //         top_cat_sale: data.top_cat_sale,
-        //         top_sp_qty: data.top_sp_qty,
-        //         top_sp_sale: data.top_sp_sale,
-        //     });
-        // });
-        this.HandleChangeLokasi = this.HandleChangeLokasi.bind(this);
     }
 
     componentDidMount(){
-        this.props.dispatch(FetchStock());
+        this.props.dispatch(FetchDashboard());
     }
 
     componentWillReceiveProps = (nextProps) => {
-        if (nextProps.auth.user) {
-          let lk = [{
-              value: "-",
-              label: "Semua Lokasi"
-          }]
-          let loc = nextProps.auth.user.lokasi;
-          if(loc!==undefined){
-              loc.map((i) => {
-                lk.push({
-                  value: i.kode,
-                  label: i.nama
-                });
-                return null;
-              })
-              
-              this.setState({
-                location_data: lk,
-                userid: nextProps.auth.user.id
-              })
-          }
+        // console.log();
+        console.log("nextprops",nextProps.data);
+        if (nextProps.data!==undefined){
+            this.setState({
+                assets: nextProps.data.assets,
+                reff: nextProps.data.reff,
+                saldo: nextProps.data.saldo,
+                slot: nextProps.data.slot,
+                withdraw: nextProps.data.withdraw,
+            })
         }
-      }
+    }
 
     refreshData(start=null,end=null,loc=null){
-        socket.emit('get_dashboard', {
-            datefrom: start!==null?start:this.state.startDate,
-            dateto: end!==null?end:this.state.endDate,
-            location: loc!==null?loc:this.state.location
-        })
+        // socket.emit('get_dashboard', {
+        //     datefrom: start!==null?start:this.state.startDate,
+        //     dateto: end!==null?end:this.state.endDate,
+        //     location: loc!==null?loc:this.state.location
+        // })
     }
 
     componentWillMount(){
@@ -161,19 +81,8 @@ class Dashboard extends Component {
         this.refreshData();
     }
 
-    HandleChangeLokasi(lk) {
-        let err = Object.assign({}, this.state.error, {
-            location: ""
-        });
-        this.setState({
-            location: lk.value,
-            error: err
-        })
-        this.refreshData(null, null, lk.value)
-
-    }
-
     render() {
+        console.log("FROM STATE",this.state.saldo);
         return (
             <Layout page="Dashboard">
                 <div className="row align-items-center">
@@ -189,10 +98,27 @@ class Dashboard extends Component {
 
                 {/* Dashboard Widget Area */}
                 <div className="row">
-                    <Cards title="Balance" data={this.state.grossSales} icon="fa fa-area-chart text-primary"/>                    
-                    <Cards title="Active Balance" data={this.state.netSales} icon="fa fa-area-chart text-primary"/>                    
+                    <Cards title="Active Balance" data={this.state.saldo} isobj={true} icon="fa fa-area-chart text-primary"/>                    
+                    <Cards title="Assets" data={this.state.assets} isobj={true} icon="fa fa-area-chart text-primary"/>                    
+                    <Cards title="Assets" data={this.state.reff} isobj={false} icon="fa fa-area-chart text-primary"/>                    
+                    <Cards title="Assets" data={this.state.withdraw} isobj={true} icon="fa fa-area-chart text-primary"/>                    
                 </div>
                 <div className="row">
+                    <Balance/>
+                </div>
+                <div className="row">
+                    <Slot title="Mining Slot" data={this.state.slot}/>
+                </div>
+                <div className="row">
+                    {
+                        this.state.slot!==undefined?
+                            this.state.slot.map(item=>{
+                                return(
+                                    <Monthly title={'Slot '+item.slot_no} symbol={item.symbol} status={item.status} data={item.monthly}/>
+                                )
+                            })
+                        :''
+                    }
                 </div>
                 
         </Layout>
@@ -207,7 +133,7 @@ class Dashboard extends Component {
 const mapStateToProps = (state) =>{
      return{
        auth: state.auth,
-       stock: state.dashboardReducer.data
+       data: state.dashboardReducer.data
      }
 }
 export default connect(mapStateToProps)(Dashboard);
