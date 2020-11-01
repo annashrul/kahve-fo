@@ -24,6 +24,7 @@ class Charts extends Component {
                           </thead>
                           <tbody>
                             {
+                              this.props.data!==undefined?
                               this.props.data.map(item=>{
                                 const label=item.status===1?<span class="badge badge-info">Active</span>:(item.status===2?<span class="badge badge-success">Paid</span>:<span class="badge badge-secondary">Not Active</span>)
 
@@ -41,7 +42,7 @@ class Charts extends Component {
 
                                   </tr>
                                 )
-                              })
+                              }):""
                             }
                             
                           </tbody>
