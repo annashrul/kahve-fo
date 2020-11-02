@@ -120,37 +120,14 @@ class Login extends Component {
                         <div className="container">
                         <div className="row">
                             <div className="col-lg-12">
-                            <div className="inner pt--250 pb--150 text-center">
-                                <h5 className="heading heading-h5 text-white">KAHVE</h5>
-                                <div className="bkseparator--15" />
-                                <h1 className="heading heading-h1 text-white font-120">Join and Get <br /> Your Profit</h1>
-                            </div>
-                            <div className="text-center">
-                                <div className="basic-modern-dots white-dots">
-                                <div className="dot first-circle" />
-                                <div className="dot second-circle" />
-                                <div className="dot third-circle" />
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                    </div>
-                    {/* End Slider Area */}
-
-                    <div className="brook-about-area pt--130 pt_md--80 pt_sm--60 rslide bg-shape" data-background="#5e0891">
-                        <div className="container">
-                        <div className="row">
-                            <div className="col-lg-12">
-                            <div className="join-content text-center max-width--990">
-                                <h6 className="heading heading-h6 font-blod text-white letter-spacing-3">JOIN US</h6>
+                            <div className="join-content pt--250 pb--250 text-center max-width--990">
+                                <h6 className="heading heading-h6 font-blod text-white letter-spacing-3">SIGN UP</h6>
                                 <div className="bkseparator--10" />
                                     <div className="login-form-wrapper">
                                     <form className="sn-form sn-form-boxed">
                                         <div className="sn-form-inner">
                                         <div className="single-input">
-                                            <label htmlFor="login-form-email">Username or email address *</label>
+                                            <label htmlFor="login-form-email" className="text-white">Email address *</label>
                                             <input type="text" readOnly={disableButton}
                                             className={email !== '' ? 'input100 has-val' : 'input100'}
                                             placeholder="Username"
@@ -160,7 +137,7 @@ class Login extends Component {
                                             {errors.email && (<div className="invalid-feedback">{errors.email}</div>)}
                                         </div>
                                         <div className="single-input">
-                                            <label htmlFor="login-form-password">Password *</label>
+                                            <label htmlFor="login-form-password" className="text-white">Password *</label>
                                             <input readOnly={disableButton}
                                             type="password"
                                             className={password !== '' ? 'input100 has-val' : 'input100'}
@@ -184,179 +161,8 @@ class Login extends Component {
                         </div>
                         </div>
                     </div>
-                    {/* End About Area */}
-
-                    {/* Start Pricing Plans */}
-                    <div className="brook-about-area pt--130 pb--130 pt_md--80 pt_sm--60 rslide bg-shape" data-background="#5e0891">
-                        <div className="container">
-                            <div className="row">
-                                {/* Start Single Pricing Table */}
-                                <div className="col-lg-4 col-md-6 col-sm-12 col-12">
-                                    <div className="procing-wrap pt--40 move-up wow">
-                                    <div className="procing-box">
-                                        <div className="header">
-                                        <div className="price">
-                                            <h3 className="currenct">Packet</h3>
-                                            <h3 className="heading headin-h3">#1</h3>
-                                        </div>
-                                        </div>
-                                        <div className="content">
-                                        <h5 className="heading heading-h5">Bronze</h5>
-                                        {/* Start Single List */}
-                                        <div className="bk-list--2">
-                                            <div className="list-header with-ckeck item-available">
-                                            <div className="marker" />
-                                            <div className="title-wrap">
-                                                <h6 className="heading heading-h5">Contract 5 Month</h6>
-                                            </div>
-                                            </div>
-                                            <div className="list-header with-ckeck item-available">
-                                            <div className="marker" />
-                                            <div className="title-wrap">
-                                                <h6 className="heading heading-h5">Min Deposit 0,024 Bitcoin</h6>
-                                            </div>
-                                            </div>
-                                            <div className="list-header with-ckeck item-available">
-                                            <div className="marker" />
-                                            <div className="title-wrap">
-                                                <h6 className="heading heading-h5">Max Deposit 0,24 Bitcoin</h6>
-                                            </div>
-                                            </div>
-                                            <div className="list-header with-ckeck item-available">
-                                            <div className="marker" />
-                                            <div className="title-wrap">
-                                                <h6 className="heading heading-h5">You Have 5 Slots</h6>
-                                            </div>
-                                            </div>
-                                            <div className="list-header with-ckeck item-available">
-                                            <div className="marker" />
-                                            <div className="title-wrap">
-                                                <h6 className="heading heading-h5">Profit 25%/Your Deposit/Month</h6>
-                                            </div>
-                                            </div>
-                                        </div>
-                                        {/* End Single List */}
-                                        </div>
-                                        <div className="footer mt--40">
-                                        <a className="brook-btn bk-btn-dark btn-sd-size btn-rounded" href="#">Sign up</a>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div>
-                                {/* End Single Pricing Table */}
-                                {/* Start Single Pricing Table */}
-                                <div className="col-lg-4 col-md-6 col-sm-12 col-12">
-                                    <div className="procing-wrap pt--40 move-up wow">
-                                    <div className="procing-box">
-                                        <div className="header">
-                                        <div className="price">
-                                            <h3 className="currenct">Packet</h3>
-                                            <h3 className="heading headin-h3">#2</h3>
-                                        </div>
-                                        </div>
-                                        <div className="content">
-                                        <h5 className="heading heading-h5">Gold</h5>
-                                        {/* Start Single List */}
-                                        <div className="bk-list--2">
-                                            <div className="list-header with-ckeck item-available">
-                                            <div className="marker" />
-                                            <div className="title-wrap">
-                                                <h6 className="heading heading-h5">Contract 5 Month</h6>
-                                            </div>
-                                            </div>
-                                            <div className="list-header with-ckeck item-available">
-                                            <div className="marker" />
-                                            <div className="title-wrap">
-                                                <h6 className="heading heading-h5">Min Deposit 0,024 Bitcoin</h6>
-                                            </div>
-                                            </div>
-                                            <div className="list-header with-ckeck item-available">
-                                            <div className="marker" />
-                                            <div className="title-wrap">
-                                                <h6 className="heading heading-h5">Max Deposit 0,24 Bitcoin</h6>
-                                            </div>
-                                            </div>
-                                            <div className="list-header with-ckeck item-available">
-                                            <div className="marker" />
-                                            <div className="title-wrap">
-                                                <h6 className="heading heading-h5">You Have 5 Slots</h6>
-                                            </div>
-                                            </div>
-                                            <div className="list-header with-ckeck item-available">
-                                            <div className="marker" />
-                                            <div className="title-wrap">
-                                                <h6 className="heading heading-h5">Profit 25%/Your Deposit/Month</h6>
-                                            </div>
-                                            </div>
-                                        </div>
-                                        {/* End Single List */}
-                                        </div>
-                                        <div className="footer mt--40">
-                                        <a className="brook-btn bk-btn-dark btn-sd-size btn-rounded" href="#">Sign up</a>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div>
-                                {/* End Single Pricing Table */}
-                                {/* Start Single Pricing Table */}
-                                <div className="col-lg-4 col-md-6 col-sm-12 col-12">
-                                    <div className="procing-wrap pt--40 move-up wow">
-                                    <div className="procing-box">
-                                        <div className="header">
-                                        <div className="price">
-                                            <h3 className="currenct">Packet</h3>
-                                            <h3 className="heading headin-h3">#3</h3>
-                                        </div>
-                                        </div>
-                                        <div className="content">
-                                        <h5 className="heading heading-h5">Platinum</h5>
-                                        {/* Start Single List */}
-                                        <div className="bk-list--2">
-                                            <div className="list-header with-ckeck item-available">
-                                            <div className="marker" />
-                                            <div className="title-wrap">
-                                                <h6 className="heading heading-h5">Contract 5 Month</h6>
-                                            </div>
-                                            </div>
-                                            <div className="list-header with-ckeck item-available">
-                                            <div className="marker" />
-                                            <div className="title-wrap">
-                                                <h6 className="heading heading-h5">Min Deposit 0,024 Bitcoin</h6>
-                                            </div>
-                                            </div>
-                                            <div className="list-header with-ckeck item-available">
-                                            <div className="marker" />
-                                            <div className="title-wrap">
-                                                <h6 className="heading heading-h5">Max Deposit 0,24 Bitcoin</h6>
-                                            </div>
-                                            </div>
-                                            <div className="list-header with-ckeck item-available">
-                                            <div className="marker" />
-                                            <div className="title-wrap">
-                                                <h6 className="heading heading-h5">You Have 5 Slots</h6>
-                                            </div>
-                                            </div>
-                                            <div className="list-header with-ckeck item-available">
-                                            <div className="marker" />
-                                            <div className="title-wrap">
-                                                <h6 className="heading heading-h5">Profit 25%/Your Deposit/Month</h6>
-                                            </div>
-                                            </div>
-                                        </div>
-                                        {/* End Single List */}
-                                        </div>
-                                        <div className="footer mt--40">
-                                        <a className="brook-btn bk-btn-dark btn-sd-size btn-rounded" href="#">Sign up</a>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div>
-                                {/* End Single Pricing Table */}
-                                </div>
-                            </div>
-                        </div>
-
-                    {/* End Pricing Plans */}
+                    </div>
+                    {/* End Slider Area */}
                 </div>
             </div>
             <Footer/>
