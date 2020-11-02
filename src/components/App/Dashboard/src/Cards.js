@@ -48,7 +48,7 @@ class Cards extends Component {
                     {
                         this.props.link!==undefined?(
                             <div className="card-footer bg-transparent border-top-0" style={{fontSize:".8em",paddingTop:0}}>
-                                Your referral link: <a href="#" onClick={(e) => {e.preventDefault();navigator.clipboard.writeText(this.props.link);Toast.fire({icon: 'success',title: `Link has been copied.`})}}>{this.props.link}</a><br/>
+                                Your referral link: <a href="#" onClick={(e) => {e.preventDefault();navigator.clipboard.writeText(this.props.link);Toast.fire({icon: 'success',title: `Link has been copied.`})}} data-toggle="tooltip" data-placement="top" title="Click to copy">{this.props.link}</a><br/>
                                 <i className="fa fa-warning"/> Invite your friend and get 0.0001 BTC !
                             </div>
                         ):""

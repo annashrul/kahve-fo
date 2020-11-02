@@ -31,7 +31,7 @@ class Dashboard extends Component {
 
     componentWillReceiveProps = (nextProps) => {
         // console.log();
-        console.log("nextprops",nextProps.data);
+        console.log(nextProps.auth);
         if (nextProps.data!==undefined){
             const newData = [];
             const hours = moment().format("H");
@@ -56,14 +56,6 @@ class Dashboard extends Component {
                 1000
             );
         }
-    }
-
-    refreshData(start=null,end=null,loc=null){
-        // socket.emit('get_dashboard', {
-        //     datefrom: start!==null?start:this.state.startDate,
-        //     dateto: end!==null?end:this.state.endDate,
-        //     location: loc!==null?loc:this.state.location
-        // })
     }
 
     componentWillMount(){

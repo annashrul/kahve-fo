@@ -58,11 +58,11 @@ export function setDashboardFailed(data = []) {
 //     }
 // }
 
-export const FetchDashboard = () =>
+export const FetchDashboard = (reff) =>
     async dispatch =>{
         dispatch(setLoading(true));
 
-        axios.post(HEADERS.URL + 'transaction/dashboard', {"kdreff": "123123"})
+        axios.post(HEADERS.URL + 'site/dashboard/'+reff, {})
         .then(res=>{
             const data = res.data
             dispatch(setDashboard(data))
