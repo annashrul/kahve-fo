@@ -24,15 +24,24 @@ class Dashboard extends Component {
             saldo:[],
             slot:[],
             withdraw:[],
-            data:[]
+            data:[],
+            referral_profit:0
         };
 
     }
 
     componentWillReceiveProps = (nextProps) => {
-        // console.log();
-        console.log(nextProps.auth);
+        if (nextProps.auth.user) {
+            console.log("AUTH", nextProps.auth.user);
+            if (nextProps.auth.user!==this.props.auth.user){
+
+                if (nextProps.auth.user.reff!==undefined){
+                    this.props.dispatch(FetchDashboard(nextProps.auth.user.reff));
+                }
+            }
+        }
         if (nextProps.data!==undefined){
+            console.log(nextProps.data);
             const newData = [];
             const hours = moment().format("H");
             if (nextProps.data.saldo!==undefined){
@@ -49,7 +58,8 @@ class Dashboard extends Component {
                 saldo: nextProps.data.saldo,
                 slot: nextProps.data.slot,
                 withdraw: nextProps.data.withdraw,
-                data: newData
+                data: newData,
+                referral_profit: nextProps.data.referral_profit
             })
             this.intervalID = setInterval(
                 () => this.tick(),
@@ -59,7 +69,7 @@ class Dashboard extends Component {
     }
 
     componentWillMount(){
-        this.props.dispatch(FetchDashboard());
+        // console.log(this.props.auth);
     }
 
     componentWillUnmount(){
@@ -99,7 +109,8 @@ class Dashboard extends Component {
 
                 {/* Dashboard Widget Area */}
                 <div className="row">
-                    <Cards title="Referral" data={this.state.reff} isobj={false} link="http://google.com" icon="fa fa-users text-primary"/>                    
+                    <Cards title="Referral" data={this.state.reff} isobj={false} link={window.location.origin.toString()+'/signup?reff='+this.props.auth.user.reff} 
+                    referral_profit={this.state.referral_profit} icon="fa fa-users text-primary"/>
                     <Cards title="Your Balance" data={this.state.data} isobj={true} miner={true} icon="fa fa-dollar text-primary"/>
                     <Cards title="Total Investment You Made" data={this.state.assets} isobj={true} icon="fa fa-money text-primary"/>                    
                     <Cards title="Total Payment You Received" data={this.state.withdraw} isobj={true} icon="fa fa-credit-card text-primary"/>                    

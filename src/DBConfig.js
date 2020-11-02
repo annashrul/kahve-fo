@@ -12,6 +12,7 @@ export const DBConfig = {
                 { name: 'email',keypath:'email',options:{unique:false}},
                 { name: 'status',keypath:'status',options:{unique:false}},
                 { name: 'foto',keypath:'foto',options:{unique:false}},
+                { name: 'reff',keypath:'reff',options:{unique:false}},
                 { name: 'created_at',keypath:'created_at',options:{unique:false}},
                 
             ]
