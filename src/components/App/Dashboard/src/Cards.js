@@ -1,4 +1,16 @@
 import React, {Component} from 'react'
+import Swal from "sweetalert2";
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 1000,
+    timerProgressBar: true,
+    onOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+})
 
 class Cards extends Component {
     render(){
@@ -9,7 +21,7 @@ class Cards extends Component {
                                     this.props.data.length>0?
                                     this.props.data.map(item=>{
                                         return(
-                                            <div style={{fontSize:'.8rem'}}>{item.total} <small>({item.coin})</small><br/></div>
+                                            <div style={this.props.data.length===1?{fontSize:'1.1rem'}:{fontSize:'.8rem'}}>{item.total} <small>({item.coin})</small><br/></div>
                                         )
                                     }):(
                                             <div style={{fontSize:'1.5rem'}}>0<br/></div>
@@ -33,6 +45,21 @@ class Cards extends Component {
                             }
                         </div>
                     </div>
+                    {
+                        this.props.link!==undefined?(
+                            <div className="card-footer bg-transparent border-top-0" style={{fontSize:".8em",paddingTop:0}}>
+                                Your referral link: <a href="#" onClick={(e) => {e.preventDefault();navigator.clipboard.writeText(this.props.link);Toast.fire({icon: 'success',title: `Link has been copied.`})}}>{this.props.link}</a><br/>
+                                <i className="fa fa-warning"/> Invite your friend and get 0.0001 BTC !
+                            </div>
+                        ):""
+                    }
+                    {
+                        this.props.miner?(
+                            <div className="card-footer bg-transparent border-top-0" style={{fontSize:".8em",paddingTop:0}}>
+                                <i className="fa fa-refresh"/> Mining is in progress!
+                            </div>
+                        ):""
+                    }
                 </div>
             </div>
         )

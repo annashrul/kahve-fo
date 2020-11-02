@@ -23,26 +23,38 @@ class Dashboard extends Component {
             reff:0,
             saldo:[],
             slot:[],
-            withdraw:[]
+            withdraw:[],
+            data:[]
         };
 
-    }
-
-    componentDidMount(){
-        this.props.dispatch(FetchDashboard());
     }
 
     componentWillReceiveProps = (nextProps) => {
         // console.log();
         console.log("nextprops",nextProps.data);
         if (nextProps.data!==undefined){
+            const newData = [];
+            const hours = moment().format("H");
+            if (nextProps.data.saldo!==undefined){
+                for (let i = 0; i < nextProps.data.saldo.length; i++) {
+                    newData.push({
+                        total: parseFloat(nextProps.data.saldo[i].total)+(parseFloat(hours) * (parseFloat(nextProps.data.saldo[i].total) / 86400)),
+                        coin: nextProps.data.saldo[i].coin
+                    })
+                }
+            }
             this.setState({
                 assets: nextProps.data.assets,
                 reff: nextProps.data.reff,
                 saldo: nextProps.data.saldo,
                 slot: nextProps.data.slot,
                 withdraw: nextProps.data.withdraw,
+                data: newData
             })
+            this.intervalID = setInterval(
+                () => this.tick(),
+                1000
+            );
         }
     }
 
@@ -55,57 +67,54 @@ class Dashboard extends Component {
     }
 
     componentWillMount(){
-        this.refreshData();
+        this.props.dispatch(FetchDashboard());
     }
 
     componentWillUnmount(){
         localStorage.removeItem('startDateProduct');
         localStorage.removeItem('endDateDashboard');
+        clearInterval(this.intervalID);
+
     }
 
-    onChange = date => this.setState({ date })
-
-    handleEvent = (event, picker) => {
-        // end:  2020-07-02T16:59:59.999Z
-        const awal = picker.startDate._d.toISOString().substring(0,10);
-        const akhir = picker.endDate._d.toISOString().substring(0,10);
+    tick() {
+        const newData = [];
+        for (let i = 0; i < this.state.data.length; i++) {
+            newData.push({
+                total: parseFloat(this.state.data[i].total) + (parseFloat(this.state.saldo[i].total) / 86400),
+                coin: this.state.data[i].coin
+            })
+        }
         this.setState({
-            startDate:awal,
-            endDate:akhir
+            data: newData
         });
-        this.refreshData(awal,akhir,null);
-    };
-
-    handleSubmit = (event) => {
-        event.preventDefault()
-        this.refreshData();
     }
+
 
     render() {
-        console.log("FROM STATE",this.state.saldo);
         return (
             <Layout page="Dashboard">
                 <div className="row align-items-center">
                     <div className="col-6">
                         <div className="dashboard-header-title mb-3">
-                        <h5 className="mb-0 font-weight-bold">Dashboard</h5>
+                            <h5 className="mb-0 font-weight-bold">Dashboard</h5>
                         </div>
                     </div>
                     {/* Dashboard Info Area */}
-                    {/* <Info handleSubmit={this.handleSubmit}/> */}
+                    <Info data={this.state.saldo}/>
                 </div>
 
 
                 {/* Dashboard Widget Area */}
                 <div className="row">
-                    <Cards title="Active Balance" data={this.state.saldo} isobj={true} icon="fa fa-area-chart text-primary"/>                    
-                    <Cards title="Assets" data={this.state.assets} isobj={true} icon="fa fa-area-chart text-primary"/>                    
-                    <Cards title="Assets" data={this.state.reff} isobj={false} icon="fa fa-area-chart text-primary"/>                    
-                    <Cards title="Assets" data={this.state.withdraw} isobj={true} icon="fa fa-area-chart text-primary"/>                    
+                    <Cards title="Referral" data={this.state.reff} isobj={false} link="http://google.com" icon="fa fa-users text-primary"/>                    
+                    <Cards title="Your Balance" data={this.state.data} isobj={true} miner={true} icon="fa fa-dollar text-primary"/>
+                    <Cards title="Total Investment You Made" data={this.state.assets} isobj={true} icon="fa fa-money text-primary"/>                    
+                    <Cards title="Total Payment You Received" data={this.state.withdraw} isobj={true} icon="fa fa-credit-card text-primary"/>                    
                 </div>
-                <div className="row">
+                {/* <div className="row">
                     <Balance/>
-                </div>
+                </div> */}
                 <div className="row">
                     <Slot title="Mining Slot" data={this.state.slot}/>
                 </div>
