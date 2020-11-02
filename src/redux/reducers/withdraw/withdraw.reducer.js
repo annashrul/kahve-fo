@@ -7,6 +7,7 @@ const initialState = {
     msg:"",
     data:[],
     data_report:[],
+    data_config:[],
 };
 
 export const withdrawReducer = (state=initialState,action) => {
@@ -16,6 +17,12 @@ export const withdrawReducer = (state=initialState,action) => {
                 status:action.data.status,
                 msg:action.data.msg,
                 data_report:action.data.result
+            });
+        case WITHDRAW.SUCCESS_CONFIG:
+            return Object.assign({}, state,{
+                status:action.data.status,
+                msg:action.data.msg,
+                data_config:action.data.result
             });
         case WITHDRAW.SUCCESS:
             return Object.assign({}, state,{

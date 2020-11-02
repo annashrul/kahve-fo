@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import connect from "react-redux/es/connect/connect";
 
+import { statusQ} from '../../../../helper';
 import Paginationq from "helper";
 import Preloader from "Preloader";
 import { FetchWithdrawReport } from '../../../../redux/actions/withdraw/withdraw.action';
@@ -74,11 +75,11 @@ class List extends Component {
                                             data.map((v,i)=>{
                                                 return(
                                                     <tr key={i}>
-                                                        <td style={ leftStyle}>{v.users}</td>
-                                                        <td style={ leftStyle}>{v.coin}</td>
+                                                        <td style={ centerStyle}>{v.users}</td>
+                                                        <td style={ centerStyle}>{v.coin}</td>
                                                         <td style={ leftStyle}>{v.amount}</td>
-                                                        <td style={ leftStyle}>{v.status}</td>
-                                                        <td style={ leftStyle}>{v.kd_trx}</td>
+                                                        <td style={ centerStyle}>{statusQ(v.status===0?'warning':v.status===1?'success':'danger',v.status===0?'Process':v.status===1?'Success':'Void')}</td>
+                                                        <td style={ centerStyle}>{v.kd_trx}</td>
 
                                                     </tr>
                                                 )

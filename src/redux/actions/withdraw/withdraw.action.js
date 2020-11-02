@@ -36,6 +36,9 @@ export function setFailed(data = []) {
 export function setWithdrawReport(data=[]){
     return {type:WITHDRAW.SUCCESS_REPORT,data}
 }
+export function setWithdrawConfig(data=[]){
+    return {type:WITHDRAW.SUCCESS_CONFIG,data}
+}
 
 export const storeWithdraw = (data) => {
     return (dispatch) => {
@@ -98,6 +101,22 @@ export const FetchWithdrawReport = (page=1,where='')=>{
                 const data = response.data;
                 
                 dispatch(setWithdrawReport(data));
+                dispatch(setLoading(false));
+            }).catch(function(error){
+            
+        })
+    }
+}
+export const FetchWithdrawConfig = (data='')=>{
+    return (dispatch) => {
+        dispatch(setLoading(true));
+        let url = `withdraw/config/${data}`;
+        
+        axios.get(HEADERS.URL+`${url}`)
+            .then(function(response){
+                const data = response.data;
+                
+                dispatch(setWithdrawConfig(data));
                 dispatch(setLoading(false));
             }).catch(function(error){
             

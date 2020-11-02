@@ -403,6 +403,7 @@ class SideMenu extends Component {
                     {/* DASHBOARD MODUL END */}
                     {/* DASHBOARD MODUL START */}
                     <li  className={path==='/withdraw'?"active":''}><Link to="/withdraw"> <i className="fa fa-dashboard" /><span> Withdraw</span></Link></li>
+                    <li  className={path==='/transfer'?"active":''}><Link to="/transfer"> <i className="fa fa-dashboard" /><span> Transfer</span></Link></li>
                     {/* DASHBOARD MODUL END */}
 
                     {/* MASTERDATA MODUL START */}
