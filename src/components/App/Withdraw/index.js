@@ -4,6 +4,7 @@ import Layout from 'components/Layout'
 import { FetchWithdrawReport } from '../../../redux/actions/withdraw/withdraw.action';
 import Form from './src/Form';
 import List from './src/List';
+import { FetchCoinType } from '../../../redux/actions/coin/coin.action';
 
 class Withdraw extends Component {
     constructor(props) {
@@ -12,6 +13,7 @@ class Withdraw extends Component {
 
     componentWillMount(){
         this.props.dispatch(FetchWithdrawReport(1,''))
+        this.props.dispatch(FetchCoinType(1,'',999))
     }
     render() {
         return (

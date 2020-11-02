@@ -2,19 +2,54 @@ import React, {Component} from 'react'
 import {storeWd} from 'redux/actions/site.action';
 import Swal from 'sweetalert2';
 import Select from 'react-select';
+import connect from "react-redux/es/connect/connect";
 class Form extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            amount: '',
-            id_wallet: '',
-            errors:{
+            amount: "",
+            id_wallet: "",
+            coin_type: "",
+            coin_type_data: [],
+            error:{
+                amount: "",
+                id_wallet: "",
+                coin_type: "",
             },
          };
          this.handleChange = this.handleChange.bind(this)
          this.handleSubmit = this.handleSubmit.bind(this)
+         this.HandleChangeCoin = this.HandleChangeCoin.bind(this)
     }
-    
+    componentWillReceiveProps = (nextProps) => {
+        if (nextProps.coin.data) {
+            let c = []
+            let coin = nextProps.coin.data;
+            if(coin!==undefined){
+                coin.map((i) => {
+                    c.push({
+                        value: i.id,
+                        label: i.title
+                    });
+                    return true;
+                })
+                this.setState({
+                    coin_type: {"value":coin[0].id,"label":coin[0].title},
+                    coin_type_data: c,
+                })
+            }
+        }
+    }
+    HandleChangeCoin(cn){
+        let err = Object.assign({}, this.state.error, {
+            coin_type: ""
+        });
+        this.setState({
+            coin_type:cn,
+            error: err
+        })
+    }
+
     handleChange = (event) => {
         let column=event.target.name;
         let value=event.target.value;
@@ -58,8 +93,12 @@ class Form extends Component {
     }
 
     render(){
+        console.log("ccccccccc",this.state.coin_type)
         return(
             <div className="card">
+                <div className="card-header bg-transparent">
+                    <h3>Withdraw</h3>
+                </div>
                 <div className="card-body">
                     <div className="row">
                         <div className="col-md-12">
@@ -70,7 +109,7 @@ class Form extends Component {
                                 <Select
                                     options={this.state.coin_type_data}
                                     placeholder="Coin type"
-                                    onChange={this.HandleChangeJenis}
+                                    onChange={this.HandleChangeCoin}
                                     value={this.state.coin_type}
 
                                 />
@@ -140,4 +179,13 @@ class Form extends Component {
     }
 }
 
-export default Form;
+
+const mapStateToPropsCreateItem = (state) => {
+    
+    return {
+    coin:state.coinReducer.data_type,
+    isLoading: state.coinReducer.isLoading,
+    auth:state.auth,
+}};
+
+export default (connect(mapStateToPropsCreateItem)(Form));
