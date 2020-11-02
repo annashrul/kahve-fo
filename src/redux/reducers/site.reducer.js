@@ -8,6 +8,7 @@ const initialState = {
     data_list: [],
     data_folder: [],
     data_tables: [],
+    data_faq: [],
     msg:"",
     status:"",
     check:false,
@@ -29,6 +30,10 @@ export const siteReducer = (state = initialState, action) => {
         case SITE.SUCCESS_FOLDER:
             return Object.assign({}, state,{
                 data_folder: action.data.result
+            });
+        case SITE.SUCCESS_FAQ:
+            return Object.assign({}, state,{
+                data_faq: action.data.result
             });
         case SITE.SUCCESS_TABLES:
             return Object.assign({}, state,{

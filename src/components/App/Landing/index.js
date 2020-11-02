@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import BgAuth from "assets/logo.png"
-// import './login.css'
+import './style.css'
 import {loginUser} from 'redux/actions/authActions';
 import Swal from 'sweetalert2'
 import {HEADERS} from 'redux/actions/_constants'
+
+import Header from './src/header'
+import Footer from './src/footer'
 class Login extends Component {
     constructor(props) {
         super(props);
@@ -105,57 +108,260 @@ class Login extends Component {
     render() {
         const {email,password, errors,disableButton} = this.state;
         return (
-        <div className="limiter">
-            <div className="container-login100">
-                <div className="row">
-                    <div className={'col-md-12'}>
-                        <div className="wrap-login100 p-b-160 p-t-50">
-                            Halaman landing page + login
-                            <form className="login100-form validate-form" action="#">
-                                <span className="login100-form-title p-b-43 mb-5">
-                                <img alt="logos" src={this.state.logo} className='img-responsive' width={this.state.width} style={{textAlign: 'center', marginLeft: 'auto', marginRight: 'auto', display: 'block'}}/>
-                                    {/* Account Login */}
-                                </span>
-                                <div className="wrap-input100 rs1 validate-input" data-validate="Username is required">
-                                    <input type="text" readOnly={disableButton}
-                                           className={email !== '' ? 'input100 has-val' : 'input100'}
-                                           placeholder="Username"
-                                           name="email"
-                                           value={email}
-                                           onChange={this.handleInputChange}/>
-                                    <span className="label-input100">Username</span>
-                                    {errors.email && (<div className="invalid-feedback">{errors.email}</div>)}
+        <div>
+            <Header/>
+
+            <div className="rvbody">
+                <div className="page-content">
+            
+                    {/* STart Slider Area */}
+                    <div className="revolution-slider-area slider-bg-1 slider-bg-2 rslide" data-background="#3d088e">
+                    <div className="revolution-slider slider-bg-2">
+                        <div className="container">
+                        <div className="row">
+                            <div className="col-lg-12">
+                            <div className="inner pt--250 pb--150 text-center">
+                                <h5 className="heading heading-h5 text-white">KAHVE</h5>
+                                <div className="bkseparator--15" />
+                                <h1 className="heading heading-h1 text-white font-120">Join and Get <br /> Your Profit</h1>
+                            </div>
+                            <div className="text-center">
+                                <div className="basic-modern-dots white-dots">
+                                <div className="dot first-circle" />
+                                <div className="dot second-circle" />
+                                <div className="dot third-circle" />
                                 </div>
-                                <div className="wrap-input100 rs2 validate-input" data-validate="Password is required">
-                                    <input
-                                        readOnly={disableButton}
-                                        type="password"
-                                        className={password !== '' ? 'input100 has-val' : 'input100'}
-                                        placeholder="Password"
-                                        name="password"
-                                        value={password}
-                                        onChange={this.handleInputChange}/>
-                                    <span className="label-input100">Password</span>
-                                    {errors.password && (<div className="invalid-feedback">{errors.password}</div>)}
-                                </div>
-                                <div className="container-login100-form-btn">
-                                    <button className="login100-form-btn" type="submit"
-                                            onClick={this.submitHandelar}>
-                                        Sign in
-                                    </button>
-                                </div>
-                                <div className="text-center w-full p-t-23">
-                                    <a href="about:blank" className="txt1">
-                                        {/* Login ke backoffice. */}
-                                    </a>
-                                </div>
-                            </form>
+                            </div>
+                            </div>
+                        </div>
                         </div>
                     </div>
+                    </div>
+                    {/* End Slider Area */}
+
+                    <div className="brook-about-area pt--130 pt_md--80 pt_sm--60 rslide bg-shape" data-background="#5e0891">
+                        <div className="container">
+                        <div className="row">
+                            <div className="col-lg-12">
+                            <div className="join-content text-center max-width--990">
+                                <h6 className="heading heading-h6 font-blod text-white letter-spacing-3">JOIN US</h6>
+                                <div className="bkseparator--10" />
+                                    <div className="login-form-wrapper">
+                                    <form className="sn-form sn-form-boxed">
+                                        <div className="sn-form-inner">
+                                        <div className="single-input">
+                                            <label htmlFor="login-form-email">Username or email address *</label>
+                                            <input type="text" readOnly={disableButton}
+                                            className={email !== '' ? 'input100 has-val' : 'input100'}
+                                            placeholder="Username"
+                                            name="email"
+                                            value={email}
+                                            onChange={this.handleInputChange} id="login-form-email" />
+                                            {errors.email && (<div className="invalid-feedback">{errors.email}</div>)}
+                                        </div>
+                                        <div className="single-input">
+                                            <label htmlFor="login-form-password">Password *</label>
+                                            <input readOnly={disableButton}
+                                            type="password"
+                                            className={password !== '' ? 'input100 has-val' : 'input100'}
+                                            placeholder="Password"
+                                            name="password"
+                                            value={password}
+                                            onChange={this.handleInputChange}
+                                            id="login-form-password" />
+                                            {errors.password && (<div className="invalid-feedback">{errors.password}</div>)}
+                                        </div>
+                                        <div className="single-input">
+                                            <button className="mr-3" onClick={this.submitHandelar}>
+                                            <span>Login</span>
+                                            </button>
+                                        </div>
+                                        </div>
+                                    </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    {/* End About Area */}
+
+                    {/* Start Pricing Plans */}
+                    <div className="brook-about-area pt--130 pb--130 pt_md--80 pt_sm--60 rslide bg-shape" data-background="#5e0891">
+                        <div className="container">
+                            <div className="row">
+                                {/* Start Single Pricing Table */}
+                                <div className="col-lg-4 col-md-6 col-sm-12 col-12">
+                                    <div className="procing-wrap pt--40 move-up wow">
+                                    <div className="procing-box">
+                                        <div className="header">
+                                        <div className="price">
+                                            <h3 className="currenct">Packet</h3>
+                                            <h3 className="heading headin-h3">#1</h3>
+                                        </div>
+                                        </div>
+                                        <div className="content">
+                                        <h5 className="heading heading-h5">Bronze</h5>
+                                        {/* Start Single List */}
+                                        <div className="bk-list--2">
+                                            <div className="list-header with-ckeck item-available">
+                                            <div className="marker" />
+                                            <div className="title-wrap">
+                                                <h6 className="heading heading-h5">Contract 5 Month</h6>
+                                            </div>
+                                            </div>
+                                            <div className="list-header with-ckeck item-available">
+                                            <div className="marker" />
+                                            <div className="title-wrap">
+                                                <h6 className="heading heading-h5">Min Deposit 0,024 Bitcoin</h6>
+                                            </div>
+                                            </div>
+                                            <div className="list-header with-ckeck item-available">
+                                            <div className="marker" />
+                                            <div className="title-wrap">
+                                                <h6 className="heading heading-h5">Max Deposit 0,24 Bitcoin</h6>
+                                            </div>
+                                            </div>
+                                            <div className="list-header with-ckeck item-available">
+                                            <div className="marker" />
+                                            <div className="title-wrap">
+                                                <h6 className="heading heading-h5">You Have 5 Slots</h6>
+                                            </div>
+                                            </div>
+                                            <div className="list-header with-ckeck item-available">
+                                            <div className="marker" />
+                                            <div className="title-wrap">
+                                                <h6 className="heading heading-h5">Profit 25%/Your Deposit/Month</h6>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        {/* End Single List */}
+                                        </div>
+                                        <div className="footer mt--40">
+                                        <a className="brook-btn bk-btn-dark btn-sd-size btn-rounded" href="#">Sign up</a>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                {/* End Single Pricing Table */}
+                                {/* Start Single Pricing Table */}
+                                <div className="col-lg-4 col-md-6 col-sm-12 col-12">
+                                    <div className="procing-wrap pt--40 move-up wow">
+                                    <div className="procing-box">
+                                        <div className="header">
+                                        <div className="price">
+                                            <h3 className="currenct">Packet</h3>
+                                            <h3 className="heading headin-h3">#2</h3>
+                                        </div>
+                                        </div>
+                                        <div className="content">
+                                        <h5 className="heading heading-h5">Gold</h5>
+                                        {/* Start Single List */}
+                                        <div className="bk-list--2">
+                                            <div className="list-header with-ckeck item-available">
+                                            <div className="marker" />
+                                            <div className="title-wrap">
+                                                <h6 className="heading heading-h5">Contract 5 Month</h6>
+                                            </div>
+                                            </div>
+                                            <div className="list-header with-ckeck item-available">
+                                            <div className="marker" />
+                                            <div className="title-wrap">
+                                                <h6 className="heading heading-h5">Min Deposit 0,024 Bitcoin</h6>
+                                            </div>
+                                            </div>
+                                            <div className="list-header with-ckeck item-available">
+                                            <div className="marker" />
+                                            <div className="title-wrap">
+                                                <h6 className="heading heading-h5">Max Deposit 0,24 Bitcoin</h6>
+                                            </div>
+                                            </div>
+                                            <div className="list-header with-ckeck item-available">
+                                            <div className="marker" />
+                                            <div className="title-wrap">
+                                                <h6 className="heading heading-h5">You Have 5 Slots</h6>
+                                            </div>
+                                            </div>
+                                            <div className="list-header with-ckeck item-available">
+                                            <div className="marker" />
+                                            <div className="title-wrap">
+                                                <h6 className="heading heading-h5">Profit 25%/Your Deposit/Month</h6>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        {/* End Single List */}
+                                        </div>
+                                        <div className="footer mt--40">
+                                        <a className="brook-btn bk-btn-dark btn-sd-size btn-rounded" href="#">Sign up</a>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                {/* End Single Pricing Table */}
+                                {/* Start Single Pricing Table */}
+                                <div className="col-lg-4 col-md-6 col-sm-12 col-12">
+                                    <div className="procing-wrap pt--40 move-up wow">
+                                    <div className="procing-box">
+                                        <div className="header">
+                                        <div className="price">
+                                            <h3 className="currenct">Packet</h3>
+                                            <h3 className="heading headin-h3">#3</h3>
+                                        </div>
+                                        </div>
+                                        <div className="content">
+                                        <h5 className="heading heading-h5">Platinum</h5>
+                                        {/* Start Single List */}
+                                        <div className="bk-list--2">
+                                            <div className="list-header with-ckeck item-available">
+                                            <div className="marker" />
+                                            <div className="title-wrap">
+                                                <h6 className="heading heading-h5">Contract 5 Month</h6>
+                                            </div>
+                                            </div>
+                                            <div className="list-header with-ckeck item-available">
+                                            <div className="marker" />
+                                            <div className="title-wrap">
+                                                <h6 className="heading heading-h5">Min Deposit 0,024 Bitcoin</h6>
+                                            </div>
+                                            </div>
+                                            <div className="list-header with-ckeck item-available">
+                                            <div className="marker" />
+                                            <div className="title-wrap">
+                                                <h6 className="heading heading-h5">Max Deposit 0,24 Bitcoin</h6>
+                                            </div>
+                                            </div>
+                                            <div className="list-header with-ckeck item-available">
+                                            <div className="marker" />
+                                            <div className="title-wrap">
+                                                <h6 className="heading heading-h5">You Have 5 Slots</h6>
+                                            </div>
+                                            </div>
+                                            <div className="list-header with-ckeck item-available">
+                                            <div className="marker" />
+                                            <div className="title-wrap">
+                                                <h6 className="heading heading-h5">Profit 25%/Your Deposit/Month</h6>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        {/* End Single List */}
+                                        </div>
+                                        <div className="footer mt--40">
+                                        <a className="brook-btn bk-btn-dark btn-sd-size btn-rounded" href="#">Sign up</a>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                {/* End Single Pricing Table */}
+                                </div>
+                            </div>
+                        </div>
+
+                    {/* End Pricing Plans */}
                 </div>
             </div>
+            <Footer/>
         </div>
-              );
+        );
     }
 }
 

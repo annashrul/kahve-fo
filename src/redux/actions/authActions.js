@@ -55,11 +55,11 @@ export const loginUser = (userData) =>
                  )
             }else{
                 Swal.fire(
-                    err.response.data.msg,
+                    err.response===undefined?"something when wrong!":err.response.data.msg,
                     '',
                     'error'
                 )
-                dispatch({type: AUTH.GET_ERRORS, payload: err.response.data.msg})
+                dispatch({type: AUTH.GET_ERRORS, payload: err.response===undefined?"something when wrong!":err.response.data.msg})
 
             }
             

@@ -49,6 +49,12 @@ export function setFolder(data = []) {
         data
     }
 }
+export function setFaq(data = []) {
+    return {
+        type: SITE.SUCCESS_FAQ,
+        data
+    }
+}
 export function setTables(data = []) {
     return {
         type: SITE.SUCCESS_TABLES,
@@ -354,3 +360,90 @@ export const importTable = (data) => {
 
         }
     };
+
+    export const FetchFaq = () => {
+        return (dispatch) => {
+            dispatch(setLoading(true));
+            axios.get(HEADERS.URL + `faq`)
+                .then(function (response) {
+                    const data = response.data;
+                    dispatch(setFaq(data));
+                    dispatch(setLoading(false));
+                })
+                .catch(function (error) {
+                    // handle error
+                    dispatch(setLoading(false));
+                })
+    
+        }
+    }
+
+    export const storeContact = (data) => {
+        return (dispatch) => {
+            dispatch(setLoading(true));
+            const url = HEADERS.URL + `inbox`;
+            axios.post(url,data)
+                .then(function (response) {
+                    const data = (response.data);
+                    if (data.status === 'success') {
+                        Swal.fire({
+                            title: 'Success',
+                            type: 'success',
+                            text: data.msg,
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'failed',
+                            type: 'error',
+                            text: data.msg,
+                        });
+                    }
+                    dispatch(setLoading(false));
+                })
+                .catch(function (error) {
+                    dispatch(setLoading(false));
+                    Swal.fire({
+                        title: 'failed',
+                        type: 'error',
+                        text: error.response === undefined?'error!':error.response.data.msg,
+                    });
+                    if (error.response) {
+                    }
+                })
+        }
+    }
+
+    export const storeWd = (data) => {
+        return (dispatch) => {
+            dispatch(setLoading(true));
+            const url = HEADERS.URL + `withdraw`;
+            axios.post(url,data)
+                .then(function (response) {
+                    const data = (response.data);
+                    if (data.status === 'success') {
+                        Swal.fire({
+                            title: 'Success',
+                            type: 'success',
+                            text: data.msg,
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'failed',
+                            type: 'error',
+                            text: data.msg,
+                        });
+                    }
+                    dispatch(setLoading(false));
+                })
+                .catch(function (error) {
+                    dispatch(setLoading(false));
+                    Swal.fire({
+                        title: 'failed',
+                        type: 'error',
+                        text: error.response === undefined?'error!':error.response.data.msg,
+                    });
+                    if (error.response) {
+                    }
+                })
+        }
+    }
