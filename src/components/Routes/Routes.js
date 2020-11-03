@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import PrivateRoute from '../common/PrivateRoute';
 import NotFound from '../common/notfound'
+import Confirm from '../common/confirmation'
 
 import Landing from '../App/Landing/';
 import Withdraw from '../App/Withdraw';
@@ -25,6 +26,7 @@ const Routes = (
             <PrivateRoute path="/dashboard" exact strict component={Dashboard} />
             {/* DASHBOARD SECTION END */}
            
+            <Route path="/confirm/:id" render={(props) => <Confirm {...props} />}/> 
             <Route component={NotFound}/>
 
         </Switch>

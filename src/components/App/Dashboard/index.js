@@ -19,10 +19,7 @@ class Dashboard extends Component {
             saldo:[],
             slot:[],
             withdraw:[],
-            data:{
-                total:0,
-                coin:"BTC"
-            },
+            data:[],
             referral_profit:0,
             number_of_month:0,
             recent_wd:[],
@@ -43,17 +40,16 @@ class Dashboard extends Component {
         }
         if (nextProps.data!==undefined){
             if (nextProps.data !== this.props.data) {
-                const newData = [];
-                if (nextProps.data.miner!==undefined){
-                    newData.push(nextProps.data.miner)
-                }
+                // const newData = [];
+                // if (nextProps.data.miner!==undefined){
+                //     newData.push(nextProps.data.miner)
+                // }
                 this.setState({
                     assets: nextProps.data.assets,
                     reff: nextProps.data.reff,
                     saldo: nextProps.data.saldo,
                     slot: nextProps.data.slot,
                     withdraw: nextProps.data.withdraw,
-                    data: newData,
                     referral_profit: nextProps.data.referral_profit,
                     number_of_month: nextProps.data.number_of_month,
                     recent_wd: nextProps.data.recent_wd,
@@ -64,10 +60,8 @@ class Dashboard extends Component {
     }
 
     componentWillMount(){
-        // this.intervalID = setInterval(
-        //     () => this.tick(),
-        //     1000
-        // );
+        this.props.dispatch(FetchDashboard(this.props.auth.user.reff));
+
     }
 
     componentWillUnmount(){
@@ -76,25 +70,15 @@ class Dashboard extends Component {
         clearInterval(this.intervalID);
     }
 
-    tick() {
-        const newData = [];
-        for (let i = 0; i < this.state.data.length; i++) {
-            newData.push({
-                total: parseFloat(this.state.data[i].total) + (parseFloat(this.state.data[i].total_perdetik) / 86400),
-                coin: this.state.data[i].coin,
-                total_perdetik: this.state.data[i].total_perdetik
-            })
-        }
-        this.setState({
-            data: newData
-        });
-    }
-
     setMiner(miner){
-        const minerData = Object.assign({}, this.state.data, {
-            coin:miner.coin,
-            total:miner.total
-        });
+        let balance=0;
+        for(let i=0;i<miner.length;i++){
+            balance+=parseFloat(miner[i].balance);
+        }
+        const minerData =[{
+            coin:'BTC',
+            total:balance
+        }];
         this.setState({
             data:minerData
         })
@@ -130,8 +114,8 @@ class Dashboard extends Component {
                     <Slot title="Mining Slot" data={this.state.slot} number_of_month={this.state.number_of_month} counter={this.setMiner}/>
                 </div>
                 <div className="row">
-                    <Box title="5 Last Withdraw" data={this.state.recent_wd}/>
-                    <Box title="Referral" data={this.state.referral_user}/>
+                    <Box title="5 Last Withdraw" isWd={true} data={this.state.recent_wd}/>
+                    <Box title="Referral" isWd={false} data={this.state.referral_user}/>
                 </div>
                 
         </Layout>

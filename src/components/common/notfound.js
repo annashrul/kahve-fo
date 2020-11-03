@@ -11,9 +11,9 @@ export default class Footer extends Component {
     constructor(props) {
         super(props);
        
-        // this.state = {
-        //     link: atob(document.getElementById("hellyeah").value)+"images/logo.png"
-        // }
+        this.state = {
+            link: atob(document.getElementById("hellyeah").value)+"images/logo.png"
+        }
     }
     componentWillMount() {
         document.title = `Page Not Found`;

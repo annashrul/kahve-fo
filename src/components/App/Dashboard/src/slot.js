@@ -15,8 +15,6 @@ class Charts extends Component {
       this.interval = setInterval(() => {
         let dates=[];
         let mining=[]
-          console.log('nextProps.data', nextProps.data);
-
         nextProps.data.map(item => {
           if (item.start_date!==null){
             let start = moment(item.start_date);
@@ -25,10 +23,15 @@ class Charts extends Component {
             const timer = this.calculateCountdown(start, end, now);
             dates.push(timer);
             mining.push({
-              balance: ((parseInt(timer.hours)*3600)+(parseInt(timer.min)*60)+parseInt(timer.sec))*parseFloat(item.daily_earning) / 86400,
+              balance: (((23-(parseInt(timer.hours))) * 3600) + ((60-parseInt(timer.min)) * 60)+(60-parseInt(timer.sec)))*parseFloat(item.daily_earning) / 86400,
             })
+            // console.log("HOUR",23 - parseInt(timer.hours))
+            // console.log("HOUR", parseInt(timer.hours))
+            // console.log("MIN", 60 - parseInt(timer.min))
+            // console.log("SEC", 60 - parseInt(timer.sec))
           }
         })
+        this.props.counter(mining);
         if(dates.length>0){
           this.setState({
             date: dates,
@@ -92,7 +95,6 @@ class Charts extends Component {
   }
 
   render(){
-    console.log(this.state.miner);
     let active=0;
         return(
              <div className="col-md-12 box-margin">
@@ -116,7 +118,7 @@ class Charts extends Component {
                             {
                               this.props.data!==undefined?
                               this.props.data.map((item,index)=>{
-                                const label=item.status===1?<span class="badge badge-info">Active</span>:(item.status===2?<span class="149	badge badge-success">Paid</span>:<span class="badge badge-secondary">Not Active</span>)
+                                const label=item.status===1?<span class="badge badge-success">Active</span>:(item.status===2?<span class="149	badge badge-danger">Done</span>:<span class="badge badge-secondary">Not Active</span>)
                                 if(item.status===1) active=item.slot_no
                                 const contract = item.contract * this.props.number_of_month;
                                 return (
@@ -134,7 +136,6 @@ class Charts extends Component {
                                       this.addLeadingZeros(this.state.date[index].sec)+" S":'-'
                                     }</td>
                                     <td>{label} {item.status===0 && active+1===item.slot_no?<a href="#" class="badge badge-warning">Invest</a>:""}</td>
-                                    <td>{this.state.miner[index]!==undefined?this.state.miner[index].balance:""}</td>
 
                                   </tr>
                                 )
@@ -143,6 +144,7 @@ class Charts extends Component {
                             
                           </tbody>
                         </table>
+                            {/* <td>{this.state.miner[index]!==undefined?this.state.miner[index].balance:""}</td> */}
                     </div>
                 </div>
             </div>

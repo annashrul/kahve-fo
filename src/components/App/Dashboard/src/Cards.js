@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import Swal from "sweetalert2";
+import Dot from 'assets/dot.png'
 const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
@@ -14,14 +15,16 @@ const Toast = Swal.mixin({
 
 class Cards extends Component {
     render(){
+        let check=false;
         const amount =this.props.isobj?
                         this.props.data!==undefined?(
                             <h2 style={{paddingLeft:5}} >
                                 {
                                     this.props.data.length>0?
                                     this.props.data.map(item=>{
+                                        check=item.total>0?true:false;
                                         return(
-                                            <div style={this.props.data.length===1?{fontSize:'1.2rem'}:{fontSize:'1rem'}}>{parseFloat(item.total).toFixed(8)} <small>({item.coin})</small><br/></div>
+                                            <div style={this.props.data.length===1?{fontSize:'1.2rem'}:{fontSize:'1rem'}}>{parseFloat(item.total).toFixed(8)} <small>({item.coin})</small></div>
                                         )
                                     }):(
                                             <div style={{fontSize:'1.5rem'}}>0<br/></div>
@@ -51,14 +54,28 @@ class Cards extends Component {
                                 Your referral link: <a href="#" onClick={(e) => {e.preventDefault();navigator.clipboard.writeText(this.props.link);Toast.fire({icon: 'success',title: `Link has been copied.`})}} style={{wordBreak:"break-all"}} data-toggle="tooltip" data-placement="top" title="Click to copy">{this.props.link}</a><br/>
                                 <i className="fa fa-warning"/> Invite your friend and get {this.props.referral_profit} BTC !
                             </div>
-                        ):""
-                    }
-                    {
+                        ):
                         this.props.miner?(
                             <div className="card-footer bg-transparent border-top-0" style={{fontSize:".8em",paddingTop:0}}>
-                                <i className="fa fa-refresh"/> Mining is {this.props.data.length===0?'Off.':'in progress!'}
+                                {
+                                    check?(
+                                        <div class="spinner-grow" style={{width:'1rem',height:'1rem'}} role="status">
+                                                <span class="sr-only">Loading...</span>
+                                        </div>  
+                                    ):(
+                                        <img src={Dot} style={{marginRight:'3px',marginTop:'-2px'}} width="12px"/>
+                                    )
+                                }
+                                Mining is {!check?'Off.':'in progress!'}
+                            {/* <span style={{color:"#fff"}}>a<br/>a<br/>a</span> */}
                             </div>
-                        ):""
+                        ):(
+                            <div className="card-footer bg-transparent border-top-0" style={{fontSize:".8em",paddingTop:0}}>
+                            <span><i>Since you join us.</i></span>
+                                
+
+                            </div>
+                        )
                     }
                 </div>
             </div>
