@@ -17,7 +17,7 @@ class Withdraw extends Component {
     }
     render() {
         return (
-            <Layout page="Dashboard">
+            <Layout page="Withdraw">
                 <div className="row">
                 <div className="col-6">
                     <Form/>

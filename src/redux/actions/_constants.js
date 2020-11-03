@@ -118,6 +118,19 @@ export const WITHDRAW = {
 }
 
 /****************
+ INVEST
+ *****************/
+export const INVEST = {
+  LOADING: 'SET_INVEST_LOADING',
+  SUCCESS: 'SET_INVEST_SUCCESS',
+  FAILED: 'SET_INVEST_FAILED',
+  LOADING_POST: 'SET_INVEST_LOADING_POST',
+  SUCCESS_REPORT: 'SET_INVEST_SUCCESS_REPORT',
+  SUCCESS_CONFIG: 'SET_INVEST_SUCCESS_CONFIG',
+
+}
+
+/****************
  COIN
  *****************/
 export const COIN = {

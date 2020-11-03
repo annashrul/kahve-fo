@@ -29,7 +29,7 @@ class Form extends Component {
             let c = []
             let coin = nextProps.coin.data;
             if(coin!==undefined){
-                coin.map((i) => {
+                coin.sort((a, b) => a.symbol.localeCompare(b.symbol)).map((i) => {
                     c.push({
                         value: i.id,
                         label: i.title+'|'+i.symbol,

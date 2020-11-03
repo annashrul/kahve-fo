@@ -96,7 +96,7 @@ class Dashboard extends Component {
 
     setMiner(miner){
         this.setState({
-            data[total]:miner
+            // data[total]:miner
         })
     }
 
