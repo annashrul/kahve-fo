@@ -10,9 +10,8 @@ import {HEADERS} from 'redux/actions/_constants'
 
 import Cards from './src/Cards'
 import Slot from './src/slot'
-import Balance from './src/balance'
 import Info from './src/Info'
-import Monthly from './src/monthlySlot'
+import Box from './src/box'
 // const socket = socketIOClient(HEADERS.URL);
 
 class Dashboard extends Component {
@@ -24,70 +23,81 @@ class Dashboard extends Component {
             saldo:[],
             slot:[],
             withdraw:[],
-            data:[]
+            data:{
+                total:0,
+                coin:"BTC"
+            },
+            referral_profit:0,
+            number_of_month:0,
+            recent_wd:[],
+            referral_user:[]
         };
 
     }
 
     componentWillReceiveProps = (nextProps) => {
-        // console.log();
-        console.log("nextprops",nextProps.data);
-        if (nextProps.data!==undefined){
-            const newData = [];
-            const hours = moment().format("H");
-            if (nextProps.data.saldo!==undefined){
-                for (let i = 0; i < nextProps.data.saldo.length; i++) {
-                    newData.push({
-                        total: parseFloat(nextProps.data.saldo[i].total)+(parseFloat(hours) * (parseFloat(nextProps.data.saldo[i].total) / 86400)),
-                        coin: nextProps.data.saldo[i].coin
-                    })
+        if (nextProps.auth.user) {
+            console.log("AUTH", nextProps.auth.user);
+            if (nextProps.auth.user!==this.props.auth.user){
+
+                if (nextProps.auth.user.reff!==undefined){
+                    this.props.dispatch(FetchDashboard(nextProps.auth.user.reff));
                 }
             }
-            this.setState({
-                assets: nextProps.data.assets,
-                reff: nextProps.data.reff,
-                saldo: nextProps.data.saldo,
-                slot: nextProps.data.slot,
-                withdraw: nextProps.data.withdraw,
-                data: newData
-            })
-            this.intervalID = setInterval(
-                () => this.tick(),
-                1000
-            );
+        }
+        if (nextProps.data!==undefined){
+            if (nextProps.data !== this.props.data) {
+                const newData = [];
+                if (nextProps.data.miner!==undefined){
+                    newData.push(nextProps.data.miner)
+                }
+                this.setState({
+                    assets: nextProps.data.assets,
+                    reff: nextProps.data.reff,
+                    saldo: nextProps.data.saldo,
+                    slot: nextProps.data.slot,
+                    withdraw: nextProps.data.withdraw,
+                    data: newData,
+                    referral_profit: nextProps.data.referral_profit,
+                    number_of_month: nextProps.data.number_of_month,
+                    recent_wd: nextProps.data.recent_wd,
+                    referral_user: nextProps.data.referral_user
+                })
+            }
         }
     }
 
-    refreshData(start=null,end=null,loc=null){
-        // socket.emit('get_dashboard', {
-        //     datefrom: start!==null?start:this.state.startDate,
-        //     dateto: end!==null?end:this.state.endDate,
-        //     location: loc!==null?loc:this.state.location
-        // })
-    }
-
     componentWillMount(){
-        this.props.dispatch(FetchDashboard());
+        // this.intervalID = setInterval(
+        //     () => this.tick(),
+        //     1000
+        // );
     }
 
     componentWillUnmount(){
         localStorage.removeItem('startDateProduct');
         localStorage.removeItem('endDateDashboard');
         clearInterval(this.intervalID);
-
     }
 
     tick() {
         const newData = [];
         for (let i = 0; i < this.state.data.length; i++) {
             newData.push({
-                total: parseFloat(this.state.data[i].total) + (parseFloat(this.state.saldo[i].total) / 86400),
-                coin: this.state.data[i].coin
+                total: parseFloat(this.state.data[i].total) + (parseFloat(this.state.data[i].total_perdetik) / 86400),
+                coin: this.state.data[i].coin,
+                total_perdetik: this.state.data[i].total_perdetik
             })
         }
         this.setState({
             data: newData
         });
+    }
+
+    setMiner(miner){
+        this.setState({
+            data[total]:miner
+        })
     }
 
 
@@ -107,7 +117,8 @@ class Dashboard extends Component {
 
                 {/* Dashboard Widget Area */}
                 <div className="row">
-                    <Cards title="Referral" data={this.state.reff} isobj={false} link="http://google.com" icon="fa fa-users text-primary"/>                    
+                    <Cards title="Referral" data={this.state.reff} isobj={false} link={window.location.origin.toString()+'/signup?reff='+this.props.auth.user.reff} 
+                    referral_profit={this.state.referral_profit} icon="fa fa-users text-primary"/>
                     <Cards title="Your Balance" data={this.state.data} isobj={true} miner={true} icon="fa fa-dollar text-primary"/>
                     <Cards title="Total Investment You Made" data={this.state.assets} isobj={true} icon="fa fa-money text-primary"/>                    
                     <Cards title="Total Payment You Received" data={this.state.withdraw} isobj={true} icon="fa fa-credit-card text-primary"/>                    
@@ -116,18 +127,11 @@ class Dashboard extends Component {
                     <Balance/>
                 </div> */}
                 <div className="row">
-                    <Slot title="Mining Slot" data={this.state.slot}/>
+                    <Slot title="Mining Slot" data={this.state.slot} number_of_month={this.state.number_of_month}/>
                 </div>
                 <div className="row">
-                    {
-                        this.state.slot!==undefined?
-                            this.state.slot.map(item=>{
-                                return(
-                                    <Monthly title={'Slot '+item.slot_no} symbol={item.symbol} status={item.status} data={item.monthly}/>
-                                )
-                            })
-                        :''
-                    }
+                    <Box title="5 Last Withdraw" data={this.state.recent_wd}/>
+                    <Box title="Referral" data={this.state.referral_user}/>
                 </div>
                 
         </Layout>

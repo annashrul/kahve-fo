@@ -13,7 +13,7 @@ class Info extends Component {
                                         this.props.data.length>0?
                                         this.props.data.map(item=>{
                                             return(
-                                                <span>{item.total} <small>({item.coin})</small><br/></span>
+                                                <span>{parseFloat(item.total).toFixed(8)} <small>({item.coin})</small><br/></span>
                                             )
                                         }):(
                                                 0

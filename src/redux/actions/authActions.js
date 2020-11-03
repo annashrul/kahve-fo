@@ -34,6 +34,7 @@ export const loginUser = (userData) =>
                     name: res.data.result.name,
                     email: res.data.result.email,
                     status: res.data.result.status,
+                    reff: res.data.result.kd_referral,
                     foto: res.data.result.foto,
                     created_at: res.data.result.created_at
                 })
