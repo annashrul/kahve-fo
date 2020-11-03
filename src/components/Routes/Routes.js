@@ -6,6 +6,8 @@ import Confirm from '../common/confirmation'
 
 import Landing from '../App/Landing/';
 import Withdraw from '../App/Withdraw';
+import Invest from '../App/Invest';
+import Invoice from '../App/Invoice';
 // import Transfer from '../App/Landing/transfer';
 // import Contact from '../App/Landing/contact-us';
 // import Faq from '../App/Landing/faq';
@@ -17,6 +19,8 @@ const Routes = (
             <Route path="/" exact strict component={Landing} />
 
             <Route path="/withdraw" exact strict component={Withdraw} />
+            <Route path="/invest" exact strict component={Invest} />
+            <Route path="/invoice" exact strict component={Invoice} />
             {/* <Route path="/transfer" exact strict component={Transfer} /> */}
             {/* <Route path="/contact" exact strict component={Contact} /> */}
             {/* <Route path="/faq" exact strict component={Faq} /> */}

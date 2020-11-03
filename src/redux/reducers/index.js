@@ -5,6 +5,7 @@ import authReducer from './authReducer';
 import errorsReducer from './errorsReducer';
 import {siteReducer} from './site.reducer';
 import {withdrawReducer} from './withdraw/withdraw.reducer';
+import {investReducer} from './invest/invest.reducer';
 import {coinReducer} from './coin/coin.reducer';
 
 export default combineReducers({
@@ -13,6 +14,7 @@ export default combineReducers({
     dashboardReducer,
     siteReducer,
     withdrawReducer,
+    investReducer,
     coinReducer,
 
     auth: authReducer,
