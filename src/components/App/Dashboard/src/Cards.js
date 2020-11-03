@@ -16,12 +16,12 @@ class Cards extends Component {
     render(){
         const amount =this.props.isobj?
                         this.props.data!==undefined?(
-                            <h2 style={{paddingLeft:5,marginTop:3}} >
+                            <h2 style={{paddingLeft:5}} >
                                 {
                                     this.props.data.length>0?
                                     this.props.data.map(item=>{
                                         return(
-                                            <div style={this.props.data.length===1?{fontSize:'1.1rem'}:{fontSize:'.8rem'}}>{item.total} <small>({item.coin})</small><br/></div>
+                                            <div style={this.props.data.length===1?{fontSize:'1.2rem'}:{fontSize:'1rem'}}>{parseFloat(item.total).toFixed(8)} <small>({item.coin})</small><br/></div>
                                         )
                                     }):(
                                             <div style={{fontSize:'1.5rem'}}>0<br/></div>
@@ -56,7 +56,7 @@ class Cards extends Component {
                     {
                         this.props.miner?(
                             <div className="card-footer bg-transparent border-top-0" style={{fontSize:".8em",paddingTop:0}}>
-                                <i className="fa fa-refresh"/> Mining is in progress!
+                                <i className="fa fa-refresh"/> Mining is {this.props.data.length===0?'Off.':'in progress!'}
                             </div>
                         ):""
                     }
