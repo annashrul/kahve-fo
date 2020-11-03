@@ -15,6 +15,8 @@ class Charts extends Component {
       this.interval = setInterval(() => {
         let dates=[];
         let mining=[]
+          console.log('nextProps.data', nextProps.data);
+
         nextProps.data.map(item => {
           if (item.start_date!==null){
             let start = moment(item.start_date);

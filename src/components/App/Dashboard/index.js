@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import Layout from 'components/Layout';
-import moment from 'moment';
-import {toRp} from "helper";
 import {FetchDashboard} from 'redux/actions/dashboard/dashboard.action'
 import 'bootstrap-daterangepicker/daterangepicker.css';
-import socketIOClient from "socket.io-client";
-import {HEADERS} from 'redux/actions/_constants'
 
 import Cards from './src/Cards'
 import Slot from './src/slot'
@@ -32,7 +28,7 @@ class Dashboard extends Component {
             recent_wd:[],
             referral_user:[]
         };
-
+        this.setMiner = this.setMiner.bind(this)
     }
 
     componentWillReceiveProps = (nextProps) => {
@@ -95,8 +91,12 @@ class Dashboard extends Component {
     }
 
     setMiner(miner){
+        const minerData = Object.assign({}, this.state.data, {
+            coin:miner.coin,
+            total:miner.total
+        });
         this.setState({
-            data[total]:miner
+            data:minerData
         })
     }
 
@@ -127,7 +127,7 @@ class Dashboard extends Component {
                     <Balance/>
                 </div> */}
                 <div className="row">
-                    <Slot title="Mining Slot" data={this.state.slot} number_of_month={this.state.number_of_month}/>
+                    <Slot title="Mining Slot" data={this.state.slot} number_of_month={this.state.number_of_month} counter={this.setMiner}/>
                 </div>
                 <div className="row">
                     <Box title="5 Last Withdraw" data={this.state.recent_wd}/>
