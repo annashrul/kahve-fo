@@ -2,13 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import BgAuth from "assets/logo.png"
-import './style.css'
+import './login.css'
 import {loginUser} from 'redux/actions/authActions';
 import Swal from 'sweetalert2'
 import {HEADERS} from 'redux/actions/_constants'
-
-import Header from './src/header'
-import Footer from './src/footer'
 class Login extends Component {
     constructor(props) {
         super(props);
@@ -108,66 +105,57 @@ class Login extends Component {
     render() {
         const {email,password, errors,disableButton} = this.state;
         return (
-        <div>
-            <Header/>
-
-            <div className="rvbody">
-                <div className="page-content">
-            
-                    {/* STart Slider Area */}
-                    <div className="revolution-slider-area slider-bg-1 slider-bg-2 rslide" data-background="#3d088e">
-                    <div className="revolution-slider slider-bg-2">
-                        <div className="container">
-                        <div className="row">
-                            <div className="col-lg-12">
-                            <div className="join-content pt--250 pb--250 text-center max-width--990">
-                                <h6 className="heading heading-h6 font-blod text-white letter-spacing-3">SIGN UP</h6>
-                                <div className="bkseparator--10" />
-                                    <div className="login-form-wrapper">
-                                    <form className="sn-form sn-form-boxed">
-                                        <div className="sn-form-inner">
-                                        <div className="single-input">
-                                            <label htmlFor="login-form-email" className="text-white">Email address *</label>
-                                            <input type="text" readOnly={disableButton}
-                                            className={email !== '' ? 'input100 has-val' : 'input100'}
-                                            placeholder="Username"
-                                            name="email"
-                                            value={email}
-                                            onChange={this.handleInputChange} id="login-form-email" />
-                                            {errors.email && (<div className="invalid-feedback">{errors.email}</div>)}
-                                        </div>
-                                        <div className="single-input">
-                                            <label htmlFor="login-form-password" className="text-white">Password *</label>
-                                            <input readOnly={disableButton}
-                                            type="password"
-                                            className={password !== '' ? 'input100 has-val' : 'input100'}
-                                            placeholder="Password"
-                                            name="password"
-                                            value={password}
-                                            onChange={this.handleInputChange}
-                                            id="login-form-password" />
-                                            {errors.password && (<div className="invalid-feedback">{errors.password}</div>)}
-                                        </div>
-                                        <div className="single-input">
-                                            <button className="mr-3" onClick={this.submitHandelar}>
-                                            <span>Login</span>
-                                            </button>
-                                        </div>
-                                        </div>
-                                    </form>
-                                    </div>
+        <div className="limiter">
+            <div className="container-login100">
+                <div className="row">
+                    <div className={'col-md-12'}>
+                        <div className="wrap-login100 p-b-160 p-t-50">
+                            Halaman landing page + login
+                            <form className="login100-form validate-form" action="#">
+                                <span className="login100-form-title p-b-43 mb-5">
+                                <img alt="logos" src={this.state.logo} className='img-responsive' width={this.state.width} style={{textAlign: 'center', marginLeft: 'auto', marginRight: 'auto', display: 'block'}}/>
+                                    {/* Account Login */}
+                                </span>
+                                <div className="wrap-input100 rs1 validate-input" data-validate="Username is required">
+                                    <input type="text" readOnly={disableButton}
+                                           className={email !== '' ? 'input100 has-val' : 'input100'}
+                                           placeholder="Username"
+                                           name="email"
+                                           value={email}
+                                           onChange={this.handleInputChange}/>
+                                    <span className="label-input100">Username</span>
+                                    {errors.email && (<div className="invalid-feedback">{errors.email}</div>)}
                                 </div>
-                            </div>
-                        </div>
+                                <div className="wrap-input100 rs2 validate-input" data-validate="Password is required">
+                                    <input
+                                        readOnly={disableButton}
+                                        type="password"
+                                        className={password !== '' ? 'input100 has-val' : 'input100'}
+                                        placeholder="Password"
+                                        name="password"
+                                        value={password}
+                                        onChange={this.handleInputChange}/>
+                                    <span className="label-input100">Password</span>
+                                    {errors.password && (<div className="invalid-feedback">{errors.password}</div>)}
+                                </div>
+                                <div className="container-login100-form-btn">
+                                    <button className="login100-form-btn" type="submit"
+                                            onClick={this.submitHandelar}>
+                                        Sign in
+                                    </button>
+                                </div>
+                                <div className="text-center w-full p-t-23">
+                                    <a href="about:blank" className="txt1">
+                                        {/* Login ke backoffice. */}
+                                    </a>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                    </div>
-                    {/* End Slider Area */}
                 </div>
             </div>
-            <Footer/>
         </div>
-        );
+              );
     }
 }
 
