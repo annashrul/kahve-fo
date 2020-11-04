@@ -9,8 +9,13 @@ import Routes from 'components/Routes/Routes';
 import { DBConfig } from 'DBConfig';
 import { initDB } from 'react-indexed-db';
  import {get} from "components/model/app.model";
+import axios from 'axios';
+import { HEADERS } from '../../redux/actions/_constants';
 
 initDB(DBConfig);
+axios.defaults.headers.common['identities'] = `${HEADERS.USERNAME}`;
+axios.defaults.headers.common['sercet-id'] = `${HEADERS.PASSWORD}`;
+axios.defaults.headers.common['connectifity-agent'] = `apps`;
 // Check token in localStorage
   if (localStorage.npos) {
     setAuthToken(atob(localStorage.npos));

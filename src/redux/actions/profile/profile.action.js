@@ -44,9 +44,10 @@ export const updateProfile = (data,param,id) => {
                     showCancelButton: false,
                     showConfirmButton: true
                 }).then((result)=>{
+                    dispatch(FetchUserDetail(id))
                     param({
                         pathname: '/profile',
-                    })
+                    });
                 });
             })
             .catch(function (error) {

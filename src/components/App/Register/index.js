@@ -4,12 +4,7 @@ import imgThumb from 'assets/thumb_1.svg';
 import Swal from 'sweetalert2';
 import { storeRegister } from '../../../redux/actions/register/register.action';
 import { Link } from 'react-router-dom';
-import Preloader from 'helper'
-// import Layout from 'components/Layout'
-// import { FetchRegisterConfig, FetchRegisterReport } from '../../../redux/actions/register/register.action';
-// import Form from './src/Form';
-// import List from './src/List';
-// import { FetchCoinType } from '../../../redux/actions/coin/coin.action';
+import Preloader from 'Preloader'
 
 class Register extends Component {
     constructor(props) {
@@ -31,7 +26,7 @@ class Register extends Component {
             }
         }
         this.handleChange = this.handleChange.bind(this)
-        if (this.props.match.params.id==='') {
+        if (this.props.match.params.id===''||this.props.match.params.id===undefined||this.props.match.params.id===null) {
             this.props.history.push({
                 pathname: '/',
                 data: this.props.config

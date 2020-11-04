@@ -7,6 +7,7 @@ import {siteReducer} from './site.reducer';
 import {withdrawReducer} from './withdraw/withdraw.reducer';
 import {investReducer} from './invest/invest.reducer';
 import {coinReducer} from './coin/coin.reducer';
+import {profileReducer} from './profile/profile.reducer';
 
 export default combineReducers({
     modalReducer,
@@ -16,6 +17,7 @@ export default combineReducers({
     withdrawReducer,
     investReducer,
     coinReducer,
+    profileReducer,
 
     auth: authReducer,
     errors : errorsReducer
