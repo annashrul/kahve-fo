@@ -45,7 +45,7 @@ export const storeCoin = (data) => {
             .then(function (response) {
                 dispatch(setLoadingPost(false));
                 Swal.fire({
-                    title: 'Transaksi berhasil.',
+                    title: 'Transaction successfully!.',
                     type: 'info',
                     showCancelButton: false,
                     showConfirmButton: true
@@ -60,7 +60,7 @@ export const storeCoin = (data) => {
                 // Swal.fire({
                 //     title: 'Success',
                 //     type: 'success',
-                //     text:"Transaksi Berhasil",
+                //     text:"Transaction successfully!",
                 // }).then((result)=>{
                 //     localStorage.removeItem("nota_pembelian_coin");
                 //     localStorage.removeItem("jenis_trx_coin");

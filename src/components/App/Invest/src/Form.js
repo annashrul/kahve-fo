@@ -104,7 +104,7 @@ class Form extends Component {
         this.setState({ [column]: value });
     }
     handleSlider = (e) => {
-        console.log("sliderrrrrrrrrrr",e)
+        
         this.setState({ amount: e.target.value });
     }
     HandleReset(e){
@@ -184,7 +184,7 @@ class Form extends Component {
     }
     render(){
         const { steps, currentStep } = this.state;
-        console.log("aaaaaaaaaa",this.state.files)
+        
         return(
             <div className="card">
                 <div className="card-header bg-transparent">
@@ -202,17 +202,17 @@ class Form extends Component {
                             <div className="col-md-12" style={{display:currentStep===0?'':'none'}}>
                                 <div className="ribbon-wrapper card">
                                     <div className="ribbon ribbon-warning">IMPORTANT!</div>
-                                    <p className="ribbon-content">Pay attention to the following 5 points so that investment can be processed immediately:</p>
                                     <div class="alert alert-danger" role="alert">
                                         <ul>
-                                            <li style={{listStyle:'outside'}}>Before you proceed to the next step, make sure you have sent BTC coins on <a href="https://indodax.com" target="_blank" className="font-15 text-light">Indodax <i class="zmdi zmdi-open-in-new"></i></a></li>
-                                            <li style={{listStyle:'outside'}}>Make sure you transfer to the this address: <br/>{this.props.config.invest_detail===undefined?'':this.props.config.invest_detail.wallet_address}</li>
+                                            <li style={{listStyle:'outside'}}>Before you confirm your investment on this website, please transfer / send bitcoin via  <a href="https://indodax.com" target="_blank" className="font-15 text-light">Indodax <i class="zmdi zmdi-open-in-new"></i></a> to the wallet id below :</li>
+                                            <li className="text-center"><h5 className="text-light">{this.props.config.invest_detail===undefined?'':this.props.config.invest_detail.wallet_address}</h5></li>
                                             <li style={{listStyle:'outside'}}>Minimum Invest {this.props.config.min +" "+ this.props.config.coin}</li>
                                             <li style={{listStyle:'outside'}}>Maximum Invest {this.props.config.max +" "+ this.props.config.coin}</li>
-                                            <li style={{listStyle:'outside'}}>We are not responsible for your mistakes if you write the wrong transfer address</li>
+                                            <li className="text-center"><br/><h5 className="text-light">DO NOT CONTINUE THE NEXT STEP, BEFORE YOU ARE SUCCESSFUL SENDING THE COIN FROM INDODAX TO OUR WALLET</h5></li>
                                         </ul>
                                     </div>
                                     <div class="form-group">
+                                        <small>#note : After Indodax receives your coin sending process, please click the button below:</small>
                                         <button type="button" className="btn btn-warning btn-lg btn-block text-light" onClick={ this.onClickNext }>I agree, continue investment</button>
                                     </div>
                                 </div>
@@ -222,6 +222,12 @@ class Form extends Component {
                                 <div className="card mt-3">
                                     <div className="card-body">
                                         <div className="col-md-12">
+                                            <div class="alert alert-warning text-light" role="alert">
+                                                <ul>
+                                                    <li style={{listStyle:'outside'}}>Insert coins according to the amount you have sent on  <a href="https://indodax.com" target="_blank" className="font-15 text-light">Indodax <i class="zmdi zmdi-open-in-new"></i></a>.</li>
+                                                    <li style={{listStyle:'outside'}}>An error when entering the number of coins will result in a change in the amount of mining.</li>
+                                                </ul>
+                                            </div>
                                             <div className="form-group">
                                                 <label className="control-label font-12">
                                                     Amount

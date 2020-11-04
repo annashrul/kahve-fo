@@ -23,7 +23,7 @@ class List extends Component {
         return(
             <div>
                 <h3>Recently Invest</h3>
-                <div className="table-responsive" style={{overflowX: "auto"}}>
+                <div style={{overflowX: "auto"}}>
                     <table className="table table-hover table-bordered">
                         <thead className="bg-light">
                         <tr>
@@ -44,7 +44,7 @@ class List extends Component {
                                             data.map((v,i)=>{
                                                 return(
                                                     <tr key={i}>
-                                                        <td style={ centerStyle}>{i+1}</td>
+                                                        <td style={ centerStyle}>{i+1 + (10 * (parseInt(current_page,10)-1))}</td>
                                                         <td style={ centerStyle}>{v.slot_no}</td>
                                                         <td style={ centerStyle}>{v.coin}</td>
                                                         <td style={ leftStyle}>{v.amount}</td>

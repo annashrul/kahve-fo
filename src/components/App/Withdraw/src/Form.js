@@ -45,9 +45,9 @@ class Form extends Component {
         }
     }
     componentDidUpdate(prevProps) {
-        console.log("gggggggggg",prevProps)
-        console.log("gggggggggg2",prevProps.coin)
-        console.log("gggggggggg3",this.props.coin)
+        
+        
+        
         if (this.props.coin !== prevProps.coin) {
             this.props.dispatch(FetchWithdrawConfig(this.props.coin.data[0].symbol))
         }
@@ -122,8 +122,8 @@ class Form extends Component {
     }
 
     render(){
-        console.log("ccccccccc",this.state.coin_type)
-        console.log("ddddddddddddd",this.props.config)
+        
+        
         return(
             <div className="card">
                 <div className="card-header bg-transparent">

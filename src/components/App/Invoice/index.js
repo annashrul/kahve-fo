@@ -87,9 +87,9 @@ class Invest extends Component {
         })
     }
     render() {
-        console.log("auth",this.props.auth)
-        console.log("detail",this.props)
-        console.log("files",this.state.files)
+        
+        
+        
         return (
             <Layout page="Invest">
                 <div className="row">
@@ -181,7 +181,7 @@ class Invest extends Component {
 }
 
 const mapStateToProps = (state) =>{
-    console.log(state)
+    
     return{
         config:state.investReducer.data_config,
         auth: state.auth

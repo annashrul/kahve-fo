@@ -48,7 +48,7 @@ export const storeWithdraw = (data) => {
             .then(function (response) {
                 dispatch(setLoadingPost(false));
                 Swal.fire({
-                    title: 'Transaksi berhasil.',
+                    title: 'Transaction successfully!.',
                     type: 'info',
                     showCancelButton: false,
                     showConfirmButton: true
@@ -63,7 +63,7 @@ export const storeWithdraw = (data) => {
                 // Swal.fire({
                 //     title: 'Success',
                 //     type: 'success',
-                //     text:"Transaksi Berhasil",
+                //     text:"Transaction successfully!",
                 // }).then((result)=>{
                 //     localStorage.removeItem("nota_pembelian_withdraw");
                 //     localStorage.removeItem("jenis_trx_withdraw");

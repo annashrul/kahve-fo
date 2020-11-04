@@ -55,7 +55,7 @@ class List extends Component {
         return(
             <div>
                 <h3>Recently Withdraw</h3>
-                <div className="table-responsive" style={{overflowX: "auto"}}>
+                <div style={{overflowX: "auto"}}>
                     <table className="table table-hover table-bordered">
                         <thead className="bg-light">
                         <tr>

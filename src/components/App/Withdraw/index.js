@@ -19,10 +19,10 @@ class Withdraw extends Component {
         return (
             <Layout page="Withdraw">
                 <div className="row">
-                <div className="col-6">
+                <div className="col-md-6 mb-4">
                     <Form/>
                 </div>
-                <div className="col-6">
+                <div className="col-md-6 mb-4">
                     <List/>
                 </div>
                 </div>
@@ -32,7 +32,7 @@ class Withdraw extends Component {
 }
 
 const mapStateToProps = (state) =>{
-    console.log(state)
+    
     return{
         auth: state.auth
     }

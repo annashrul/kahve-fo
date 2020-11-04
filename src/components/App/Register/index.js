@@ -31,6 +31,12 @@ class Register extends Component {
             }
         }
         this.handleChange = this.handleChange.bind(this)
+        if (this.props.match.params.id==='') {
+            this.props.history.push({
+                pathname: '/',
+                data: this.props.config
+            })
+        }
     }
 
     handleChange = (event) => {
@@ -50,37 +56,59 @@ class Register extends Component {
             kd_referral:this.state.kd_referral===''?this.props.match.params.id:this.state.kd_referral,
             wallet_address:this.state.wallet_address,
         };
-
-        let timerInterval;
-        Swal.fire({
-            title: 'Wait a moment',
-            html: 'is sending data to the server',
-            timer: 1000,
-            timerProgressBar: true,
-            onBeforeOpen: () => {
-                Swal.showLoading()
-                timerInterval = setInterval(() => {
-                    const content = Swal.getContent()
-                    if (content) {
-                        const b = content.querySelector('b')
-                        if (b) {
-                            b.textContent = Swal.getTimerLeft()
+        let err = this.state.error;
+        if(parsedata['kd_referral']===''||parsedata['kd_referral']===undefined){
+            err = Object.assign({}, err, {kd_referral:"Referral cannot be null"});
+            this.setState({error: err});
+        }
+        else if(parsedata['name']===''||parsedata['name']===undefined){
+            err = Object.assign({}, err, {name:"Name cannot be null"});
+            this.setState({error: err});
+        }
+        else if(parsedata['wallet_address']===''||parsedata['wallet_address']===undefined){
+            err = Object.assign({}, err, {wallet_address:"Wallet address cannot be null"});
+            this.setState({error: err});
+        }
+        else if(parsedata['email']===''||parsedata['email']===undefined){
+            err = Object.assign({}, err, {email:"Email cannot be null"});
+            this.setState({error: err});
+        }
+        else if(parsedata['password']===''||parsedata['password']===undefined){
+            err = Object.assign({}, err, {password:"Password cannot be null"});
+            this.setState({error: err});
+        }
+        else{
+            let timerInterval;
+            Swal.fire({
+                title: 'Wait a moment',
+                html: 'is sending data to the server',
+                timer: 1000,
+                timerProgressBar: true,
+                onBeforeOpen: () => {
+                    Swal.showLoading()
+                    timerInterval = setInterval(() => {
+                        const content = Swal.getContent()
+                        if (content) {
+                            const b = content.querySelector('b')
+                            if (b) {
+                                b.textContent = Swal.getTimerLeft()
+                            }
                         }
-                    }
-                }, 100)
-            },
-            onClose: () => {
-                clearInterval(timerInterval)
-            }
-        }).then((result) => {
-            if (result.dismiss === Swal.DismissReason.timer) {
-                this.props.dispatch(storeRegister(parsedata,(arr)=>this.props.history.push(arr)));
-            }
-        })
+                    }, 100)
+                },
+                onClose: () => {
+                    clearInterval(timerInterval)
+                }
+            }).then((result) => {
+                if (result.dismiss === Swal.DismissReason.timer) {
+                    this.props.dispatch(storeRegister(parsedata,(arr)=>this.props.history.push(arr)));
+                }
+            })
+        }
     }
     render() {
         return (
-            <div className="container h-100" style={{marginTop:'8rem'}}>
+            <div className="container h-100" style={{marginTop:'4rem',marginBottom:'4rem'}}>
                 {!this.props.isProses?
                 <div className="row h-100 align-items-center justify-content-center">
                     <div className="col-12">
@@ -100,26 +128,50 @@ class Register extends Component {
                                 <div className="form-group" style={{display:'none'}}>
                                     <label htmlFor="id_card">ID Card</label>
                                     <input className="form-control" type="text" id="id_card" name="id_card" value={this.state.id_card} onChange={(e) => this.handleChange(e)} placeholder="Enter ID Card" value="-" required />
+                                    <div className="invalid-feedback"
+                                        style={this.state.error.id_card !== "" ? {display: 'block'} : {display: 'none'}}>
+                                        {this.state.error.id_card}
+                                    </div>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="kd_referral">Refferal</label>
-                                    <input className="form-control" type="text" id="kd_referral" name="kd_referral" value={this.state.kd_referral} onChange={(e) => this.handleChange(e)} placeholder="Enter your Refferal" required />
+                                    <input className="form-control" type="text" id="kd_referral" name="kd_referral" value={this.state.kd_referral} onChange={(e) => this.handleChange(e)} placeholder="Enter your Refferal" required readOnly />
+                                    <div className="invalid-feedback"
+                                        style={this.state.error.kd_referral !== "" ? {display: 'block'} : {display: 'none'}}>
+                                        {this.state.error.kd_referral}
+                                    </div>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="name">Full Name</label>
                                     <input className="form-control" type="text" id="name" name="name" value={this.state.name} onChange={(e) => this.handleChange(e)} placeholder="Enter your Name" required />
+                                    <div className="invalid-feedback"
+                                        style={this.state.error.name !== "" ? {display: 'block'} : {display: 'none'}}>
+                                        {this.state.error.name}
+                                    </div>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="wallet_address">Wallet Address</label>
-                                    <input className="form-control" type="text" id="wallet_address" name="wallet_address" value={this.state.wallet_address} onChange={(e) => this.handleChange(e)} placeholder="Wallet Address" required />
+                                    <input className="form-control" type="text" id="wallet_address" name="wallet_address" value={this.state.wallet_address} onChange={(e) => this.handleChange(e)} placeholder="Enter Wallet Address" required />
+                                    <div className="invalid-feedback"
+                                        style={this.state.error.wallet_address !== "" ? {display: 'block'} : {display: 'none'}}>
+                                        {this.state.error.wallet_address}
+                                    </div>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="email">Email address</label>
                                     <input className="form-control" type="email" id="email" name="email" value={this.state.email} onChange={(e) => this.handleChange(e)} required placeholder="Enter your Email" />
+                                    <div className="invalid-feedback"
+                                        style={this.state.error.email !== "" ? {display: 'block'} : {display: 'none'}}>
+                                        {this.state.error.email}
+                                    </div>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="password">Password</label>
                                     <input className="form-control" type="password" required id="password" name="password" value={this.state.password} onChange={(e) => this.handleChange(e)} placeholder="Enter your Password" />
+                                    <div className="invalid-feedback"
+                                        style={this.state.error.password !== "" ? {display: 'block'} : {display: 'none'}}>
+                                        {this.state.error.password}
+                                    </div>
                                 </div>
                                 <div className="form-group mb-0 mt-15">
                                     <button className="btn btn-primary btn-block" type="submit" onClick={(e)=>this.handleSubmit(e)}>Sign Up</button>
@@ -143,7 +195,7 @@ class Register extends Component {
 }
 
 const mapStateToProps = (state) =>{
-    console.log(state)
+    
     return{
         isProses:state.registerReducer===undefined?false:state.registerReducer.isLoading,
         auth: state.auth

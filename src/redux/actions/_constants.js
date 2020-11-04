@@ -55,12 +55,11 @@ export const REGISTER = {
 /****************
     USERS
 *****************/
-export const USER_LIST = {
-  LOADING: 'SET_USER_LIST_LOADING',
-  SUCCESS: 'SUCCESS_USER_LIST',
-  FAILED: 'FAILED_USER_LIST',
-  DETAIL: 'DETAIL_USER_LIST',
-  EDIT: 'EDIT_USER_LIST'
+export const PROFILE = {
+  LOADING: 'SET_PROFILE_LOADING',
+  SUCCESS: 'SUCCESS_PROFILE',
+  FAILED: 'FAILED_PROFILE',
+  DETAIL: 'SUCCESS_PROFILE_DETAIL',
 }
 
 /****************

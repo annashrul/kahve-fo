@@ -16,19 +16,6 @@ class Invest extends Component {
         this.props.dispatch(FetchCoinType(1,'',999))
         this.props.dispatch(FetchInvestConfig())
     }
-    // componentDidUpdate(prevProps) {
-    //     console.log("gggggggggg",prevProps)
-    //     console.log("gggggggggg2",prevProps.config)
-    //     console.log("gggggggggg3",this.props.config)
-    //     // if (this.props.config !== prevProps.config) {
-    //         if (this.props.config.active_invest === 1) {
-    //             this.props.history.push({
-    //                 pathname: '/invoice',
-    //                 data: this.props.config
-    //             })
-    //         }
-    //     // }
-    // }
     render() {
         return (
             <Layout page="Invest">
@@ -46,7 +33,6 @@ class Invest extends Component {
 }
 
 const mapStateToProps = (state) =>{
-    console.log(state)
     return{
         config:state.investReducer.data_config,
         auth: state.auth

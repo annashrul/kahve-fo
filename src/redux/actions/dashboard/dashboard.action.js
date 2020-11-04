@@ -70,8 +70,8 @@ export const FetchDashboard = (reff) =>
         }).catch(err =>{
             // if (err.message === 'Network Error') {
             //      Swal.fire(
-            //          'Server tidak tersambung!.',
-            //          'Periksa koneksi internet anda.',
+            //          'Server cannot connected!.',
+            //          'Check your internet connection.',
             //          'error'
             //      )
             // }else{
