@@ -8,6 +8,7 @@ import Landing from '../App/Landing/';
 import Withdraw from '../App/Withdraw';
 import Invest from '../App/Invest';
 import Invoice from '../App/Invoice';
+import Register from '../App/Register';
 // import Transfer from '../App/Landing/transfer';
 // import Contact from '../App/Landing/contact-us';
 // import Faq from '../App/Landing/faq';
@@ -17,6 +18,8 @@ const Routes = (
     <div>
         <Switch>
             <Route path="/" exact strict component={Landing} />
+            <Route path="/register/:id" exact strict component={Register} />
+            <Route path="/register" exact strict component={Register} />
 
             <Route path="/withdraw" exact strict component={Withdraw} />
             <Route path="/invest" exact strict component={Invest} />
