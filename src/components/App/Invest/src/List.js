@@ -27,6 +27,7 @@ class List extends Component {
                     <table className="table table-hover table-bordered">
                         <thead className="bg-light">
                         <tr>
+                            <th className="text-black" style={ centerStyle} rowSpan="2">No</th>
                             <th className="text-black" style={ centerStyle} rowSpan="2">Slot Number</th>
                             <th className="text-black" style={ centerStyle} rowSpan="2">Coin</th>
                             <th className="text-black" style={ centerStyle} rowSpan="2">Amount</th>
@@ -43,6 +44,7 @@ class List extends Component {
                                             data.map((v,i)=>{
                                                 return(
                                                     <tr key={i}>
+                                                        <td style={ centerStyle}>{i+1}</td>
                                                         <td style={ centerStyle}>{v.slot_no}</td>
                                                         <td style={ centerStyle}>{v.coin}</td>
                                                         <td style={ leftStyle}>{v.amount}</td>

@@ -84,6 +84,35 @@ export const storeInvest = (data) => {
             })
     }
 }
+export const storeAppove = (id,data) => {
+    return (dispatch) => {
+        dispatch(setLoadingPost(true));
+        const url = HEADERS.URL + `topup/${id}`;
+        axios.put(url, data)
+            .then(function (response) {
+                dispatch(setLoadingPost(false));
+                Swal.fire({
+                    title: 'Upload Success!',
+                    type: 'info',
+                    showCancelButton: false,
+                    showConfirmButton: true
+                }).then((result)=>{
+                    window.location.reload();
+                });
+            })
+            .catch(function (error) {
+                dispatch(setLoadingPost(false));
+                Swal.fire({
+                    title: 'Failed',
+                    type: 'error',
+                    text: error.response.data.msg,
+                });
+                if (error.response) {
+                    
+                }
+            })
+    }
+}
 
 
 //FILTER INVEST REPORT//
