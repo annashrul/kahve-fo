@@ -401,25 +401,10 @@ class SideMenu extends Component {
                     {/* DASHBOARD MODUL START */}
                     <li  className={path==='/'?"active":''}><a href="/"> <i className="fa fa-dashboard" /><span> Dashboard</span></a></li>
                     {/* DASHBOARD MODUL END */}
-                    {/* DASHBOARD MODUL START */}
-                    <li  className={path==='/withdraw'?"active":''}><Link to="/withdraw"> <i className="fa fa-dashboard" /><span> Withdraw</span></Link></li>
-                    <li  className={path==='/transfer'?"active":''}><Link to="/transfer"> <i className="fa fa-dashboard" /><span> Transfer</span></Link></li>
-                    {/* DASHBOARD MODUL END */}
-
-                    {/* MASTERDATA MODUL START */}
-                    <li className={ "treeview" +
-                        (this.state.isMasterdata===true
-                            ?" active menu-open" : "")
-                    } >
-
-                        <a href="!#" onClick={(e) => this.changeMenu(e,'masterdata')}><i className="zmdi zmdi-receipt" /> <span>Master Data</span> <i className="fa fa-angle-right" /></a>
-                        <ul className={"treeview-menu animate__animated" + (this.state.isMasterdata===true ?" animate__bounceInRight " : " animate__fadeOutLeft ") + "animate__faster"} style={{display:this.state.isMasterdata===true
-                        ?"block" : "none"}}>
-                            <li className={path==='/barang'?"active":''}><Link to="/barang" style={{width:'fit-content'}}> <i className="fa fa-list-alt" />Barang</Link></li>
-                            <li className={path==='/brand'?"active":''}><Link to="/brand" style={{width:'fit-content'}}> <i className="fa fa-list-alt" />Brand</Link></li>
-                        </ul>
-                    </li>
-                    {/* MASTERDATA MODUL END */}
+                    
+                    <li  className={path==='/invest'?"active":''}><Link to="/invest"> <i className="fa fa-btc" /><span> Invest</span></Link></li>
+                    <li  className={path==='/withdraw'?"active":''}><Link to="/withdraw"> <i className="fa fa-exchange" /><span> Withdraw</span></Link></li>
+                    <li  className={path==='/transfer'?"active":''}><Link to="/transfer"> <i className="fa fa-send" /><span> Transfer</span></Link></li>
 
                     {/* LOGOUT MODUL START */}
                     <li><a href={null} style={{cursor:'pointer',color:'#a6b6d0'}} onClick={(event)=>this.handleLogout(event)}> <i className="fa fa-chain-broken" /><span> Logout</span></a></li>

@@ -1,0 +1,153 @@
+import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import imgThumb from 'assets/thumb_1.svg';
+import Swal from 'sweetalert2';
+import { storeRegister } from '../../../redux/actions/register/register.action';
+import { Link } from 'react-router-dom';
+import Preloader from 'helper'
+// import Layout from 'components/Layout'
+// import { FetchRegisterConfig, FetchRegisterReport } from '../../../redux/actions/register/register.action';
+// import Form from './src/Form';
+// import List from './src/List';
+// import { FetchCoinType } from '../../../redux/actions/coin/coin.action';
+
+class Register extends Component {
+    constructor(props) {
+        super(props);
+        this.state={
+            id_card:"",
+            kd_referral:this.props.match.params.id,
+            name:"",
+            wallet_address:"",
+            email:"",
+            password:"",
+            error:{
+                id_card:"",
+                kd_refferal:"",
+                name:"",
+                wallet_address:"",
+                email:"",
+                password:"",
+            }
+        }
+        this.handleChange = this.handleChange.bind(this)
+    }
+
+    handleChange = (event) => {
+        let column=event.target.name;
+        let value=event.target.value;
+        this.setState({ [column]: value });
+    }
+    handleSubmit(e){
+        e.preventDefault();
+        let parsedata=[];
+        parsedata = {
+            name:this.state.name,
+            email:this.state.email,
+            password:this.state.password,
+            id_card:"-",
+            selfie:"-",
+            kd_referral:this.state.kd_referral===''?this.props.match.params.id:this.state.kd_referral,
+            wallet_address:this.state.wallet_address,
+        };
+
+        let timerInterval;
+        Swal.fire({
+            title: 'Wait a moment',
+            html: 'is sending data to the server',
+            timer: 1000,
+            timerProgressBar: true,
+            onBeforeOpen: () => {
+                Swal.showLoading()
+                timerInterval = setInterval(() => {
+                    const content = Swal.getContent()
+                    if (content) {
+                        const b = content.querySelector('b')
+                        if (b) {
+                            b.textContent = Swal.getTimerLeft()
+                        }
+                    }
+                }, 100)
+            },
+            onClose: () => {
+                clearInterval(timerInterval)
+            }
+        }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.timer) {
+                this.props.dispatch(storeRegister(parsedata,(arr)=>this.props.history.push(arr)));
+            }
+        })
+    }
+    render() {
+        return (
+            <div className="container h-100" style={{marginTop:'8rem'}}>
+                {!this.props.isProses?
+                <div className="row h-100 align-items-center justify-content-center">
+                    <div className="col-12">
+                    {/* Middle Box */}
+                    <div className="middle-box">
+                        <div className="card">
+                        <div className="card-body p-4">
+                            <div className="row align-items-center">
+                            <div className="col-md-6">
+                                <div className="xs-d-none mb-50-xs break-320-576-none">
+                                <img src={imgThumb} alt />
+                                </div>
+                            </div>
+                            <div className="col-md-6">
+                                <h4 className="font-18 mb-30">Create a free account.</h4>
+                                <form>
+                                <div className="form-group" style={{display:'none'}}>
+                                    <label htmlFor="id_card">ID Card</label>
+                                    <input className="form-control" type="text" id="id_card" name="id_card" value={this.state.id_card} onChange={(e) => this.handleChange(e)} placeholder="Enter ID Card" value="-" required />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="kd_referral">Refferal</label>
+                                    <input className="form-control" type="text" id="kd_referral" name="kd_referral" value={this.state.kd_referral} onChange={(e) => this.handleChange(e)} placeholder="Enter your Refferal" required />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="name">Full Name</label>
+                                    <input className="form-control" type="text" id="name" name="name" value={this.state.name} onChange={(e) => this.handleChange(e)} placeholder="Enter your Name" required />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="wallet_address">Wallet Address</label>
+                                    <input className="form-control" type="text" id="wallet_address" name="wallet_address" value={this.state.wallet_address} onChange={(e) => this.handleChange(e)} placeholder="Wallet Address" required />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="email">Email address</label>
+                                    <input className="form-control" type="email" id="email" name="email" value={this.state.email} onChange={(e) => this.handleChange(e)} required placeholder="Enter your Email" />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="password">Password</label>
+                                    <input className="form-control" type="password" required id="password" name="password" value={this.state.password} onChange={(e) => this.handleChange(e)} placeholder="Enter your Password" />
+                                </div>
+                                <div className="form-group mb-0 mt-15">
+                                    <button className="btn btn-primary btn-block" type="submit" onClick={(e)=>this.handleSubmit(e)}>Sign Up</button>
+                                </div>
+                                <div className="text-center mt-15"><span className="mr-2 font-13 font-weight-bold">Already have an account?</span><Link to={'/'} className="font-13 font-weight-bold" >Sign in</Link></div>
+                                </form>
+                            </div> {/* end card-body */}
+                            </div>
+                            {/* end card */}
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                :
+                <Preloader/>
+                }
+                </div>
+        );
+    }
+}
+
+const mapStateToProps = (state) =>{
+    console.log(state)
+    return{
+        isProses:state.registerReducer===undefined?false:state.registerReducer.isLoading,
+        auth: state.auth
+    }
+}
+
+export default connect(mapStateToProps)(Register);

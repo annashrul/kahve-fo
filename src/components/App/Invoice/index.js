@@ -4,12 +4,14 @@ import Layout from 'components/Layout'
 import Dropzone from 'react-dropzone'
 import Swal from 'sweetalert2';
 import imgUpload from 'assets/upload.png';
+import { storeAppove } from '../../../redux/actions/invest/invest.action';
 
 class Invest extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            confirm:false
+            confirm:false,
+            files:''
         }
         
         this.handleConfirm = this.handleConfirm.bind(this)
@@ -17,7 +19,7 @@ class Invest extends Component {
     getUpload(data,param){
         var reader = new FileReader();
         reader.readAsDataURL(data[0]);
-        if(data[0].name.toString().substring(data[0].name.length - 4) === '.png'){
+        // if(data[0].name.toString().substring(data[0].name.length - 4) === '.png'){
             
              
             reader.onloadstart = () =>
@@ -39,31 +41,45 @@ class Invest extends Component {
             reader.onload = () =>
                 
                  
-            reader.onloadend = () =>
+            reader.onloadend = () => {
                  
-                this.setState({
-                    isLoad:'',
-                    files:reader.result.toString().includes('application/vnd.ms-excel')?reader.result.toString().replace('application/vnd.ms-excel','text/csv'):reader.result.toString(),
-                    table:param
+                // this.setState({
+                //     files:reader.result,
+                // });
+
+                let parsedata = {}
+                parsedata['pict'] = reader.result;
+                Swal.fire({
+                    title: 'Upload?',
+                    type: 'info',
+                    showCancelButton: true,
+                    showConfirmButton: true
+                }).then((result)=>{
+                    if(result.dismiss === 'cancel'){
+                        Swal.close()
+                    } else {
+                        this.props.dispatch(storeAppove(this.props.config.invest_detail.id,parsedata))
+                    }
                 });
-        } else {
-            Swal.fire({
-                title:'Kesalahan',
-                text:'Format File Tidak Diperbolehkan!',
-                icon:'error'
-            })
-        }
-        this.setState({
-            isUpload:param==='close'?'':param
-        })
+            }
+        // } else {
+        //     Swal.fire({
+        //         title:'Kesalahan',
+        //         text:'Format File Tidak Diperbolehkan!',
+        //         icon:'error'
+        //     })
+        // }
+        // this.setState({
+        //     isUpload:param==='close'?'':param
+        // })
     }
     componentDidUpdate() {
-            if (this.props.config.length<=0) {
-                this.props.history.push({
-                    pathname: '/invest',
-                    data: this.props.config
-                })
-            }
+        if (this.props.config.length<=0) {
+            this.props.history.push({
+                pathname: '/invest',
+                data: this.props.config
+            })
+        }
     }
     handleConfirm(e){
         this.setState({
@@ -73,6 +89,7 @@ class Invest extends Component {
     render() {
         console.log("auth",this.props.auth)
         console.log("detail",this.props)
+        console.log("files",this.state.files)
         return (
             <Layout page="Invest">
                 <div className="row">
@@ -125,6 +142,9 @@ class Invest extends Component {
                                     </div>
                                     <br/>
                                     <div className="card p-4 img-thumbnail">
+                                        <div className="text-right" style={{display:this.state.confirm?'':'none'}}>
+                                        <button className="btn btn-circle btn-danger float-right" onClick={(e)=>this.handleConfirm(e)}><i className="fa fa-times"></i></button>
+                                        </div>
                                         <div className="card-body text-center" style={{display:this.state.confirm?'none':''}}>
                                             <h4 className="mb-10 font-24">Information</h4>
                                             <h6 className="mb-30">Immediately transfer an amount of <span className="text-success">{this.props.config.length<=0?'':this.props.config.invest_detail.amount} {this.props.config.length<=0?'':this.props.config.coin}</span> to the wallet address:</h6>
@@ -137,7 +157,7 @@ class Invest extends Component {
                                             {({getRootProps, getInputProps}) => (
                                                 <div className="container text-center" style={{padding: '1rem',cursor: 'pointer'}}>
                                                     <div {...getRootProps()}>
-                                                        <input {...getInputProps()} />
+                                                        <input {...getInputProps()} accept="image/*" />
                                                         <img className="card-img-top img-responsive mb-3" src={imgUpload} alt="" style={{width:'200px',borderRadius: '30px',padding: '2rem', borderStyle: 'dashed'}} />
                                                         <p>Drag 'n' drop some files images here, or click to select files</p>
                                                     </div>

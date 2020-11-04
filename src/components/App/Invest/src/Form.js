@@ -1,14 +1,18 @@
 import React, {Component} from 'react'
-import {storeWd} from 'redux/actions/site.action';
 import Swal from 'sweetalert2';
-import Select from 'react-select';
+import Stepper from 'react-stepper-horizontal';
 import connect from "react-redux/es/connect/connect";
 import { CustomInput } from 'reactstrap';
 import { storeInvest } from '../../../../redux/actions/invest/invest.action';
+import imgUpload from 'assets/upload.png';
+import Dropzone from 'react-dropzone'
 class Form extends Component {
     constructor(props) {
         super(props);
         this.state = { 
+            files: "",
+            confirm: false,
+            isUpload: false,
             amount: "",
             id_slot: "",
             coin_type: "",
@@ -20,12 +24,48 @@ class Form extends Component {
                 id_slot: "",
                 coin_type: "",
             },
-         };
+            steps: [{title: 'Step One'}, {title: 'Step Two'}, {title: 'Step Three'}],
+            currentStep: 0,
+        };
+        this.onClickNext = this.onClickNext.bind(this);
          this.handleChange = this.handleChange.bind(this)
          this.handleSlider = this.handleSlider.bind(this)
-         this.handleAgree = this.handleAgree.bind(this)
+         this.getUpload = this.getUpload.bind(this)
          this.handleSubmit = this.handleSubmit.bind(this)
          this.HandleChangeCoin = this.HandleChangeCoin.bind(this)
+    }
+    
+    getUpload(data,param){
+        var reader = new FileReader();
+        reader.readAsDataURL(data[0]);
+        reader.onloadstart = () =>
+            this.setState({
+                isLoad:param
+            });
+        reader.onabort = () =>
+            Swal.fire({
+                title:'Error',
+                text:'File Canceled!',
+                icon:'error'
+            });
+        reader.onerror = () =>
+            Swal.fire({
+                title:'Error',
+                text:'File Error!',
+                icon:'error'
+            });
+        reader.onload = () =>
+            
+                
+        reader.onloadend = () => {
+            this.setState({files:reader.result, isUpload:true})
+        }
+    }
+
+    handleConfirm(e){
+        this.setState({
+            confirm:!this.state.confirm
+        })
     }
     componentWillReceiveProps = (nextProps) => {
         this.setState({config:nextProps.config})
@@ -48,16 +88,7 @@ class Form extends Component {
             }
         }
     }
-    // componentDidUpdate(prevProps) {
-    //     console.log("gggggggggg",prevProps)
-    //     console.log("gggggggggg2",prevProps.coin)
-    //     console.log("gggggggggg3",this.props.coin)
-    //     if (this.props.coin !== prevProps.coin) {
-    //         this.props.dispatch(FetchInvestConfig(this.props.coin.data[0].symbol))
-    //     }
-    //   }
     HandleChangeCoin(cn){
-        // this.props.dispatch(FetchInvestConfig(String(cn.label).split('|')[1]))
         let err = Object.assign({}, this.state.error, {
             coin_type: ""
         });
@@ -75,10 +106,6 @@ class Form extends Component {
     handleSlider = (e) => {
         console.log("sliderrrrrrrrrrr",e)
         this.setState({ amount: e.target.value });
-    }
-    handleAgree = (e) => {
-        e.preventDefault();
-        this.setState({ aggre: !this.state.aggre });
     }
     HandleReset(e){
         e.preventDefault();
@@ -102,6 +129,7 @@ class Form extends Component {
         parsedata = {
             amount: this.state.amount,
             id_slot: this.state.config.slot.id,
+            pict: this.state.files,
             coin_type: this.state.config.coin.id===undefined?"c2f9fc02-5193-466e-acd8-8d69069d3fbb":this.state.config.coin.id,
         };
 
@@ -133,83 +161,154 @@ class Form extends Component {
         })
     }
 
+    onClickNext() {
+        const { steps, currentStep } = this.state;
+        if(currentStep===0){
+            this.setState({
+                currentStep: currentStep + 1,
+            });
+        } 
+        else if(currentStep>0&&this.state.amount!==''){
+            this.setState({
+                currentStep: currentStep + 1,
+            });
+        }
+        else if(this.state.amount===''){
+            let err = Object.assign({}, this.state.error, {
+                amount: "Amount can't be null"
+            });
+            this.setState({
+                error:err
+            });
+        }
+    }
     render(){
-        console.log("ccccccccc",this.state.coin_type)
-        console.log("ddddddddddddd",this.props.config)
+        const { steps, currentStep } = this.state;
+        console.log("aaaaaaaaaa",this.state.files)
         return(
             <div className="card">
                 <div className="card-header bg-transparent">
-                    <h3>Invest Available for Slot Number #{this.props.config.slot===undefined?0:this.props.config.slot.slot_no}</h3>
+                    <h3 style={{display:this.props.config.active_invest===1?'none':''}}>Invest Available for Slot Number #{this.props.config.slot===undefined?0:this.props.config.slot.slot_no}</h3>
+                    <h3 style={{display:this.props.config.active_invest===1?'':'none'}}>This form can be opened after your transaction is approved! </h3>
                 </div>
-                <div className="card-body">
-                    <div className="row">
-                        <div className="col-md-12" style={{display:this.state.aggre?'none':''}}>
-                            <div className="ribbon-wrapper card">
-                                <div className="ribbon ribbon-warning">IMPORTANT!</div>
-                                <p className="ribbon-content">Pay attention to the following 5 points so that investment can be processed immediately:</p>
-                                <ul>
-                                    <li>* Prepare proof of your transaction, eg: photos or screenshots</li>
-                                    <li>* Make sure you transfer to the correct address</li>
-                                    <li>* Minimum Invest {this.props.config.min +" "+ this.props.config.coin}</li>
-                                    <li>* Maximum Invest {this.props.config.max +" "+ this.props.config.coin}</li>
-                                    <li>* We are not responsible for your mistakes if you write the wrong transfer address</li>
-                                </ul>
-                                <div class="form-group">
-                                    <label>&nbsp;</label>
-                                    <button type="button" className="btn btn-warning btn-lg btn-block text-light" onClick={(e) => this.handleAgree(e)}>I agree, continue investment</button>
+                {
+                    this.props.config.active_invest===1?
+                    '':
+                    <div className="card-body">
+                        <div className="row">
+                            <div className="col-md-12 mb-4">
+                                <Stepper steps={ steps } activeStep={ currentStep } />
+                            </div>
+                            <div className="col-md-12" style={{display:currentStep===0?'':'none'}}>
+                                <div className="ribbon-wrapper card">
+                                    <div className="ribbon ribbon-warning">IMPORTANT!</div>
+                                    <p className="ribbon-content">Pay attention to the following 5 points so that investment can be processed immediately:</p>
+                                    <div class="alert alert-danger" role="alert">
+                                        <ul>
+                                            <li style={{listStyle:'outside'}}>Before you proceed to the next step, make sure you have sent BTC coins on <a href="https://indodax.com" target="_blank" className="font-15 text-light">Indodax <i class="zmdi zmdi-open-in-new"></i></a></li>
+                                            <li style={{listStyle:'outside'}}>Make sure you transfer to the this address: <br/>{this.props.config.invest_detail===undefined?'':this.props.config.invest_detail.wallet_address}</li>
+                                            <li style={{listStyle:'outside'}}>Minimum Invest {this.props.config.min +" "+ this.props.config.coin}</li>
+                                            <li style={{listStyle:'outside'}}>Maximum Invest {this.props.config.max +" "+ this.props.config.coin}</li>
+                                            <li style={{listStyle:'outside'}}>We are not responsible for your mistakes if you write the wrong transfer address</li>
+                                        </ul>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="button" className="btn btn-warning btn-lg btn-block text-light" onClick={ this.onClickNext }>I agree, continue investment</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        
-                        <div className="col-md-12" style={{display:this.state.aggre?'':'none'}}>
-                            <div className="card mt-3">
-                                <div className="card-body">
-                                    <div className="col-md-12">
-                                        <div className="form-group">
-                                            <label className="control-label font-12">
-                                                Amount
-                                            </label>
-                                            <CustomInput type="range" min={this.props.config.min} max={this.props.config.max} step="0.000000000000000001" value={this.state.amount} onChange={(e)=>this.handleSlider(e)} />
-                                            <div className="input-group">
-                                                <input
-                                                    type="number"
-                                                    min={this.props.config.min}
-                                                    max={this.props.config.max}
-                                                    step="0.0001"
-                                                    readOnly={false}
-                                                    className="form-control"
-                                                    id="amount"
-                                                    name="amount"
-                                                    onChange={(e) => this.handleChange(e)}
-                                                    value={this.state.amount}
-                                                />
-                                            <div className="input-group-append">
-                                                    <span className="input-group-text" id="basic-addon1">{this.props.config.coin}</span>
+                            
+                            <div className="col-md-12" style={{display:currentStep===1?'':'none'}}>
+                                <div className="card mt-3">
+                                    <div className="card-body">
+                                        <div className="col-md-12">
+                                            <div className="form-group">
+                                                <label className="control-label font-12">
+                                                    Amount
+                                                </label>
+                                                <div className="d-flex align-items-center justify-content-between">
+                                                    <small>{this.props.config.min}</small>
+                                                    <small>{this.props.config.max}</small>
+                                                </div>
+                                                <CustomInput type="range" min={this.props.config.min} max={this.props.config.max} step="0.00000001" value={this.state.amount} onChange={(e)=>this.handleSlider(e)} />
+                                                <div className="input-group">
+                                                    <input
+                                                        type="number"
+                                                        min={this.props.config.min}
+                                                        max={this.props.config.max}
+                                                        step="0.00000001"
+                                                        readOnly={false}
+                                                        className="form-control"
+                                                        id="amount"
+                                                        name="amount"
+                                                        onChange={(e) => this.handleChange(e)}
+                                                        value={this.state.amount}
+                                                    />
+                                                <div className="input-group-append">
+                                                        <span className="input-group-text" id="basic-addon1">{this.props.config.coin}</span>
+                                                    </div>
+                                                </div>
+                                                <div className="invalid-feedback"
+                                                        style={this.state.error.amount !== "" ? {display: 'block'} : {display: 'none'}}>
+                                                    {this.state.error.amount}
+                                                </div>
+                                                <div className="invalid-feedback"
+                                                        style={this.state.amount < this.props.config.min || this.state.amount > this.props.config.max ? {display: 'block'} : {display: 'none'}}>
+                                                    Nominal not included in the range
                                                 </div>
                                             </div>
-                                            <div className="invalid-feedback"
-                                                    style={this.state.error.amount !== "" ? {display: 'block'} : {display: 'none'}}>
-                                                {this.state.error.amount}
-                                            </div>
-                                            <div className="invalid-feedback"
-                                                    style={this.state.amount < this.props.config.min || this.state.amount > this.props.config.max ? {display: 'block'} : {display: 'none'}}>
-                                                Nominal not included in the range
+                                        </div>
+                                    </div>
+                                    <div className="card-footer bg-transparent">
+                                        <div className="row">
+                                            <div className="col-md-6 offset-6">
+                                                <div class="form-group">
+                                                    <button type="button" className="btn btn-info btn-block" onClick={(e) => this.onClickNext(e)}>NEXT</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="card-footer bg-transparent">
-                                    <div className="row">
-                                        <div className="col-md-6">
-                                            <div class="form-group">
-                                                <label>&nbsp;</label>
-                                                <button type="button" className="btn btn-primary btn-block" onClick={(e) => this.handleSubmit(e)}>PROCESS</button>
+                            </div>
+                            <div className="col-md-12" style={{display:currentStep===2?'':'none'}}>
+                                <div className="card mt-3">
+                                    <div className="card-body">
+                                        {/* <div className="col-md-12"> */}
+                                            <div className="card p-4 img-thumbnail">
+                                                <div className="text-center" style={{display:this.state.confirm?'none':''}}>
+                                                    <h4 className="mb-10 font-24">Information</h4>
+                                                    <h6 className="mb-30">Immediately transfer from <a href="https://indodax.com" target="_blank" className="font-15 text-info">Indodax <i class="zmdi zmdi-open-in-new"></i></a> an amount of <span className="text-success">{this.props.config.length<=0?'':this.props.config.invest_detail.amount} {this.props.config.length<=0?'':this.props.config.coin}</span> to the wallet address:</h6>
+                                                    <h2>{this.props.config.length<=0?'':this.props.config.invest_detail.wallet_address}</h2>
+                                                    <br/>
+                                                    <button className="btn btn-lg btn-info" onClick={(e)=>this.handleConfirm(e)}>CONFIRM</button>
+                                                </div>
+                                                <div className="text-center" style={{display:this.state.confirm?'':'none'}}>
+                                                    <Dropzone onDrop={acceptedFiles => this.getUpload(acceptedFiles,'barang')}>
+                                                    {({getRootProps, getInputProps}) => (
+                                                        <div className="container text-center" style={{padding: '0.5rem',cursor: 'pointer'}}>
+                                                            <div {...getRootProps()}>
+                                                                <input {...getInputProps()} accept="image/*" />
+                                                                <img className="card-img-top img-responsive mb-3" src={this.state.files===''?imgUpload:this.state.files} alt="" style={{width:'200px',borderRadius: '30px',padding: '2rem', borderStyle: 'dashed'}} />
+                                                                <p>Drag 'n' drop some files images here, or click to select files</p>
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                    </Dropzone>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <div class="form-group">
-                                                <label>&nbsp;</label>
-                                                <button type="button" className="btn btn-danger btn-block" onClick={(e) => this.HandleReset(e)}>RESET</button>
+                                        {/* </div> */}
+                                    </div>
+                                    <div className="card-footer bg-transparent">
+                                        <div className="row">
+                                            <div className="col-md-6">
+                                                <div class="form-group">
+                                                    <button type="button" className="btn btn-danger btn-block" onClick={(e) => this.HandleReset(e)}>RESET</button>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-6">
+                                                <div class="form-group">
+                                                    <button type="button" className="btn btn-primary btn-block" onClick={(e) => this.handleSubmit(e)} disabled={!this.state.isUpload}>PROCESS</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -217,9 +316,9 @@ class Form extends Component {
                             </div>
                         </div>
                     </div>
-                </div> {/* end col */}
-            </div>
             
+                }
+            </div>
         )
     }
 }
