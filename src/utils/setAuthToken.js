@@ -11,6 +11,9 @@ const setAuthToken = token =>{
         axios.defaults.headers.common['Content-Type'] = `application/x-www-form-urlencoded`;
     }else{
         // delete auth header
+        axios.defaults.headers.common['identities'] = `${HEADERS.USERNAME}`;
+        axios.defaults.headers.common['sercet-id'] = `${HEADERS.PASSWORD}`;
+        axios.defaults.headers.common['connectifity-agent'] = `apps`;
         delete axios.defaults.headers.common['Authorization'];
     }
 }

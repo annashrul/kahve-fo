@@ -66,6 +66,68 @@ export const loginUser = (userData) =>
             
         });
     }
+
+export const confirmEmail = (registid) =>
+    async dispatch => {
+        destroy('sess');
+        Swal.fire({
+            title: 'Please Wait..',
+            html: 'Verifying your account.',
+            onBeforeOpen: () => {
+                Swal.showLoading()
+            },
+            onClose: () => {}
+        })
+
+        axios.post(HEADERS.URL + 'auth/confirm/'+registid, {})
+            .then(res => {
+                setTimeout(
+                    function () {
+                        Swal.close()
+                        // save token to localStorage
+                        Swal.fire(
+                            '.',
+                            '',
+                            'success'
+                        )
+
+                        Swal.fire({
+                            title: 'Your account has been verified!',
+                            text: "Please login to continue using kahve.",
+                            icon: 'success',
+                            showCancelButton: false,
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: 'Okay!'
+                        }).then((result) => {
+                            if (result.value) {
+                                window.location.href = "/";
+                            }
+                        })
+                    }, 800)
+
+            }).catch(err => {
+                Swal.close()
+                if (err.message === 'Network Error') {
+                    Swal.fire(
+                        'Server tidak tersambung!.',
+                        'Periksa koneksi internet anda.',
+                        'error'
+                    )
+                } else {
+                    Swal.fire(
+                        err.response === undefined ? "something when wrong!" : err.response.data.msg,
+                        '',
+                        'error'
+                    )
+                    dispatch({
+                        type: AUTH.GET_ERRORS,
+                        payload: err.response === undefined ? "something when wrong!" : err.response.data.msg
+                    })
+
+                }
+
+            });
+    }
 // set user data
 export const setCurrentUser = decoded =>{
     return{
