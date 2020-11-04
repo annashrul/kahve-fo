@@ -88,9 +88,9 @@ class Form extends Component {
         e.preventDefault();
         let parsedata=[];
         parsedata = {
-            amount: this.state.config.length<=0?0:this.state.config.active_balance.total,
-            id_wallet: this.state.config.length<=0?'-':this.state.config.wallet.address,
-            coin_type: this.state.coin_type.value,
+            amount: this.state.config.active_balance === undefined ? 0 : this.state.config.active_balance,
+            id_wallet: this.state.config.wallet.address === undefined ? '-' : this.state.config.wallet.address,
+            coin_type: this.state.coin_type.value === undefined ? 'BTC' : this.state.coin_type.value,
         };
 
         let timerInterval;
@@ -150,9 +150,9 @@ class Form extends Component {
                             </div>
                             <div className="row">
                                 <div className="col-6">Total Active Balance</div>
-                                <div className="col-6">{this.state.config.length<=0?0:this.state.config.active_balance.total}</div>
+                                <div className="col-6">{this.state.config.active_balance===undefined?0:this.state.config.active_balance}</div>
                                 <div className="col-6">Number of payments</div>
-                                <div className="col-6">xX</div>
+                                <div className="col-6">{this.state.config.num_trx===undefined?0:this.state.config.num_trx}</div>
                             </div>
                         </div>
                         

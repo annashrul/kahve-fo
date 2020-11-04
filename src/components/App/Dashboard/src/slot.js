@@ -97,54 +97,55 @@ class Charts extends Component {
   render(){
     let active=0;
         return(
-             <div className="col-md-12 box-margin">
+             <div className="col-md-12 col-sm-12 box-margin">
                 <div className="card">
-                    <div className="card-body">
+                    <div className="card-body" style={{overflowX: 'auto'}}>
                         <h4 className="card-title">{this.props.title}</h4>
+                        <div className="table-responsive"> 
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Invest</th>
+                                <th scope="col">Contract</th>
+                                <th scope="col">Daily Earning</th>
+                                <th scope="col">Start Date</th>
+                                <th scope="col">Time Left</th>
+                                <th scope="col">Status</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {
+                                this.props.data!==undefined?
+                                this.props.data.map((item,index)=>{
+                                  const label=item.status===1?<span class="badge badge-success">Active</span>:(item.status===2?<span class="149	badge badge-danger">Done</span>:<span class="badge badge-secondary">Not Active</span>)
+                                  if(item.status===1) active=item.slot_no
+                                  const contract = item.contract * this.props.number_of_month;
+                                  return (
+                                    <tr style={item.status==0?{background:'#eeeeee'}:{}}>
+                                      <th scope="row">Slot {item.slot_no}</th>
+                                      <td>{item.amount===null?'-':parseFloat(item.amount).toFixed(8)} <small>{item.symbol===null?'-':"("+item.symbol+")"}</small></td>
+                                      <td>{item.contract===null?'-':contract+' Days'} </td>
+                                      <td>{item.daily_earning===null?'-':parseFloat(item.daily_earning).toFixed(8)} <small>{item.symbol===null?'-':"("+item.symbol+")"}</small></td>
+                                      <td>{item.start_date===null?'-':moment(item.start_date).format('Y-M-D HH:mm:ss')}</td>
+                                      <td>{
+                                        this.state.date[index]!==undefined?
+                                        this.addLeadingZeros(this.state.date[index].days)+" D "+
+                                        this.addLeadingZeros(this.state.date[index].hours)+" H "+
+                                        this.addLeadingZeros(this.state.date[index].min)+" M "+
+                                        this.addLeadingZeros(this.state.date[index].sec)+" S":'-'
+                                      }</td>
+                                      <td>{label} {item.status===0 && active+1===item.slot_no?<a href="/invest" class="badge badge-warning">Invest</a>:""}</td>
 
-                        <table class="table">
-                          <thead>
-                            <tr>
-                              <th scope="col">#</th>
-                              <th scope="col">Invest</th>
-                              <th scope="col">Contract</th>
-                              <th scope="col">Daily Earning</th>
-                              <th scope="col">Start Date</th>
-                              <th scope="col">Time Left</th>
-                              <th scope="col">Status</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {
-                              this.props.data!==undefined?
-                              this.props.data.map((item,index)=>{
-                                const label=item.status===1?<span class="badge badge-success">Active</span>:(item.status===2?<span class="149	badge badge-danger">Done</span>:<span class="badge badge-secondary">Not Active</span>)
-                                if(item.status===1) active=item.slot_no
-                                const contract = item.contract * this.props.number_of_month;
-                                return (
-                                  <tr style={item.status==0?{background:'#eeeeee'}:{}}>
-                                    <th scope="row">Slot {item.slot_no}</th>
-                                    <td>{item.amount===null?'-':parseFloat(item.amount).toFixed(8)} <small>{item.symbol===null?'-':"("+item.symbol+")"}</small></td>
-                                    <td>{item.contract===null?'-':contract+' Days'} </td>
-                                    <td>{item.daily_earning===null?'-':parseFloat(item.daily_earning).toFixed(8)} <small>{item.symbol===null?'-':"("+item.symbol+")"}</small></td>
-                                    <td>{item.start_date===null?'-':moment(item.start_date).format('Y-M-D HH:mm:ss')}</td>
-                                    <td>{
-                                      this.state.date[index]!==undefined?
-                                      this.addLeadingZeros(this.state.date[index].days)+" D "+
-                                      this.addLeadingZeros(this.state.date[index].hours)+" H "+
-                                      this.addLeadingZeros(this.state.date[index].min)+" M "+
-                                      this.addLeadingZeros(this.state.date[index].sec)+" S":'-'
-                                    }</td>
-                                    <td>{label} {item.status===0 && active+1===item.slot_no?<a href="#" class="badge badge-warning">Invest</a>:""}</td>
-
-                                  </tr>
-                                )
-                              }):""
-                            }
-                            
-                          </tbody>
-                        </table>
+                                    </tr>
+                                  )
+                                }):""
+                              }
+                              
+                            </tbody>
+                          </table>
                             {/* <td>{this.state.miner[index]!==undefined?this.state.miner[index].balance:""}</td> */}
+                    </div>
                     </div>
                 </div>
             </div>
