@@ -8,6 +8,7 @@ import Cards from './src/Cards'
 import Slot from './src/slot'
 import Info from './src/Info'
 import Box from './src/box'
+import Simulator from './src/simulator'
 // const socket = socketIOClient(HEADERS.URL);
 
 class Dashboard extends Component {
@@ -116,6 +117,9 @@ class Dashboard extends Component {
                 <div className="row">
                     <Box title="5 Last Withdraw" isWd={true} data={this.state.recent_wd}/>
                     <Box title="Referral" isWd={false} data={this.state.referral_user}/>
+                </div>
+                <div className="row">
+                    <Simulator title="Simualate mining" />
                 </div>
                 
         </Layout>

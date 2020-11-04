@@ -399,7 +399,7 @@ class SideMenu extends Component {
             <nav>
                 <ul className="sidebar-menu" data-widget="tree">
                     {/* DASHBOARD MODUL START */}
-                    <li  className={path==='/'?"active":''}><Link to="/"> <i className="fa fa-dashboard" /><span> Dashboard</span></Link></li>
+                    <li  className={path==='/'?"active":''}><a href="/"> <i className="fa fa-dashboard" /><span> Dashboard</span></a></li>
                     {/* DASHBOARD MODUL END */}
                     
                     <li  className={path==='/invest'?"active":''}><Link to="/invest"> <i className="fa fa-btc" /><span> Invest</span></Link></li>

@@ -37,7 +37,7 @@ class Cards extends Component {
                         <h2 style={{paddingLeft:5}} className="font-20">{this.props.data}</h2>
                     )
         return(
-            <div className="col-md-6 col-xl-3 box-margin">
+            <div className="col-md-6 col-xl-3 col-sm-12 box-margin">
                 <div className="card">
                     <div className="card-header bg-transparent border-bottom-0">{this.props.title}</div>
                     <div className="card-body">

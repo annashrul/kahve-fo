@@ -3,7 +3,7 @@ import moment from 'moment'
 class Charts extends Component {
   render(){
         return(
-             <div className="col-md-6 box-margin">
+             <div className="col-md-6 col-sm-6 box-margin">
                 <div className="card">
                     <div className="card-body" >
                         <h4 className="card-title">{this.props.title}</h4>
