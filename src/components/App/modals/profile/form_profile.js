@@ -106,19 +106,15 @@ class ModalProfile extends Component{
             email:this.state.email,
             password:this.state.password
         };
-        // let err = this.state.error;
-        // if(parsedata['name']===''||parsedata['name']===undefined){
-        //     err = Object.assign({}, err, {name:"Name cannot be null"});
-        //     this.setState({error: err});
-        // }
-        // else if(parsedata['email']===''||parsedata['email']===undefined){
-        //     err = Object.assign({}, err, {email:"Email cannot be null"});
-        //     this.setState({error: err});
-        // }
-        // else if(parsedata['password']===''||parsedata['password']===undefined){
-        //     err = Object.assign({}, err, {password:"Password cannot be null"});
-        //     this.setState({error: err});
-        // }
+        if(parsedata['name']===''||parsedata['name']===undefined){
+            delete parsedata['name'];
+        }
+        if(parsedata['email']===''||parsedata['email']===undefined){
+            delete parsedata['email'];
+        }
+        if(parsedata['password']===''||parsedata['password']===undefined){
+            delete parsedata['password'];
+        }
         // else{
             let timerInterval;
             Swal.fire({

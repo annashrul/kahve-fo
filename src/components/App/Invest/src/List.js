@@ -11,8 +11,9 @@ class List extends Component {
         // localStorage.setItem("page_piutang_report",pageNumber);
         this.props.dispatch(FetchInvestReport(pageNumber))
     }
-    render(){const centerStyle = {verticalAlign: "middle", textAlign: "center"};
-    const leftStyle = {verticalAlign: "middle", textAlign: "left"};
+    render(){
+        const centerStyle = {verticalAlign: "middle", textAlign: "center"};
+        const leftStyle = {verticalAlign: "middle", textAlign: "left"};
     // const rightStyle = {verticalAlign: "middle", textAlign: "right",whiteSpace: "nowrap"};
     const {
         per_page,

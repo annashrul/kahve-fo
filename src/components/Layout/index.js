@@ -59,6 +59,7 @@ class Layout extends Component {
     render() {
         const rawtime = parseInt(this.getTimeout(), 10);
         const timedout = rawtime === 0 ? 86400000 * 2 : rawtime;
+
         return (
             <Idle
                 timeout={timedout}
@@ -72,7 +73,10 @@ class Layout extends Component {
                             <div className="ecaps-sidemenu-area" onMouseEnter={this.mouseEnterHandle} onMouseLeave={this.mouseOutHandle}>
                                 {/* Desktop Logo */}
                                 <div className="ecaps-logo">
-                                    <Link to="/" style={{backgroundColor:'#242939'}}><img className="desktop-logo" src={this.props.auth.user.logo} onError={(e)=>{e.target.onerror = null; e.target.src=`${Default}`}}  alt="Desktop Logo" style={{maxHeight:'50px'}} /> <img className="small-logo" src={this.props.auth.user.fav_icon} onError={(e)=>{e.target.onerror = null; e.target.src=`${Default}`}} alt="Mobile Logo" /></Link>
+                                    <Link to="/" style={{backgroundColor:'#242939'}}>
+                                        <img className="desktop-logo" src={this.props.auth.user.logo===undefined?localStorage.getItem("logos"):this.props.auth.user.logo} onError={(e)=>{e.target.onerror = null; e.target.src=`${Default}`}}  alt="Desktop Logo" style={{maxHeight:'50px'}} />
+                                        <img className="small-logo" src={this.props.auth.user.logo===undefined?localStorage.getItem("logos"):this.props.auth.user.logo} onError={(e)=>{e.target.onerror = null; e.target.src=`${Default}`}} alt="Mobile Logo" />
+                                    </Link>
                                 </div>
                                 {/* Side Nav */}
                                 <div className="slimScrollDiv" style={{position: "relative", width: "auto", height: "100%"}}>

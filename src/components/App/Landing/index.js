@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import BgAuth from "assets/logo.png"
-import imgThumb from 'assets/thumb_1.svg';
+import imgThumb from 'assets/kahve.png';
 // import './login.css'
 import {loginUser} from 'redux/actions/authActions';
 import Swal from 'sweetalert2'
@@ -36,12 +36,13 @@ class Login extends Component {
     }
 
     initFetch(check){
-        fetch(HEADERS.URL + `site/logo`)
+        fetch(HEADERS.URL + `site/get`)
         .then(res => res.json())
         .then(
             (data) => {
                 localStorage.setItem("logos",data.result.logo)
-                localStorage.setItem("site_title", data.result.title)
+                localStorage.setItem("site_title", data.result.site_name)
+                localStorage.setItem("site_url", data.result.site_url)
                 document.title = `${data.result.title}`;
                 this.setState({
                     logo: data.result.logo,

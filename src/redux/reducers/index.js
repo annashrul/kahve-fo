@@ -6,6 +6,7 @@ import errorsReducer from './errorsReducer';
 import {siteReducer} from './site.reducer';
 import {withdrawReducer} from './withdraw/withdraw.reducer';
 import {investReducer} from './invest/invest.reducer';
+import {transactionReducer} from './transaction/transaction.reducer';
 import {coinReducer} from './coin/coin.reducer';
 import {profileReducer} from './profile/profile.reducer';
 
@@ -16,6 +17,7 @@ export default combineReducers({
     siteReducer,
     withdrawReducer,
     investReducer,
+    transactionReducer,
     coinReducer,
     profileReducer,
 

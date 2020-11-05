@@ -118,6 +118,16 @@ export const WITHDRAW = {
 }
 
 /****************
+ TRANSACTION
+ *****************/
+export const TRANSACTION = {
+  LOADING: 'SET_TRANSACTION_LOADING',
+  FAILED: 'SET_TRANSACTION_FAILED',
+  SUCCESS_REPORT: 'SET_TRANSACTION_SUCCESS_REPORT',
+
+}
+
+/****************
  INVEST
  *****************/
 export const INVEST = {

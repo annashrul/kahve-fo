@@ -10,6 +10,7 @@ import Invest from '../App/Invest';
 import Invoice from '../App/Invoice';
 import Register from '../App/Register';
 import Profile from '../App/Profile';
+import History from '../App/History/transaction';
 // import Transfer from '../App/Landing/transfer';
 // import Contact from '../App/Landing/contact-us';
 // import Faq from '../App/Landing/faq';
@@ -26,6 +27,7 @@ const Routes = (
 
             <Route path="/withdraw" exact strict component={Withdraw} />
             <Route path="/invest" exact strict component={Invest} />
+            <Route path="/history" exact strict component={History} />
             <Route path="/invoice" exact strict component={Invoice} />
             {/* <Route path="/transfer" exact strict component={Transfer} /> */}
             {/* <Route path="/contact" exact strict component={Contact} /> */}

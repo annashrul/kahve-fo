@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import imgThumb from 'assets/thumb_1.svg';
+import imgThumb from 'assets/kahve.png';
 import Swal from 'sweetalert2';
 import { storeRegister } from '../../../redux/actions/register/register.action';
 import { Link } from 'react-router-dom';
