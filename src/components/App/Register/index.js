@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import imgThumb from 'assets/thumb_1.svg';
+import imgThumb from 'assets/kahve.png';
 import Swal from 'sweetalert2';
 import { storeRegister } from '../../../redux/actions/register/register.action';
 import { Link } from 'react-router-dom';
@@ -114,7 +114,7 @@ class Register extends Component {
                             <div className="row align-items-center">
                             <div className="col-md-6">
                                 <div className="xs-d-none mb-50-xs break-320-576-none">
-                                <img src={imgThumb} alt />
+                                <img src={imgThumb} alt="kahve" />
                                 </div>
                             </div>
                             <div className="col-md-6">
@@ -122,7 +122,7 @@ class Register extends Component {
                                 <form>
                                 <div className="form-group" style={{display:'none'}}>
                                     <label htmlFor="id_card">ID Card</label>
-                                    <input className="form-control" type="text" id="id_card" name="id_card" value={this.state.id_card} onChange={(e) => this.handleChange(e)} placeholder="Enter ID Card" value="-" required />
+                                    <input className="form-control" type="text" id="id_card" name="id_card" value={this.state.id_card} onChange={(e) => this.handleChange(e)} placeholder="Enter ID Card" required />
                                     <div className="invalid-feedback"
                                         style={this.state.error.id_card !== "" ? {display: 'block'} : {display: 'none'}}>
                                         {this.state.error.id_card}

@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import moment from 'moment'
 class Charts extends Component {
   render(){
         return(
@@ -49,7 +48,7 @@ class Charts extends Component {
                                     {
                                       this.props.data !== undefined ?
                                         this.props.data.map(item=>{
-                                          const label=item.status===1?<span class="badge badge-success">Paid</span>:(item.status===2?<span class="149	badge badge-danger">Cancel</span>:<span class="badge badge-secondary">Pending Payment</span>)
+                                          // const label=item.status===1?<span class="badge badge-success">Paid</span>:(item.status===2?<span class="149	badge badge-danger">Cancel</span>:<span class="badge badge-secondary">Pending Payment</span>)
 
                                           return(
                                             <tr>

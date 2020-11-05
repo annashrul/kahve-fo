@@ -6,6 +6,17 @@ import { CustomInput } from 'reactstrap';
 import { storeInvest } from '../../../../redux/actions/invest/invest.action';
 import imgUpload from 'assets/upload.png';
 import Dropzone from 'react-dropzone'
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 1000,
+    timerProgressBar: true,
+    onOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+})
 class Form extends Component {
     constructor(props) {
         super(props);
@@ -101,11 +112,35 @@ class Form extends Component {
     handleChange = (event) => {
         let column=event.target.name;
         let value=event.target.value;
+        if (column === 'amount'){
+            if(value>this.props.config.max) value=this.props.config.max;
+            if(value===''){
+                value=0;
+                let err = Object.assign({}, this.state.error, {
+                    amount: "Wrong Amount!"
+                });
+                this.setState({
+                    error: err
+                })
+            } else {
+                let err = Object.assign({}, this.state.error, {
+                    amount: ""
+                });
+                this.setState({
+                    error: err
+                })
+            }
+        }
         this.setState({ [column]: value });
     }
     handleSlider = (e) => {
-        
-        this.setState({ amount: e.target.value });
+        let err = Object.assign({}, this.state.error, {
+            amount: ""
+        });
+        this.setState({ 
+            amount: e.target.value,
+            error:err
+        });
     }
     HandleReset(e){
         e.preventDefault();
@@ -162,7 +197,9 @@ class Form extends Component {
     }
 
     onClickNext() {
-        const { steps, currentStep } = this.state;
+        const { 
+            // steps,
+            currentStep } = this.state;
         if(currentStep===0){
             this.setState({
                 currentStep: currentStep + 1,
@@ -204,8 +241,11 @@ class Form extends Component {
                                     <div className="ribbon ribbon-warning">IMPORTANT!</div>
                                     <div class="alert alert-danger" role="alert">
                                         <ul>
-                                            <li style={{listStyle:'outside'}}>Before you confirm your investment on this website, please transfer / send bitcoin via  <a href="https://indodax.com" target="_blank" className="font-15 text-light">Indodax <i class="zmdi zmdi-open-in-new"></i></a> to the wallet id below :</li>
-                                            <li className="text-center"><h5 className="text-light">{this.props.config.invest_detail===undefined?'':this.props.config.invest_detail.wallet_address}</h5></li>
+                                            <li style={{listStyle:'outside'}}>Before you confirm your investment on this website, please transfer / send bitcoin via  <a href="https://indodax.com" target="_blank" rel="noopener noreferrer" className="font-15 text-light">Indodax <i class="zmdi zmdi-open-in-new"></i></a> to the wallet id below :</li>
+                                            <li className="text-center">
+                                                {/* <h5 className="text-light">{this.props.config.invest_detail===undefined?'':this.props.config.invest_detail.wallet_address}</h5> */}
+                                                <a href="!#" className=" text-light font-20" onClick={(e) => {e.preventDefault();navigator.clipboard.writeText(this.props.config.invest_detail===undefined?'':this.props.config.invest_detail.wallet_address);Toast.fire({icon: 'success',title: `Wallet ID has been copied.`})}} style={{wordBreak:"break-all"}} data-toggle="tooltip" data-placement="top" title="Click to copy">{this.props.config.invest_detail===undefined?'':this.props.config.invest_detail.wallet_address} <i class="zmdi zmdi-copy"></i></a><br/>
+                                                </li>
                                             <li style={{listStyle:'outside'}}>Minimum Invest {this.props.config.min +" "+ this.props.config.coin}</li>
                                             <li style={{listStyle:'outside'}}>Maximum Invest {this.props.config.max +" "+ this.props.config.coin}</li>
                                             <li className="text-center"><br/><h5 className="text-light">DO NOT CONTINUE THE NEXT STEP, BEFORE YOU ARE SUCCESSFUL SENDING THE COIN FROM INDODAX TO OUR WALLET</h5></li>
@@ -224,7 +264,7 @@ class Form extends Component {
                                         <div className="col-md-12">
                                             <div class="alert alert-warning text-light" role="alert">
                                                 <ul>
-                                                    <li style={{listStyle:'outside'}}>Insert coins according to the amount you have sent on  <a href="https://indodax.com" target="_blank" className="font-15 text-light">Indodax <i class="zmdi zmdi-open-in-new"></i></a>.</li>
+                                                    <li style={{listStyle:'outside'}}>Insert coins according to the amount you have sent on  <a href="https://indodax.com" target="_blank" rel="noopener noreferrer" className="font-15 text-light">Indodax <i class="zmdi zmdi-open-in-new"></i></a>.</li>
                                                     <li style={{listStyle:'outside'}}>An error when entering the number of coins will result in a change in the amount of mining.</li>
                                                 </ul>
                                             </div>
@@ -283,10 +323,10 @@ class Form extends Component {
                                             <div className="card p-4 img-thumbnail">
                                                 <div className="text-center" style={{display:this.state.confirm?'none':''}}>
                                                     <h4 className="mb-10 font-24">Information</h4>
-                                                    <h6 className="mb-30">Immediately transfer from <a href="https://indodax.com" target="_blank" className="font-15 text-info">Indodax <i class="zmdi zmdi-open-in-new"></i></a> an amount of <span className="text-success">{this.props.config.length<=0?'':this.props.config.invest_detail.amount} {this.props.config.length<=0?'':this.props.config.coin}</span> to the wallet address:</h6>
-                                                    <h2>{this.props.config.length<=0?'':this.props.config.invest_detail.wallet_address}</h2>
+                                                    <h6 className="mb-30">Prepare photos or screenshots in the form of proof that you have sent coins to our wallet address via <a href="https://indodax.com" target="_blank" rel="noopener noreferrer" className="font-15 text-info">Indodax <i class="zmdi zmdi-open-in-new"></i></a></h6>
+                                                    {/* <h2>{this.props.config.length<=0?'':this.props.config.invest_detail.wallet_address}</h2> */}
                                                     <br/>
-                                                    <button className="btn btn-lg btn-info" onClick={(e)=>this.handleConfirm(e)}>CONFIRM</button>
+                                                    <button className="btn btn-lg btn-info" onClick={(e)=>this.handleConfirm(e)}>UPLOAD</button>
                                                 </div>
                                                 <div className="text-center" style={{display:this.state.confirm?'':'none'}}>
                                                     <Dropzone onDrop={acceptedFiles => this.getUpload(acceptedFiles,'barang')}>

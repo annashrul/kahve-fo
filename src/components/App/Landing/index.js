@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import BgAuth from "assets/logo.png"
-import imgThumb from 'assets/thumb_1.svg';
+import imgThumb from 'assets/kahve.png';
 // import './login.css'
 import {loginUser} from 'redux/actions/authActions';
 import Swal from 'sweetalert2'
@@ -36,12 +36,13 @@ class Login extends Component {
     }
 
     initFetch(check){
-        fetch(HEADERS.URL + `site/logo`)
+        fetch(HEADERS.URL + `site/get`)
         .then(res => res.json())
         .then(
             (data) => {
                 localStorage.setItem("logos",data.result.logo)
-                localStorage.setItem("site_title", data.result.title)
+                localStorage.setItem("site_title", data.result.site_name)
+                localStorage.setItem("site_url", data.result.site_url)
                 document.title = `${data.result.title}`;
                 this.setState({
                     logo: data.result.logo,
@@ -117,7 +118,7 @@ class Login extends Component {
                         <div className="row align-items-center">
                         <div className="col-md-6">
                             <div className="xs-d-none mb-50-xs break-320-576-none">
-                            <img src={imgThumb} alt />
+                            <img src={imgThumb} alt="kahve" />
                             </div>
                         </div>
                         <div className="col-md-6">
@@ -130,7 +131,6 @@ class Login extends Component {
                                 {errors.email && (<div className="invalid-feedback">{errors.email}</div>)}
                             </div>
                             <div className="form-group">
-                                <a href="forget-password.html" className="text-dark float-right" />
                                 <label className="float-left" htmlFor="password">Password</label>
                                 <input className="form-control" type="password" required id="password" name="password" value={password} onChange={this.handleInputChange} placeholder="Enter your password" />
                                 {errors.password && (<div className="invalid-feedback">{errors.password}</div>)}

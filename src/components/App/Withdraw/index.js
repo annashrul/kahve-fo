@@ -7,9 +7,6 @@ import List from './src/List';
 import { FetchCoinType } from '../../../redux/actions/coin/coin.action';
 
 class Withdraw extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     componentWillMount(){
         this.props.dispatch(FetchWithdrawReport(1,''))

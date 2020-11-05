@@ -116,11 +116,11 @@ class Header extends Component {
       const {isShowNotif,isDay} = this.state;
     return (
       // <!-- Top Header Area -->
-      <header className="top-header-area d-flex align-items-center justify-content-between" style={{backgroundColor:(!isMobile?'':'#242939')}} >
+      <header className="top-header-area d-flex align-items-center justify-content-between" style={{backgroundColor:(!isMobile?'':'#fdfdfd')}} >
           <div className="left-side-content-area d-flex align-items-center">
               {/* Mobile Logo */}
                 <div className="mobile-logo mr-3 mr-sm-4">
-                    <Link to={'./'} ><img src="/favicon.png" onError={(e)=>{e.target.onerror = null; e.target.src=`${Default}`}}  alt="Mobile Logo"/></Link>
+                    <Link to={'./'} ><img src={this.props.auth.user.logo===undefined?localStorage.getItem("logos"):this.props.auth.user.logo} onError={(e)=>{e.target.onerror = null; e.target.src=`${Default}`}}  alt="Mobile Logo"/></Link>
                 </div>
               {/* <!-- Triggers --> */}
               <div className="ecaps-triggers mr-1 mr-sm-3">

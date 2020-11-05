@@ -106,19 +106,15 @@ class ModalProfile extends Component{
             email:this.state.email,
             password:this.state.password
         };
-        let err = this.state.error;
-        // if(parsedata['name']===''||parsedata['name']===undefined){
-        //     err = Object.assign({}, err, {name:"Name cannot be null"});
-        //     this.setState({error: err});
-        // }
-        // else if(parsedata['email']===''||parsedata['email']===undefined){
-        //     err = Object.assign({}, err, {email:"Email cannot be null"});
-        //     this.setState({error: err});
-        // }
-        // else if(parsedata['password']===''||parsedata['password']===undefined){
-        //     err = Object.assign({}, err, {password:"Password cannot be null"});
-        //     this.setState({error: err});
-        // }
+        if(parsedata['name']===''||parsedata['name']===undefined){
+            delete parsedata['name'];
+        }
+        if(parsedata['email']===''||parsedata['email']===undefined){
+            delete parsedata['email'];
+        }
+        if(parsedata['password']===''||parsedata['password']===undefined){
+            delete parsedata['password'];
+        }
         // else{
             let timerInterval;
             Swal.fire({
@@ -168,7 +164,7 @@ class ModalProfile extends Component{
                         <form autoComplete="new-password">
                                 <div className="form-group" style={{display:'none'}}>
                                     <label htmlFor="id_card">ID Card</label>
-                                    <input className="form-control" type="text" id="id_card" name="id_card" value={this.state.id_card} onChange={(e) => this.handleChange(e)} placeholder="Enter ID Card" value="-" required />
+                                    <input className="form-control" type="text" id="id_card" name="id_card" value={this.state.id_card} onChange={(e) => this.handleChange(e)} placeholder="Enter ID Card" required />
                                     <div className="invalid-feedback"
                                         style={this.state.error.id_card !== "" ? {display: 'block'} : {display: 'none'}}>
                                         {this.state.error.id_card}

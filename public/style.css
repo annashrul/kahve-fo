@@ -108,7 +108,7 @@ Last Updated: Oct 24, 2019
 'Open+Sans', sans-serif;
 ------------------------------------- */
 /* Import Fonts & CSS Files */
-@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,400,500,600,700|Open+Sans:400,600&amp;display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rubik&display=swap");
 @import url(css/bootstrap.min.css);
 /*@import url(css/owl.carousel.min.css);*/
 @import url("https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css");
@@ -131,7 +131,7 @@ body {
   background-color: #f9fafb;
   color: #1b3e4b;
   font-weight: 400;
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: "Rubik", sans-serif;
   font-size: 14px;
 }
 
@@ -144,7 +144,7 @@ h6 {
   line-height: 1.25;
   color: #001737;
   font-weight: 500;
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: "Rubik", sans-serif;
 }
 
 p {
@@ -152,7 +152,7 @@ p {
   line-height: 1.7;
   font-size: 14px;
   font-weight: 400;
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: "Rubik", sans-serif;
 }
 
 a,
@@ -1427,7 +1427,7 @@ div.tagsinput span.tag a {
   left: 0;
   width: 220px;
   height: 100%;
-  background-color: #242939;
+  background-color: #ffffff;
   -webkit-transition-duration: 500ms;
   -o-transition-duration: 500ms;
   transition-duration: 500ms;
@@ -1444,9 +1444,9 @@ div.tagsinput span.tag a {
   -webkit-transition-duration: 500ms;
   -o-transition-duration: 500ms;
   transition-duration: 500ms;
-  background-color: #242939;
-  -webkit-box-shadow: 1px 0 20px 0 #242939;
-  box-shadow: 1px 0 20px 0 #242939;
+  background-color: #fdfdfd;
+  -webkit-box-shadow: 1px 0 20px 0 #fdfdfd;
+  box-shadow: 1px 0 20px 0 #fdfdfd;
 }
 
 .ecaps-logo a {
@@ -1682,7 +1682,7 @@ div.tagsinput span.tag a {
   align-items: center;
   width: 100%;
   padding: 0rem 1.25rem;
-  color: #a6b6d0;
+  color: #555555;
   font-size: 14px;
   font-weight: 400;
   text-transform: capitalize;
@@ -1696,7 +1696,7 @@ div.tagsinput span.tag a {
   max-width: 25px;
   width: 25px;
   font-size: 16px;
-  color: #a6b6d0;
+  color: #555555;
   font-weight: 400;
 }
 
@@ -1728,7 +1728,7 @@ div.tagsinput span.tag a {
 
 .sidebar-menu li .treeview-menu li a {
   font-size: 14px;
-  color: #a6b6d0;
+  color: #555555;
   margin-left: 0;
   margin-right: 0;
   position: relative;
@@ -1752,7 +1752,7 @@ div.tagsinput span.tag a {
   max-width: 20px;
   width: 20px;
   font-size: 18px;
-  color: #a6b6d0;
+  color: #555555;
   font-weight: 700;
 }
 
@@ -1836,6 +1836,7 @@ div.tagsinput span.tag a {
 }
 
 .sidebar-menu>li.active>a,
+.sidebar-menu>li.active>a>i,
 .sidebar-menu>li.menu-open>a {
   color: #ffffff;
   font-weight: 400;

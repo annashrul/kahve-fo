@@ -7,8 +7,19 @@ import Preloader from 'Preloader'
 import Layout from 'components/Layout'
 import { FetchUserDetail } from '../../../redux/actions/profile/profile.action';
 import getImg from 'assets/default.png';
-import moment from 'moment'
+// import moment from 'moment'
 import ModalProfile from '../modals/profile/form_profile'
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 1000,
+    timerProgressBar: true,
+    onOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+})
 class Profile extends Component {
     constructor(props) {
         super(props);
@@ -120,29 +131,31 @@ class Profile extends Component {
             active_balance,
             active_slot,
             address,
-            bep,
-            created_at,
+            // bep,
+            // created_at,
             email,
             foto,
-            id,
-            id_card,
+            // id,
+            // id_card,
             investment,
-            isadmin,
+            // isadmin,
             kd_referral,
             name,
-            number_of_month,
+            // number_of_month,
             payment,
             reff,
-            selfie,
-            slot,
-            status,
-            updated_at,
-            upline_reff,
+            // selfie,
+            // slot,
+            // status,
+            // updated_at,
+            // upline_reff,
         } = this.props.detail
 
-        const centerStyle = {verticalAlign: "middle", textAlign: "center"};
-        const leftStyle = {verticalAlign: "middle", textAlign: "left"};
-        const rightStyle = {verticalAlign: "middle", textAlign: "right",whiteSpace: "nowrap"};
+        const link = window.location.origin.toString()+'/register/'+this.props.auth.user.reff;
+
+        // const centerStyle = {verticalAlign: "middle", textAlign: "center"};
+        // const leftStyle = {verticalAlign: "middle", textAlign: "left"};
+        // const rightStyle = {verticalAlign: "middle", textAlign: "right",whiteSpace: "nowrap"};
         return (
             <Layout page="Profile">
                 {!this.props.isProses?
@@ -157,7 +170,7 @@ class Profile extends Component {
                                 <div className="d-md-flex align-items-center justify-content-between">
                                 <div className="info d-flex align-items-center mb-30-xs">
                                     <div className="profile-heading-thumb mr-3">
-                                    <img className="border-radius-50" src={foto} alt onError={(e)=>{e.target.onerror = null; e.target.src=`${getImg}`}} />
+                                    <img className="border-radius-50" alt="kahve" src={foto} onError={(e)=>{e.target.onerror = null; e.target.src=`${getImg}`}} />
                                     </div>
                                     <div className="text">
                                     <h4>{name}</h4>
@@ -206,58 +219,24 @@ class Profile extends Component {
                                 </div>
                                 </div>
                             </div>
-
-                            <div className="card box-margin">
-                                <div className="card-header bg-white border-0">
-                                    <div className="row">
-                                    <div className="col-12">
-                                        <h6 className="card-title mb-0">My Slot</h6>
-                                    </div>
-                                    </div>
-                                </div>
-                                <div style={{overflowX:'auto'}}>
-                                    <table className="table align-items-center">
-                                    <thead>
-                                        <tr>
-                                        <th style={centerStyle}>SLOT</th>
-                                        <th style={centerStyle}>START DATE</th>
-                                        <th style={centerStyle}>DAILY EARNING</th>
-                                        <th style={centerStyle}>AMOUNT</th>
-                                        <th style={centerStyle}>MONTHLY PROFIT</th>
-                                        <th style={centerStyle}>CONTRACT</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="list">
-                                        {
-                                            (
-                                                typeof slot === 'object' ?
-                                                    slot.map((v,i)=>{
-                                                        return(
-                                                            <tr>
-                                                                <td style={centerStyle}>{v.slot_no}</td>
-                                                                <td style={rightStyle}>{moment(v.start_date).format('YYYY-MM-DD')}</td>
-                                                                <td style={leftStyle}>{v.daily_earning}</td>
-                                                                <td style={leftStyle}>{v.amount}</td>
-                                                                <td style={leftStyle}>{v.monthly_profit}</td>
-                                                                <td style={centerStyle}>{v.contract}</td>
-                                                            </tr>
-                                                        )
-                                                    })
-                                                    : "No data."
-                                            )
-                                        }
-                                    </tbody>
-                                    </table>
-                                </div>
-                            </div>
                         </div>
 
                         
-                        <div className="col-md-6 col-xl-3">
+                        <div className="col-md-6 col-xl-6">
+                            <div className="card box-margin img-thumbnail">
+                                <div className="card-body text-center">
+                                <h2>Your Referral Link</h2>
+                                    <p>Click link to Copy</p>
+                                        <a href="!#" className="font-20" onClick={(e) => {e.preventDefault();navigator.clipboard.writeText(link);Toast.fire({icon: 'success',title: `Link has been copied.`})}} style={{wordBreak:"break-all"}} data-toggle="tooltip" data-placement="top" title="Click to copy">{link}</a><br/>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {/* <div className="col-md-6 col-xl-3">
                             <div className="card box-margin">
                                 <div className="card-header bg-transparent">Your selfie picture</div>
                                 <div className="card-body">
-                                <a href={selfie} target="_blank" data-lightbox="roadtrip"><img src={selfie} className="img-fluid mb-30" alt onError={(e)=>{e.target.onerror = null; e.target.src=`${getImg}`}}/></a>
+                                <a href={selfie} target="_blank" data-lightbox="roadtrip"><img src={selfie} alt='kahve' className="img-fluid mb-30" onError={(e)=>{e.target.onerror = null; e.target.src=`${getImg}`}}/></a>
                                 </div>
                             </div>
                         </div>
@@ -265,10 +244,10 @@ class Profile extends Component {
                             <div className="card box-margin">
                                 <div className="card-header bg-transparent">Your ID Card</div>
                                 <div className="card-body">
-                                <a href={id_card} target="_blank" data-lightbox="roadtrip"><img src={id_card} className="img-fluid mb-30" alt onError={(e)=>{e.target.onerror = null; e.target.src=`${getImg}`}}/></a>
+                                <a href={id_card} target="_blank" data-lightbox="roadtrip"><img src={id_card} alt="kahve" className="img-fluid mb-30" onError={(e)=>{e.target.onerror = null; e.target.src=`${getImg}`}}/></a>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 :
                 <Preloader/>

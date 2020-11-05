@@ -101,7 +101,7 @@ class Invest extends Component {
                                     <div className="media align-items-center">
                                     {/* Logo */}
                                     <div className="card-body-login mb-30">
-                                        <img src="img/core-img/small-logo.png" alt />
+                                        <img src="img/core-img/small-logo.png" alt="kahve" />
                                     </div>
                                     </div>
                                     <div className="mb-1 font-15">Office 154, 330 North Brand Boulevard</div>
