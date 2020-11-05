@@ -112,11 +112,35 @@ class Form extends Component {
     handleChange = (event) => {
         let column=event.target.name;
         let value=event.target.value;
+        if (column === 'amount'){
+            if(value>this.props.config.max) value=this.props.config.max;
+            if(value===''){
+                value=0;
+                let err = Object.assign({}, this.state.error, {
+                    amount: "Wrong Amount!"
+                });
+                this.setState({
+                    error: err
+                })
+            } else {
+                let err = Object.assign({}, this.state.error, {
+                    amount: ""
+                });
+                this.setState({
+                    error: err
+                })
+            }
+        }
         this.setState({ [column]: value });
     }
     handleSlider = (e) => {
-        
-        this.setState({ amount: e.target.value });
+        let err = Object.assign({}, this.state.error, {
+            amount: ""
+        });
+        this.setState({ 
+            amount: e.target.value,
+            error:err
+        });
     }
     HandleReset(e){
         e.preventDefault();
@@ -299,10 +323,10 @@ class Form extends Component {
                                             <div className="card p-4 img-thumbnail">
                                                 <div className="text-center" style={{display:this.state.confirm?'none':''}}>
                                                     <h4 className="mb-10 font-24">Information</h4>
-                                                    <h6 className="mb-30">Immediately transfer from <a href="https://indodax.com" target="_blank" rel="noopener noreferrer" className="font-15 text-info">Indodax <i class="zmdi zmdi-open-in-new"></i></a> an amount of <span className="text-success">{this.props.config.length<=0?'':this.props.config.invest_detail.amount} {this.props.config.length<=0?'':this.props.config.coin}</span> to the wallet address:</h6>
-                                                    <h2>{this.props.config.length<=0?'':this.props.config.invest_detail.wallet_address}</h2>
+                                                    <h6 className="mb-30">Prepare photos or screenshots in the form of proof that you have sent coins to our wallet address via <a href="https://indodax.com" target="_blank" rel="noopener noreferrer" className="font-15 text-info">Indodax <i class="zmdi zmdi-open-in-new"></i></a></h6>
+                                                    {/* <h2>{this.props.config.length<=0?'':this.props.config.invest_detail.wallet_address}</h2> */}
                                                     <br/>
-                                                    <button className="btn btn-lg btn-info" onClick={(e)=>this.handleConfirm(e)}>CONFIRM</button>
+                                                    <button className="btn btn-lg btn-info" onClick={(e)=>this.handleConfirm(e)}>UPLOAD</button>
                                                 </div>
                                                 <div className="text-center" style={{display:this.state.confirm?'':'none'}}>
                                                     <Dropzone onDrop={acceptedFiles => this.getUpload(acceptedFiles,'barang')}>

@@ -116,7 +116,7 @@ class Header extends Component {
       const {isShowNotif,isDay} = this.state;
     return (
       // <!-- Top Header Area -->
-      <header className="top-header-area d-flex align-items-center justify-content-between" style={{backgroundColor:(!isMobile?'':'#242939')}} >
+      <header className="top-header-area d-flex align-items-center justify-content-between" style={{backgroundColor:(!isMobile?'':'#fdfdfd')}} >
           <div className="left-side-content-area d-flex align-items-center">
               {/* Mobile Logo */}
                 <div className="mobile-logo mr-3 mr-sm-4">

@@ -68,7 +68,7 @@ class List extends Component {
                                         <th className="text-white font-20" style={ centerStyle} width="5%" rowSpan="2">No</th>
                                         <th className="text-white font-20" style={ centerStyle} width="10%" rowSpan="2">Date/Time</th>
                                         <th className="text-white font-20" style={ centerStyle} width="65%" rowSpan="2">Note</th>
-                                        <th className="text-white font-20" style={ centerStyle} width="20%" rowSpan="2" colSpan={2}>Value</th>
+                                        <th className="text-white font-20" style={ centerStyle} width="20%" rowSpan="2">Value</th>
                                     </tr>
                                     </thead>
                                             <tbody className="bg-white">
@@ -87,13 +87,9 @@ class List extends Component {
                                                                         <p className="mb-0 text-muted">{v.note}</p>
                                                                         <h6 className="mb-1">{v.kd_trx}</h6>
                                                                     </td>
-                                                                    <td style={ centerStyle}>
-                                                                        <h6 className="mb-1 text-success">+</h6>
-                                                                        <p className="mb-0 text-danger">-</p>
-                                                                    </td>
                                                                     <td style={ leftStyle}>
-                                                                        <h6 className="mb-1 text-success">{v.amount_in}</h6>
-                                                                        <p className="mb-0 text-danger">{v.amount_out}</p>
+                                                                        <h6 className="mb-1 text-success">+ {v.amount_in}</h6>
+                                                                        <p className="mb-0 text-danger">- {v.amount_out}</p>
                                                                     </td>
                                                                 </tr>
                                                             )
