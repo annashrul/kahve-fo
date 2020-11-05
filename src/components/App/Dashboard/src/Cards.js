@@ -51,7 +51,7 @@ class Cards extends Component {
                     {
                         this.props.link!==undefined?(
                             <div className="card-footer bg-transparent border-top-0" style={{fontSize:".8em",paddingTop:0}}>
-                                Your referral link: <a href="#" onClick={(e) => {e.preventDefault();navigator.clipboard.writeText(this.props.link);Toast.fire({icon: 'success',title: `Link has been copied.`})}} style={{wordBreak:"break-all"}} data-toggle="tooltip" data-placement="top" title="Click to copy">{this.props.link}</a><br/>
+                                Your referral link: <a href="!#" onClick={(e) => {e.preventDefault();navigator.clipboard.writeText(this.props.link);Toast.fire({icon: 'success',title: `Link has been copied.`})}} style={{wordBreak:"break-all"}} data-toggle="tooltip" data-placement="top" title="Click to copy">{this.props.link}</a><br/>
                                 <i className="fa fa-warning"/> Invite your friend and get {this.props.referral_profit} BTC !
                             </div>
                         ):
@@ -63,7 +63,7 @@ class Cards extends Component {
                                                 <span class="sr-only">Loading...</span>
                                         </div>  
                                     ):(
-                                        <img src={Dot} style={{marginRight:'3px',marginTop:'-2px'}} width="12px"/>
+                                        <img src={Dot} alt="kahve" style={{marginRight:'3px',marginTop:'-2px'}} width="12px"/>
                                     )
                                 }
                                 Mining is {!check?'Off.':'in progress!'}

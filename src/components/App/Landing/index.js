@@ -117,7 +117,7 @@ class Login extends Component {
                         <div className="row align-items-center">
                         <div className="col-md-6">
                             <div className="xs-d-none mb-50-xs break-320-576-none">
-                            <img src={imgThumb} alt />
+                            <img src={imgThumb} alt="kahve" />
                             </div>
                         </div>
                         <div className="col-md-6">
@@ -130,7 +130,6 @@ class Login extends Component {
                                 {errors.email && (<div className="invalid-feedback">{errors.email}</div>)}
                             </div>
                             <div className="form-group">
-                                <a href="forget-password.html" className="text-dark float-right" />
                                 <label className="float-left" htmlFor="password">Password</label>
                                 <input className="form-control" type="password" required id="password" name="password" value={password} onChange={this.handleInputChange} placeholder="Enter your password" />
                                 {errors.password && (<div className="invalid-feedback">{errors.password}</div>)}

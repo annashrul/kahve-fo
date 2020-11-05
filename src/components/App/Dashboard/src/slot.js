@@ -23,13 +23,14 @@ class Charts extends Component {
             const timer = this.calculateCountdown(start, end, now);
             dates.push(timer);
             mining.push({
-              balance: (((23-(parseInt(timer.hours))) * 3600) + ((60-parseInt(timer.min)) * 60)+(60-parseInt(timer.sec)))*parseFloat(item.daily_earning) / 86400,
+              balance: (((23-(parseInt(timer.hours,10))) * 3600) + ((60-parseInt(timer.min,10)) * 60)+(60-parseInt(timer.sec,10)))*parseFloat(item.daily_earning) / 86400,
             })
             // console.log("HOUR",23 - parseInt(timer.hours))
             // console.log("HOUR", parseInt(timer.hours))
             // console.log("MIN", 60 - parseInt(timer.min))
             // console.log("SEC", 60 - parseInt(timer.sec))
           }
+          return null
         })
         this.props.counter(mining);
         if(dates.length>0){
@@ -122,7 +123,7 @@ class Charts extends Component {
                                   if(item.status===1) active=item.slot_no
                                   const contract = item.contract * this.props.number_of_month;
                                   return (
-                                    <tr style={item.status==0?{background:'#eeeeee'}:{}}>
+                                    <tr style={item.status===0?{background:'#eeeeee'}:{}}>
                                       <th scope="row">Slot {item.slot_no}</th>
                                       <td>{item.amount===null?'-':parseFloat(item.amount).toFixed(8)} <small>{item.symbol===null?'-':"("+item.symbol+")"}</small></td>
                                       <td>{item.contract===null?'-':contract+' Days'} </td>

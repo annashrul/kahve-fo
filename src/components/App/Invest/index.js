@@ -7,10 +7,6 @@ import List from './src/List';
 import { FetchCoinType } from '../../../redux/actions/coin/coin.action';
 
 class Invest extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     componentWillMount(){
         this.props.dispatch(FetchInvestReport(1,''))
         this.props.dispatch(FetchCoinType(1,'',999))

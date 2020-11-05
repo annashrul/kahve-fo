@@ -20,6 +20,7 @@ const Routes = (
         <Switch>
             <Route path="/" exact strict component={Landing} />
             <Route path="/register/:id" exact strict component={Register} />
+            <Route path="/register/" exact strict component={Register} />
             <Route path="/register" exact strict component={Register} />
             <Route path="/profile" exact strict component={Profile} />
 
