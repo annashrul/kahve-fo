@@ -23,6 +23,8 @@ class Dashboard extends Component {
             data:[],
             referral_profit:0,
             number_of_month:0,
+            contract:0,
+            monthly_profit:0,
             recent_wd:[],
             referral_user:[]
         };
@@ -59,7 +61,9 @@ class Dashboard extends Component {
                     referral_profit: nextProps.data.referral_profit,
                     number_of_month: nextProps.data.number_of_month,
                     recent_wd: nextProps.data.recent_wd,
-                    referral_user: nextProps.data.referral_user
+                    referral_user: nextProps.data.referral_user,
+                    contract: nextProps.data.contract,
+                    monthly_profit: nextProps.data.monthly_profit,
                 })
             }
         }
@@ -117,14 +121,22 @@ class Dashboard extends Component {
                     <Balance/>
                 </div> */}
                 <div className="row">
-                    <Slot title="Mining Slot" data={this.state.slot} number_of_month={this.state.number_of_month} counter={this.setMiner}/>
+                    <Slot title="Mining Slot"
+                        data={this.state.slot}
+                        number_of_month={this.state.number_of_month}
+                        counter={this.setMiner}/>
                 </div>
                 <div className="row">
                     <Box title="5 Last Withdraw" isWd={true} data={this.state.recent_wd}/>
                     <Box title="Referral" isWd={false} data={this.state.referral_user}/>
                 </div>
                 <div className="row">
-                    <Simulator title="Simualate mining" />
+                    <Simulator 
+                        title="Mining Calculator" 
+                        number_of_month={this.state.number_of_month}
+                        contract={this.state.contract}
+                        monthly_profit={this.state.monthly_profit}
+                    />
                 </div>
                 
         </Layout>

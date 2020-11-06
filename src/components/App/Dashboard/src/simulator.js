@@ -16,14 +16,16 @@ class Charts extends Component {
         };
         this.handleChange = this.handleChange.bind(this)
     }
-
+// number_of_month
+// contract
+// monthly_profit
     handleChange = (event) => {
         let column = event.target.name;
         let value = event.target.value;
         if (column === 'amount'){
             if(value>this.state.max) value=this.state.max;
             if(value==='') value=0;
-            const monthly=(parseFloat(value)*(45/100))
+            const monthly=(parseFloat(value)*(parseFloat(this.props.monthly_profit)/100))
             this.setState({
                 monthly: (monthly),
                 daily: (monthly/30),
@@ -72,7 +74,7 @@ class Charts extends Component {
                                         <tr>
                                             <th style={{border:'none',width:"30%"}}>Contract Period</th>
                                             <td style={{border:'none'}}>:</td>
-                                            <td style={{border:'none'}}>150 Days</td>
+                                            <td style={{border:'none'}}>{parseInt(this.props.number_of_month,10)*parseInt(this.props.contract,10)} Days</td>
                                         </tr>
                                         <tr>
                                             <th style={{border:'none',width:"30%"}}>Monthly income</th>
