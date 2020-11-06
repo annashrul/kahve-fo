@@ -1,21 +1,20 @@
 import React, {Component} from 'react'
-import {storeWd} from 'redux/actions/site.action';
 import Swal from 'sweetalert2';
 import Select from 'react-select';
 import connect from "react-redux/es/connect/connect";
-import { FetchWithdrawConfig } from '../../../../redux/actions/withdraw/withdraw.action';
+import { storeTransfer } from '../../../../redux/actions/transfer/transfer.action';
 class Form extends Component {
     constructor(props) {
         super(props);
         this.state = { 
             amount: "",
-            id_wallet: "",
+            wallet_address: "",
             coin_type: "",
             coin_type_data: [],
             config:[],
             error:{
                 amount: "",
-                id_wallet: "",
+                wallet_address: "",
                 coin_type: "",
             },
          };
@@ -44,16 +43,7 @@ class Form extends Component {
             }
         }
     }
-    componentDidUpdate(prevProps) {
-        
-        
-        
-        if (this.props.coin !== prevProps.coin) {
-            this.props.dispatch(FetchWithdrawConfig(this.props.coin.data[0].symbol))
-        }
-      }
     HandleChangeCoin(cn){
-        this.props.dispatch(FetchWithdrawConfig(String(cn.label).split('|')[1]))
         let err = Object.assign({}, this.state.error, {
             coin_type: ""
         });
@@ -88,9 +78,9 @@ class Form extends Component {
         e.preventDefault();
         let parsedata=[];
         parsedata = {
-            amount: this.state.config.active_balance === undefined ? 0 : this.state.config.active_balance,
-            id_wallet: this.state.config.wallet.address === undefined ? '-' : this.state.config.wallet.address,
-            coin_type: this.state.coin_type.value === undefined ? 'BTC' : this.state.coin_type.value,
+            amount: this.state.amount,
+            wallet_address: this.state.wallet_address,
+            coin_type: this.state.coin_type
         };
 
         let timerInterval;
@@ -116,7 +106,7 @@ class Form extends Component {
             }
         }).then((result) => {
             if (result.dismiss === Swal.DismissReason.timer) {
-                this.props.dispatch(storeWd(parsedata));
+                this.props.dispatch(storeTransfer(parsedata));
             }
         })
     }
@@ -127,7 +117,7 @@ class Form extends Component {
         return(
             <div className="card">
                 <div className="card-header bg-transparent">
-                    <h3>Withdraw</h3>
+                    <h3>Transfer</h3>
                 </div>
                 <div className="card-body">
                     <div className="row">
@@ -137,70 +127,60 @@ class Form extends Component {
                                     Coin Type
                                 </label>
                                 <Select
+                                    isDisabled={true}
                                     options={this.state.coin_type_data}
                                     placeholder="Coin type"
                                     onChange={this.HandleChangeCoin}
                                     value={this.state.coin_type}
-
                                 />
                                 <div className="invalid-feedback"
                                         style={this.state.error.coin_type !== "" ? {display: 'block'} : {display: 'none'}}>
                                     {this.state.error.coin_type}
                                 </div>
                             </div>
-                            <div className="row">
-                                <div className="col-6">Total Active Balance</div>
-                                <div className="col-6">{this.state.config.active_balance===undefined?0:this.state.config.active_balance}</div>
-                                <div className="col-6">Number of payments</div>
-                                <div className="col-6">{this.state.config.num_trx===undefined?0:this.state.config.num_trx}</div>
-                            </div>
                         </div>
                         
                         <div className="col-md-12">
                             <div className="card mt-3">
                                 <div className="card-body">
-                                    <h4><strong>Important</strong></h4>
-                                    <ul>
-                                        <li>* You can only 1x withdraw/24h</li>
-                                    </ul>
                                     <div className="col-md-12">
                                         <div className="form-group">
                                             <label className="control-label font-12">
-                                                Amount
+                                                Wallet Address Destination
                                             </label>
                                             <input
                                                 type="text"
-                                                maxLength="8"
-                                                readOnly={true}
+                                                readOnly={false}
                                                 className="form-control"
-                                                id="amount"
-                                                name="amount"
-                                                onChange={(e) => this.HandleInput(e)}
-                                                value={this.state.config.length<=0?0:this.state.config.active_balance.total}
+                                                id="wallet_address"
+                                                name="wallet_address"
+                                                onChange={(e) => this.handleChange(e)}
+                                                value={this.state.wallet_address}
                                             />
                                             <div className="invalid-feedback"
-                                                    style={this.state.error.amount !== "" ? {display: 'block'} : {display: 'none'}}>
-                                                {this.state.error.amount}
+                                                    style={this.state.error.wallet_address !== "" ? {display: 'block'} : {display: 'none'}}>
+                                                {this.state.error.wallet_address}
                                             </div>
                                         </div>
                                     </div>
                                     <div className="col-md-12">
                                         <div className="form-group">
                                             <label className="control-label font-12">
-                                                Wallet Address
+                                                Amount
                                             </label>
                                             <input
-                                                type="text"
-                                                readOnly={true}
+                                                type="number"
+                                                maxLength="8"
+                                                readOnly={false}
                                                 className="form-control"
-                                                id="id_wallet"
-                                                name="id_wallet"
-                                                onChange={(e) => this.HandleInput(e)}
-                                                value={this.state.config.length<=0?'-':this.state.config.wallet.address}
+                                                id="amount"
+                                                name="amount"
+                                                onChange={(e) => this.handleChange(e)}
+                                                value={this.state.amount}
                                             />
                                             <div className="invalid-feedback"
-                                                    style={this.state.error.id_wallet !== "" ? {display: 'block'} : {display: 'none'}}>
-                                                {this.state.error.id_wallet}
+                                                    style={this.state.error.amount !== "" ? {display: 'block'} : {display: 'none'}}>
+                                                {this.state.error.amount}
                                             </div>
                                         </div>
                                     </div>
@@ -210,7 +190,7 @@ class Form extends Component {
                         <div className="col-md-6">
                             <div class="form-group">
                                 <label>&nbsp;</label>
-                                <button type="button" className="btn btn-primary btn-block" onClick={(e) => this.handleSubmit(e)}>PROCESS</button>
+                                <button type="button" className="btn btn-primary btn-block" onClick={(e) => this.handleSubmit(e)}>TRANSFER</button>
                             </div>
                         </div>
                         <div className="col-md-6">
@@ -231,7 +211,6 @@ class Form extends Component {
 const mapStateToPropsCreateItem = (state) => {
     
     return {
-    config:state.withdrawReducer.data_config,
     coin:state.coinReducer.data_type,
     isLoading: state.coinReducer.isLoading,
     auth:state.auth,

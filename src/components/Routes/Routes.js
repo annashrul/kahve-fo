@@ -11,9 +11,9 @@ import Invoice from '../App/Invoice';
 import Register from '../App/Register';
 import Profile from '../App/Profile';
 import History from '../App/History/transaction';
-// import Transfer from '../App/Landing/transfer';
-// import Contact from '../App/Landing/contact-us';
-// import Faq from '../App/Landing/faq';
+import Transfer from '../App/Transfer';
+import Contact from '../App/ContactUs';
+import Faq from '../App/Faq';
 // import Payouts from '../App/Landing/payouts';
 import Dashboard from '../App/Dashboard';
 const Routes = (
@@ -29,9 +29,9 @@ const Routes = (
             <Route path="/invest" exact strict component={Invest} />
             <Route path="/history" exact strict component={History} />
             <Route path="/invoice" exact strict component={Invoice} />
-            {/* <Route path="/transfer" exact strict component={Transfer} /> */}
-            {/* <Route path="/contact" exact strict component={Contact} /> */}
-            {/* <Route path="/faq" exact strict component={Faq} /> */}
+            <Route path="/transfer" exact strict component={Transfer} />
+            <Route path="/contact" exact strict component={Contact} />
+            <Route path="/faq" exact strict component={Faq} />
             {/* <Route path="/payouts" exact strict component={Payouts} /> */}
            
             {/* DASHBOARD SECTION START */}

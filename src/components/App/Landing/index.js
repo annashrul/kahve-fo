@@ -7,7 +7,6 @@ import imgThumb from 'assets/kahve.png';
 import {loginUser} from 'redux/actions/authActions';
 import Swal from 'sweetalert2'
 import {HEADERS} from 'redux/actions/_constants'
-import { Link } from 'react-router-dom';
 class Login extends Component {
     constructor(props) {
         super(props);
@@ -20,7 +19,7 @@ class Login extends Component {
             // acc_number:0,
             errors:{
             },
-            logo: BgAuth,
+            logo: imgThumb,
             width:'100px'
          };
     }
@@ -43,7 +42,7 @@ class Login extends Component {
                 localStorage.setItem("logos",data.result.logo)
                 localStorage.setItem("site_title", data.result.site_name)
                 localStorage.setItem("site_url", data.result.site_url)
-                document.title = `${data.result.title}`;
+                document.title = `${data.result.title===undefined?'Kahve - Log In':data.result.title}`;
                 this.setState({
                     logo: data.result.logo,
                     width:data.result.width
@@ -108,7 +107,7 @@ class Login extends Component {
     render() {
         const {email,password, errors} = this.state;
         return (
-        <div className="container h-100" style={{marginTop:'8rem'}}>
+        <div className="container h-100 login-area" style={{marginTop:'8rem'}}>
             <div className="row h-100 align-items-center justify-content-center">
                 <div className="col-12">
                 {/* Middle Box */}
@@ -118,7 +117,7 @@ class Login extends Component {
                         <div className="row align-items-center">
                         <div className="col-md-6">
                             <div className="xs-d-none mb-50-xs break-320-576-none">
-                            <img src={imgThumb} alt="kahve" />
+                            <img src={this.state.logo} alt="kahve" />
                             </div>
                         </div>
                         <div className="col-md-6">
@@ -138,7 +137,6 @@ class Login extends Component {
                             <div className="form-group mb-0">
                                 <button className="btn btn-primary btn-block" type="submit" onClick={this.submitHandelar}> Log In </button>
                             </div>
-                            <div className="text-center mt-15"><span className="mr-2 font-13 font-weight-bold">Don't have an account?</span><Link to={'register'} className="font-13 font-weight-bold">Sign up</Link></div>
                             </form>
                         </div> {/* end card-body */}
                         </div>

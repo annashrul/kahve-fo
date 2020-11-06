@@ -8,6 +8,12 @@ import { FetchCoinType } from '../../../redux/actions/coin/coin.action';
 
 class Withdraw extends Component {
 
+    componentDidMount(){
+        if(!this.props.auth.isAuthenticated){
+            this.props.history.push('/')
+        }
+    }
+
     componentWillMount(){
         this.props.dispatch(FetchWithdrawReport(1,''))
         this.props.dispatch(FetchCoinType(1,'',999))

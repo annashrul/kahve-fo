@@ -7,6 +7,9 @@ import List from './src/List';
 class TransactionHistory extends Component {
     componentDidMount(){
         this.props.dispatch(FetchTransactionReport(1,'', this.props.auth.user.id))
+        if(!this.props.auth.isAuthenticated){
+            this.props.history.push('/')
+        }
     }
     componentDidUpdate(prevState) {
         if (this.props.auth!==prevState.auth) {

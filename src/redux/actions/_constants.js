@@ -105,6 +105,19 @@ export const SLOT = {
 
 
 /****************
+ TRANSFER
+ *****************/
+export const TRANSFER = {
+  LOADING: 'SET_TRANSFER_LOADING',
+  SUCCESS: 'SET_TRANSFER_SUCCESS',
+  FAILED: 'SET_TRANSFER_FAILED',
+  LOADING_POST: 'SET_TRANSFER_LOADING_POST',
+  SUCCESS_REPORT: 'SET_TRANSFER_SUCCESS_REPORT',
+  SUCCESS_CONFIG: 'SET_TRANSFER_SUCCESS_CONFIG',
+
+}
+
+/****************
  WITHDRAW
  *****************/
 export const WITHDRAW = {

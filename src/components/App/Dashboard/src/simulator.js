@@ -50,6 +50,7 @@ class Charts extends Component {
                                     <div className="input-group">
                                         <input
                                             type="number"
+                                            maxLength="8"
                                             min={this.state.min}
                                             max={this.state.max}
                                             step={0.0001}

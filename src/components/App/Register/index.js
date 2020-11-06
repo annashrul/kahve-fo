@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { storeRegister } from '../../../redux/actions/register/register.action';
 import { Link } from 'react-router-dom';
 import Preloader from 'Preloader'
+import { HEADERS } from '../../../redux/actions/_constants';
 
 class Register extends Component {
     constructor(props) {
@@ -16,6 +17,9 @@ class Register extends Component {
             wallet_address:"",
             email:"",
             password:"",
+            password_confirm:"",
+            logo: imgThumb,
+            width:'100px',
             error:{
                 id_card:"",
                 kd_refferal:"",
@@ -23,6 +27,7 @@ class Register extends Component {
                 wallet_address:"",
                 email:"",
                 password:"",
+                password_confirm:"",
             }
         }
         this.handleChange = this.handleChange.bind(this)
@@ -34,10 +39,39 @@ class Register extends Component {
         }
     }
 
+    componentDidMount(){
+        if(this.props.auth.isAuthenticated){
+            this.props.history.push('/')
+        }
+        this.initFetch(false)
+    }
+
+    initFetch(check){
+        fetch(HEADERS.URL + `site/get`)
+        .then(res => res.json())
+        .then(
+            (data) => {
+                document.title = `${data.result.title===undefined?'Kahve - Register':data.result.title}`;
+                this.setState({
+                    logo: data.result.logo,
+                    width:data.result.width
+                })
+            },
+            (error) => {
+                this.setState({
+                    isLoaded: true,
+                    error
+                });
+            }
+        )
+    }
+
     handleChange = (event) => {
         let column=event.target.name;
         let value=event.target.value;
-        this.setState({ [column]: value });
+        let err = this.state.error;
+        err = Object.assign({}, err, {[column]:""});
+        this.setState({ [column]: value, error: err });
     }
     handleSubmit(e){
         e.preventDefault();
@@ -70,6 +104,10 @@ class Register extends Component {
         }
         else if(parsedata['password']===''||parsedata['password']===undefined){
             err = Object.assign({}, err, {password:"Password cannot be null"});
+            this.setState({error: err});
+        }
+        else if(parsedata['password']!==this.state.password_confirm){
+            err = Object.assign({}, err, {password_confirm:"Password does not match"});
             this.setState({error: err});
         }
         else{
@@ -114,7 +152,7 @@ class Register extends Component {
                             <div className="row align-items-center">
                             <div className="col-md-6">
                                 <div className="xs-d-none mb-50-xs break-320-576-none">
-                                <img src={imgThumb} alt="kahve" />
+                                <img src={this.state.logo} alt="kahve" />
                                 </div>
                             </div>
                             <div className="col-md-6">
@@ -166,6 +204,14 @@ class Register extends Component {
                                     <div className="invalid-feedback"
                                         style={this.state.error.password !== "" ? {display: 'block'} : {display: 'none'}}>
                                         {this.state.error.password}
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="password_confirm">Confirm Password</label>
+                                    <input className="form-control" type="password" required id="password_confirm" name="password_confirm" value={this.state.password_confirm} onChange={(e) => this.handleChange(e)} placeholder="Enter your Confirm Password" />
+                                    <div className="invalid-feedback"
+                                        style={this.state.error.password_confirm !== "" ? {display: 'block'} : {display: 'none'}}>
+                                        {this.state.error.password_confirm}
                                     </div>
                                 </div>
                                 <div className="form-group mb-0 mt-15">

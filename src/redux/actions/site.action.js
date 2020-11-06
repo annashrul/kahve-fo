@@ -378,7 +378,7 @@ export const importTable = (data) => {
         }
     }
 
-    export const storeContact = (data) => {
+    export const storeContact = (data,param) => {
         return (dispatch) => {
             dispatch(setLoading(true));
             const url = HEADERS.URL + `inbox`;
@@ -390,6 +390,10 @@ export const importTable = (data) => {
                             title: 'Success',
                             type: 'success',
                             text: data.msg,
+                        }).then((result)=>{
+                            param({
+                                pathname: '/',
+                            })
                         });
                     } else {
                         Swal.fire({

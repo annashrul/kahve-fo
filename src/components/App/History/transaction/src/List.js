@@ -34,7 +34,7 @@ class List extends Component {
     render(){
         const centerStyle = {verticalAlign: "middle", textAlign: "center"};
         const leftStyle = {verticalAlign: "middle", textAlign: "left"};
-        console.log("ccccccccccccccc",this.state.isSimple)
+        
     const {
         per_page,
         last_page,
