@@ -6,6 +6,7 @@ import { CustomInput } from 'reactstrap';
 import { storeInvest } from '../../../../redux/actions/invest/invest.action';
 import imgUpload from 'assets/upload.png';
 import Dropzone from 'react-dropzone'
+import moment from 'moment'
 const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
@@ -170,8 +171,8 @@ class Form extends Component {
 
         let timerInterval;
         Swal.fire({
-            title: 'Tunggu Sebentar',
-            html: 'data sedang dikirim ke server',
+            title: 'Please wait',
+            html: 'data is sending to server',
             timer: 1000,
             timerProgressBar: true,
             onBeforeOpen: () => {
@@ -226,11 +227,35 @@ class Form extends Component {
             <div className="card">
                 <div className="card-header bg-transparent">
                     <h3 style={{display:this.props.config.active_invest===1?'none':''}}>Invest Available for Slot Number #{this.props.config.slot===undefined?0:this.props.config.slot.slot_no}</h3>
-                    <h3 style={{display:this.props.config.active_invest===1?'':'none'}}>This form can be opened after your transaction is approved! </h3>
+                    <h3 style={{display:this.props.config.active_invest===1?'':'none'}}>You have made an investment, wait for confirmation from the admin. </h3>
                 </div>
                 {
-                    this.props.config.active_invest===1?
-                    '':
+                    this.props.config.active_invest===1||this.props.isLoading?
+                    <div className="card-body pl-5">
+                        <h3>Summary</h3>
+                        <div className="row">
+                            <div className="col-md-3">
+                                <label>Invoice</label>
+                            </div>
+                            <div className="col-md-9">
+                                <label>: {this.props.config.invest_detail===undefined?'':this.props.config.invest_detail.kd_trx}</label>
+                            </div>
+                            <div className="col-md-3">
+                                <label>Amount</label>
+                            </div>
+                            <div className="col-md-9">
+                                <label>: {this.props.config.invest_detail===undefined?'':this.props.config.invest_detail.amount}</label>
+                            </div>
+                            <div className="col-md-3">
+                                <label>Date</label>
+                            </div>
+                            <div className="col-md-9">
+                                <label>: {moment(this.props.config.invest_detail===undefined?'':this.props.config.invest_detail.created_at).format('YYYY-MM-DD')}</label>
+                            </div>
+                        </div>
+                    
+                    </div>
+                    :
                     <div className="card-body">
                         <div className="row">
                             <div className="col-md-12 mb-4">
@@ -280,6 +305,7 @@ class Form extends Component {
                                                 <div className="input-group">
                                                     <input
                                                         type="number"
+                                                        maxLength="8"
                                                         min={this.props.config.min}
                                                         max={this.props.config.max}
                                                         step="0.00000001"

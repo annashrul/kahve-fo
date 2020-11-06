@@ -8,6 +8,7 @@ import {withdrawReducer} from './withdraw/withdraw.reducer';
 import {investReducer} from './invest/invest.reducer';
 import {transactionReducer} from './transaction/transaction.reducer';
 import {coinReducer} from './coin/coin.reducer';
+import {transferReducer} from './transfer/transfer.reducer';
 import {profileReducer} from './profile/profile.reducer';
 
 export default combineReducers({
@@ -19,6 +20,7 @@ export default combineReducers({
     investReducer,
     transactionReducer,
     coinReducer,
+    transferReducer,
     profileReducer,
 
     auth: authReducer,

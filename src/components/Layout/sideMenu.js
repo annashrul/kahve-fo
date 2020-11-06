@@ -406,6 +406,9 @@ class SideMenu extends Component {
                     <li  className={path==='/withdraw'?"active":''}><Link to="/withdraw"> <i className="fa fa-exchange" /><span> Withdraw</span></Link></li>
                     <li  className={path==='/transfer'?"active":''}><Link to="/transfer"> <i className="fa fa-send" /><span> Transfer</span></Link></li>
                     <li  className={path==='/history'?"active":''}><Link to="/history"> <i className="fa fa-history" /><span> History</span></Link></li>
+                    
+                    <li  className={path==='/Contact'?"active":''}><Link to="/Contact"> <i className="zmdi zmdi-account-box-mail" /><span> Contact Us</span></Link></li>
+                    <li  className={path==='/faq'?"active":''}><Link to="/faq"> <i className="fa fa-comments-o" /><span> Faq</span></Link></li>
 
                     {/* LOGOUT MODUL START */}
                     <li><a href={null} style={{cursor:'pointer'}} className="text-dark" onClick={(event)=>this.handleLogout(event)}> <i className="fa fa-chain-broken" /><span> Logout</span></a></li>

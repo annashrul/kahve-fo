@@ -50,6 +50,11 @@ class Profile extends Component {
             this.props.dispatch(FetchUserDetail(this.props.auth.user.id))
         }
     }
+    componentDidMount(){
+        if(!this.props.auth.isAuthenticated){
+            this.props.history.push('/')
+        }
+    }
 
     handleEdit = (e) => {
         e.preventDefault();
@@ -126,7 +131,7 @@ class Profile extends Component {
     }
     render() {
         
-        console.log(this.props.auth)
+        
         const {
             active_balance,
             active_slot,
@@ -259,7 +264,7 @@ class Profile extends Component {
 }
 
 const mapStateToProps = (state) =>{
-    console.log(state.profileReducer)
+    
     return{
         isProses:state.profileReducer===undefined?false:state.profileReducer.isLoading,
         auth: state.auth,

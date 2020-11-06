@@ -36,7 +36,7 @@ class ModalProfile extends Component{
 
     componentWillReceiveProps(nextProps){
         let getDetail = nextProps.detail;
-        console.log("cccccccccccccccc",getDetail)
+        
         this.setState({
             name:getDetail.name,
             email:getDetail.email,
@@ -78,7 +78,7 @@ class ModalProfile extends Component{
             //     } else {
             //         // this.props.dispatch(storeAppove(this.props.config.profile_detail.id,parsedata))
             //         // this.props.valid(reader.result)
-                    console.log(reader.result)
+                    
             //         // window.scrollTo(0, 0);
             //         // const bool = !this.props.isOpen;
             //         // this.props.dispatch(ModalToggle(bool));

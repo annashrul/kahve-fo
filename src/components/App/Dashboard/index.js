@@ -31,6 +31,11 @@ class Dashboard extends Component {
         this.setMiner = this.setMiner.bind(this)
     }
 
+    componentDidMount(){
+        if(!this.props.auth.isAuthenticated){
+            this.props.history.push('/')
+        }
+    }
     componentWillReceiveProps = (nextProps) => {
         if (nextProps.auth.user) {
             console.log("AUTH", nextProps.auth.user);

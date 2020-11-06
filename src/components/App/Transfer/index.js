@@ -1,31 +1,32 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import Layout from 'components/Layout'
-import { FetchInvestConfig, FetchInvestReport } from '../../../redux/actions/invest/invest.action';
+import { FetchTransferReport } from '../../../redux/actions/transfer/transfer.action';
 import Form from './src/Form';
-import List from './src/List';
+import Card from './src/Card';
 import { FetchCoinType } from '../../../redux/actions/coin/coin.action';
 
-class Invest extends Component {
+class Transfer extends Component {
+
     componentDidMount(){
         if(!this.props.auth.isAuthenticated){
             this.props.history.push('/')
         }
     }
+
     componentWillMount(){
-        this.props.dispatch(FetchInvestReport(1,''))
+        this.props.dispatch(FetchTransferReport(1,''))
         this.props.dispatch(FetchCoinType(1,'',999))
-        this.props.dispatch(FetchInvestConfig())
     }
     render() {
         return (
-            <Layout page="Invest">
+            <Layout page="Transfer">
                 <div className="row">
                 <div className="col-md-6 mb-4">
-                    <Form config={this.props.config}/>
+                    <Form/>
                 </div>
                 <div className="col-md-6 mb-4">
-                    <List/>
+                    <Card/>
                 </div>
                 </div>
             </Layout>
@@ -34,10 +35,10 @@ class Invest extends Component {
 }
 
 const mapStateToProps = (state) =>{
+    
     return{
-        config:state.investReducer.data_config,
         auth: state.auth
     }
 }
 
-export default connect(mapStateToProps)(Invest);
+export default connect(mapStateToProps)(Transfer);
