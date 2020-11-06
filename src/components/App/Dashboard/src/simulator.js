@@ -73,7 +73,7 @@ class Charts extends Component {
                                         <tr>
                                             <th style={{border:'none',width:"30%"}}>Contract Period</th>
                                             <td style={{border:'none'}}>:</td>
-                                            <td style={{border:'none'}}>{parseInt(this.props.number_of_month)*parseInt(this.props.contract)} Days</td>
+                                            <td style={{border:'none'}}>{parseInt(this.props.number_of_month,10)*parseInt(this.props.contract,10)} Days</td>
                                         </tr>
                                         <tr>
                                             <th style={{border:'none',width:"30%"}}>Monthly income</th>
