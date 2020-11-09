@@ -177,7 +177,7 @@ class Register extends Component {
                             <div className="row align-items-center">
                             <div className="col-md-6">
                                 <div className="xs-d-none mb-50-xs">
-                                <img src={this.state.logo} alt="kahve" />
+                                <img src={this.state.logo}   onError={(e)=>{e.target.onerror = null; e.target.src=`${imgThumb}`}} alt="kahve" />
                                 </div>
                             </div>
                             <div className="col-md-6">
