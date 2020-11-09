@@ -18,14 +18,25 @@ class Charts extends Component {
         nextProps.data.map(item => {
           if (item.start_date!==null){
             if(item.mining_active===1){
-              let start = moment(item.start_date);
-              let now = moment();
-              let end = moment(item.start_date).add((nextProps.number_of_month*item.contract), 'days');
-              const timer = this.calculateCountdown(start, end, now);
-              dates.push(timer);
-              mining.push({
-                balance: (((23-(parseInt(timer.hours,10))) * 3600) + ((60-parseInt(timer.min,10)) * 60)+(60-parseInt(timer.sec,10)))*parseFloat(item.daily_earning) / 86400,
-              })
+              if(item.status===1){
+                let start = moment(item.start_date);
+                let now = moment();
+                let end = moment(item.start_date).add((nextProps.number_of_month*item.contract), 'days');
+                const timer = this.calculateCountdown(start, end, now);
+                dates.push(timer);
+                mining.push({
+                  balance: (((23-(parseInt(timer.hours,10))) * 3600) + ((60-parseInt(timer.min,10)) * 60)+(60-parseInt(timer.sec,10)))*parseFloat(item.daily_earning) / 86400,
+                })
+              }else{
+                dates.push({
+                  years: 0,
+                  days: 0,
+                  hours: 0,
+                  min: 0,
+                  sec: 0,
+                  millisec: 0,
+                });
+              }
             }else{
               dates.push({
                 years: 0,
@@ -131,7 +142,8 @@ class Charts extends Component {
                                 this.props.data!==undefined?
                                 this.props.data.map((item,index)=>{
                                   const label=item.status===1?<span class="badge badge-success">Active</span>:(item.status===2?<span class="149	badge badge-danger">Done</span>:<span class="badge badge-secondary">Not Active</span>)
-                                  if(item.status===1) active=item.slot_no
+                                  if(item.status>0) active=item.slot_no
+                                  // console.log(item.status);
                                   const contract = item.contract * this.props.number_of_month;
                                   return (
                                     <tr style={item.status===0?{background:'#eeeeee'}:{}}>
@@ -147,7 +159,7 @@ class Charts extends Component {
                                         this.addLeadingZeros(this.state.date[index].min)+" M "+
                                         this.addLeadingZeros(this.state.date[index].sec)+" S":'-'
                                       }</td>
-                                      <td>{label} {item.status===0 && active+1===item.slot_no?<a href="/invest" class="badge badge-warning">Invest</a>:""} {item.status===1&&item.mining_active===0 && active===item.slot_no?<abbr title="Mining will start automatically after start date."><span class=""  >Mining off <i className="fa fa-warning"/></span></abbr>:""}</td>
+                                      <td>{label} {item.status===0 && active+1===item.slot_no?<a href="/invest" class="badge badge-warning">Invest</a>:""} {item.status===1&&item.mining_active===0 && active===item.slot_no?<abbr title="Mining will start automatically after start date."><span class="">Mining off <i className="fa fa-warning"/></span></abbr>:""}</td>
 
                                     </tr>
                                   )
