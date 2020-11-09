@@ -49,7 +49,7 @@ class Login extends Component {
         .then(
             (data) => {
                 localStorage.setItem("logos",data.result.logo)
-                localStorage.setItem("site_title", data.result.site_name)
+                localStorage.setItem("site_title", data.result.site_name)   
                 localStorage.setItem("site_url", data.result.site_url)
                 document.title = `${data.result.title===undefined?'Kahve - Log In':data.result.title}`;
                 this.setState({

@@ -97,7 +97,7 @@ class Charts extends Component {
                                             <td style={{border:'none'}}>{this.state.twoMonths.toFixed(8)} ₿</td>
                                         </tr>
                                         <tr>
-                                            <th style={{border:'none',width:"30%"}}>Total Earnings <br/>(150 days)</th>
+                                            <th style={{border:'none',width:"30%"}}>Total Earnings <br/>({parseInt(this.props.number_of_month,10)*parseInt(this.props.contract,10)} days)</th>
                                             <td style={{border:'none'}}>:</td>
                                             <td style={{border:'none'}}>{this.state.totals.toFixed(8)} ₿</td>
                                         </tr>

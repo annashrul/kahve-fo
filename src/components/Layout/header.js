@@ -120,7 +120,7 @@ class Header extends Component {
           <div className="left-side-content-area d-flex align-items-center">
               {/* Mobile Logo */}
                 <div className="mobile-logo mr-3 mr-sm-4">
-                    <Link to={'./'} ><img src={this.props.auth.user.logo===undefined?localStorage.getItem("logos"):this.props.auth.user.logo} onError={(e)=>{e.target.onerror = null; e.target.src=`${Default}`}}  alt="Mobile Logo"/></Link>
+                    <a href='/' ><img src={this.props.auth.user.logo===undefined?localStorage.getItem("logos"):this.props.auth.user.logo} onError={(e)=>{e.target.onerror = null; e.target.src=`${Default}`}}  alt="Mobile Logo"/></a>
                 </div>
               {/* <!-- Triggers --> */}
               <div className="ecaps-triggers mr-1 mr-sm-3">
