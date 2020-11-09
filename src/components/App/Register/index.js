@@ -232,7 +232,7 @@ class Register extends Component {
                                 <div className="form-group">
                                     <ReCAPTCHA
                                         size="normal"
-                                        sitekey="6LcgvOAZAAAAAAIpET5hHV_DikIuZ_YxVKAeOR3h"
+                                        sitekey="6Lfex-AZAAAAADYVuKH3o_uCU4TtxjT14b8R-Jj9"
                                         onChange={this.onValid}
                                     />
                                 </div>

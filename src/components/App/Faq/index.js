@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import Layout from 'components/Layout'
 import { FetchFaq } from '../../../redux/actions/site.action';
-import Card from './src/Card';
+import List from './src/List';
 
 class Faq extends Component {
 
@@ -20,7 +20,7 @@ class Faq extends Component {
             <Layout page="Faq">
                 <h3>Frequelty Asked Questions</h3>
                 <br></br>
-                <Card/>
+                <List/>
             </Layout>
         );
     }
