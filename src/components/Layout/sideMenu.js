@@ -404,7 +404,7 @@ class SideMenu extends Component {
                     
                     <li  className={path==='/invest'?"active":''}><Link to="/invest"> <i className="fa fa-btc" /><span> Invest</span></Link></li>
                     <li  className={path==='/withdraw'?"active":''}><Link to="/withdraw"> <i className="fa fa-exchange" /><span> Withdraw</span></Link></li>
-                    <li  className={path==='/transfer'?"active":''}><Link to="/transfer"> <i className="fa fa-send" /><span> Transfer</span></Link></li>
+                    {/* <li  className={path==='/transfer'?"active":''}><Link to="/transfer"> <i className="fa fa-send" /><span> Transfer</span></Link></li> */}
                     <li  className={path==='/history'?"active":''}><Link to="/history"> <i className="fa fa-history" /><span> History</span></Link></li>
                     
                     <li  className={path==='/Contact'?"active":''}><Link to="/Contact"> <i className="zmdi zmdi-account-box-mail" /><span> Contact Us</span></Link></li>
