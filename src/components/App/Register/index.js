@@ -20,6 +20,7 @@ class Register extends Component {
             password:"",
             password_confirm:"",
             logo: imgThumb,
+            register_limit: false,
             width:'100px',
             captcha: false,
             error:{
@@ -34,6 +35,7 @@ class Register extends Component {
         }
         this.onValid = this.onValid.bind(this)
         this.handleChange = this.handleChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
         if (this.props.match.params.id===''||this.props.match.params.id===undefined||this.props.match.params.id===null) {
             this.props.history.push({
                 pathname: '/',
@@ -57,6 +59,7 @@ class Register extends Component {
                 document.title = `${data.result.title===undefined?'Kahve - Register':data.result.title}`;
                 this.setState({
                     logo: data.result.logo,
+                    register_limit: data.result.register_limit,
                     width:data.result.width
                 })
             },
@@ -120,6 +123,13 @@ class Register extends Component {
                 'error'
             )
         }
+        else if(this.state.register_limit){
+            Swal.fire(
+                'Limit register reached!',
+                'Register again later!',
+                'error'
+            )
+        }
         else{
             let timerInterval;
             Swal.fire({
@@ -173,14 +183,14 @@ class Register extends Component {
                             <div className="col-md-6">
                                 <h4 className="font-18 mb-30">Create a free account.</h4>
                                 <form>
-                                <div className="form-group" style={{display:'none'}}>
+                                {/* <div className="form-group" style={{display:'none'}}>
                                     <label htmlFor="id_card">ID Card</label>
                                     <input className="form-control" type="text" id="id_card" name="id_card" value={this.state.id_card} onChange={(e) => this.handleChange(e)} placeholder="Enter ID Card" required />
                                     <div className="invalid-feedback"
                                         style={this.state.error.id_card !== "" ? {display: 'block'} : {display: 'none'}}>
                                         {this.state.error.id_card}
                                     </div>
-                                </div>
+                                </div> */}
                                 <div className="form-group">
                                     <label htmlFor="kd_referral">Referral</label>
                                     <input className="form-control" type="text" id="kd_referral" name="kd_referral" value={this.state.kd_referral} onChange={(e) => this.handleChange(e)} placeholder="Enter your Refferal" required readOnly />
@@ -237,7 +247,11 @@ class Register extends Component {
                                     />
                                 </div>
                                 <div className="form-group mb-0 mt-15">
-                                    <button className="btn btn-primary btn-block" type="submit" onClick={(e)=>this.handleSubmit(e)}>Sign Up</button>
+                                    <button className="btn btn-primary btn-block" type="button" disabled={this.state.register_limit} onClick={(e)=>this.handleSubmit(e)}>Sign Up</button>
+                                    <div className="invalid-feedback"
+                                        style={this.state.register_limit? {display: 'block'} : {display: 'none'}}>
+                                        Register limit reached!
+                                    </div>
                                 </div>
                                 <div className="text-center mt-15"><span className="mr-2 font-13 font-weight-bold">Already have an account?</span><Link to={'/'} className="font-13 font-weight-bold" >Sign in</Link></div>
                                 </form>

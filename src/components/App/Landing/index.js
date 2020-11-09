@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import BgAuth from "assets/logo.png"
+// import BgAuth from "assets/logo.png"
 import imgThumb from 'assets/kahve.png';
 // import './login.css'
 import {loginUser} from 'redux/actions/authActions';
