@@ -6,6 +6,7 @@ import { storeRegister } from '../../../redux/actions/register/register.action';
 import { Link } from 'react-router-dom';
 import Preloader from 'Preloader'
 import { HEADERS } from '../../../redux/actions/_constants';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 class Register extends Component {
     constructor(props) {
@@ -20,6 +21,7 @@ class Register extends Component {
             password_confirm:"",
             logo: imgThumb,
             width:'100px',
+            captcha: false,
             error:{
                 id_card:"",
                 kd_refferal:"",
@@ -30,6 +32,7 @@ class Register extends Component {
                 password_confirm:"",
             }
         }
+        this.onValid = this.onValid.bind(this)
         this.handleChange = this.handleChange.bind(this)
         if (this.props.match.params.id===''||this.props.match.params.id===undefined||this.props.match.params.id===null) {
             this.props.history.push({
@@ -107,8 +110,15 @@ class Register extends Component {
             this.setState({error: err});
         }
         else if(parsedata['password']!==this.state.password_confirm){
-            err = Object.assign({}, err, {password_confirm:"Password does not match"});
+            err = Object.assign({}, err, {password_confirm:"Password confirm not match!"});
             this.setState({error: err});
+        }
+        else if(!this.state.captcha){
+            Swal.fire(
+                'Captcha is required!',
+                'Checked captcha first!',
+                'error'
+            )
         }
         else{
             let timerInterval;
@@ -138,6 +148,11 @@ class Register extends Component {
                 }
             })
         }
+    }
+    
+    onValid(value){
+        // console.log("Captcha value:", value);
+        this.setState({captcha:value!==''?true:false})
     }
     render() {
         return (
@@ -213,6 +228,13 @@ class Register extends Component {
                                         style={this.state.error.password_confirm !== "" ? {display: 'block'} : {display: 'none'}}>
                                         {this.state.error.password_confirm}
                                     </div>
+                                </div>
+                                <div className="form-group">
+                                    <ReCAPTCHA
+                                        size="normal"
+                                        sitekey="6LcgvOAZAAAAAAIpET5hHV_DikIuZ_YxVKAeOR3h"
+                                        onChange={this.onValid}
+                                    />
                                 </div>
                                 <div className="form-group mb-0 mt-15">
                                     <button className="btn btn-primary btn-block" type="submit" onClick={(e)=>this.handleSubmit(e)}>Sign Up</button>
