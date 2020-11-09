@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { storeContact } from '../../../redux/actions/site.action';
 import Preloader from 'Preloader'
 import Layout from 'components/Layout'
+import ReCAPTCHA from 'react-google-recaptcha';
 
 class Contact extends Component {
     constructor(props) {
@@ -14,6 +15,7 @@ class Contact extends Component {
             email:"",
             title:"",
             message:"",
+            captcha: false,
             error:{
                 name:"",
                 email:"",
@@ -22,6 +24,7 @@ class Contact extends Component {
             }
         }
         this.handleChange = this.handleChange.bind(this)
+        this.onValid = this.onValid.bind(this)
     }
 
     componentDidMount(){
@@ -60,12 +63,19 @@ class Contact extends Component {
             this.setState({error: err});
         }
         else if(parsedata['title']===''||parsedata['title']===undefined){
-            err = Object.assign({}, err, {title:"Password cannot be null"});
+            err = Object.assign({}, err, {title:"Title cannot be null"});
             this.setState({error: err});
         }
         else if(parsedata['message']===''||parsedata['message']===undefined){
             err = Object.assign({}, err, {message:"Message cannot be null"});
             this.setState({error: err});
+        }
+        else if(!this.state.captcha){
+            Swal.fire(
+                'Captcha is required!',
+                'Checked captcha first!',
+                'error'
+            )
         }
         else{
             let timerInterval;
@@ -95,6 +105,11 @@ class Contact extends Component {
                 }
             })
         }
+    }
+    
+    onValid(value){
+        // console.log("Captcha value:", value);
+        this.setState({captcha:value!==''?true:false})
     }
     render() {
         return (
@@ -137,12 +152,20 @@ class Contact extends Component {
                                 <div className="form-group">
                                     <label htmlFor="message">Message</label>
                                     {/* <input className="form-control" type="message" required id="message" name="message" value={this.state.message} onChange={(e) => this.handleChange(e)} placeholder="Enter your Password" /> */}
-                                    <textarea className="form-control" rows="4" required id="message" name="message" value={this.state.message} onChange={(e) => this.handleChange(e)} >
+                                    <textarea className="form-control" rows="4" required id="message" name="message" style={{height:'auto'}} value={this.state.message} onChange={(e) => this.handleChange(e)} >
                                     </textarea>
                                     <div className="invalid-feedback"
                                         style={this.state.error.message !== "" ? {display: 'block'} : {display: 'none'}}>
                                         {this.state.error.message}
                                     </div>
+                                </div>
+                                <div className="form-group">
+                                    <ReCAPTCHA
+                                        style={{ display: "inline-block" }}
+                                        size="normal"
+                                        sitekey="6Lfex-AZAAAAADYVuKH3o_uCU4TtxjT14b8R-Jj9"
+                                        onChange={this.onValid}
+                                    />
                                 </div>
                                 <div className="form-group mb-0 mt-15">
                                     <button className="btn btn-primary btn-block" type="submit" onClick={(e)=>this.handleSubmit(e)}>SEND</button>

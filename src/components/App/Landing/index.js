@@ -6,12 +6,14 @@ import imgThumb from 'assets/kahve.png';
 import {loginUser} from 'redux/actions/authActions';
 import Swal from 'sweetalert2'
 import {HEADERS} from 'redux/actions/_constants'
+import ReCAPTCHA from 'react-google-recaptcha';
 class Login extends Component {
     constructor(props) {
         super(props);
         this.state = { 
             email: '',
             password: '',
+            captcha: false,
             // disableButton:false,
             // server_price:0,
             // acc_name:"",
@@ -21,6 +23,7 @@ class Login extends Component {
             logo: imgThumb,
             width:'100px'
          };
+         this.onValid = this.onValid.bind(this)
     }
     getFaviconEl() {
         return document.getElementById("favicon");
@@ -79,15 +82,23 @@ class Login extends Component {
         event.preventDefault();
         const {email,password} = this.state;
         if(email!==''&&password!==''){
-            const user = {
-                email: email,
-                password: password
+            if(this.state.captcha){
+                const user = {
+                    email: email,
+                    password: password
+                }
+                this.props.loginUser(user);
+            } else {
+                Swal.fire(
+                    'Captcha is required!',
+                    'Checked captcha first!',
+                    'error'
+                )
             }
-            this.props.loginUser(user);
         }else{
             Swal.fire(
-                'Isi Username dan Password Terlebih Dahulu! ',
-                'Lengkapi form untuk melanjutkan.',
+                'Fill Username and Password! ',
+                'Form cannot be null.',
                 'error'
             )
         }
@@ -101,6 +112,11 @@ class Login extends Component {
         this.setState({
           [name]: value
         });
+    }
+
+    onValid(value){
+        // console.log("Captcha value:", value);
+        this.setState({captcha:value!==''?true:false})
     }
 
     render() {
@@ -132,6 +148,13 @@ class Login extends Component {
                                 <label className="float-left" htmlFor="password">Password</label>
                                 <input className="form-control" type="password" required id="password" name="password" value={password} onChange={this.handleInputChange} placeholder="Enter your password" />
                                 {errors.password && (<div className="invalid-feedback">{errors.password}</div>)}
+                            </div>
+                            <div className="form-group">
+                                <ReCAPTCHA
+                                    size="normal"
+                                    sitekey="6Lfex-AZAAAAADYVuKH3o_uCU4TtxjT14b8R-Jj9"
+                                    onChange={this.onValid}
+                                />
                             </div>
                             <div className="form-group mb-0">
                                 <button className="btn btn-primary btn-block" type="submit" onClick={this.submitHandelar}> Log In </button>
