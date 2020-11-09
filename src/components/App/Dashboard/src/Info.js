@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {Link} from "react-router-dom"
 
 class Info extends Component {
     render(){
@@ -6,7 +7,7 @@ class Info extends Component {
             <div className="col-6">
                 <div className="dashboard-infor-mation d-flex flex-wrap align-items-center mb-3">
                     <div className="dashboard-clock">
-                        <div id="dashboardDate" style={{marginBottom:'10px'}}>Active Balance <a href="!#" class="badge badge-success">Withdraw</a></div>
+                        <div id="dashboardDate" style={{marginBottom:'10px'}}>Active Balance <Link to="/Withdraw"> <span className="badge badge-success"> Withdraw</span></Link></div>
                         {
                             this.props.data!==undefined?
                                         this.props.data.length>0?

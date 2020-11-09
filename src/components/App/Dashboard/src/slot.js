@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import moment from 'moment'
+import {Link} from "react-router-dom"
+
 class Charts extends Component {
 
   constructor(props) {
@@ -159,7 +161,7 @@ class Charts extends Component {
                                         this.addLeadingZeros(this.state.date[index].min)+" M "+
                                         this.addLeadingZeros(this.state.date[index].sec)+" S":'-'
                                       }</td>
-                                      <td>{label} {item.status===0 && active+1===item.slot_no?<a href="/invest" class="badge badge-warning">Invest</a>:""} {item.status===1&&item.mining_active===0 && active===item.slot_no?<abbr title="Mining will start automatically after start date."><span class="">Mining off <i className="fa fa-warning"/></span></abbr>:""}</td>
+                                      <td>{label} {item.status===0 && active+1===item.slot_no?<Link to="/invest"> <span className="badge badge-warning"> Invest</span></Link>:""} {item.status===1&&item.mining_active===0 && active===item.slot_no?<abbr title="Mining will start automatically after start date."><span class="">Mining off <i className="fa fa-warning"/></span></abbr>:""}</td>
 
                                     </tr>
                                   )
