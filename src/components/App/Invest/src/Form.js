@@ -169,32 +169,52 @@ class Form extends Component {
             coin_type: this.state.config.coin.id===undefined?"c2f9fc02-5193-466e-acd8-8d69069d3fbb":this.state.config.coin.id,
         };
 
-        let timerInterval;
-        Swal.fire({
-            title: 'Please wait',
-            html: 'data is sending to server',
-            timer: 1000,
-            timerProgressBar: true,
-            onBeforeOpen: () => {
-                Swal.showLoading()
-                timerInterval = setInterval(() => {
-                    const content = Swal.getContent()
-                    if (content) {
-                        const b = content.querySelector('b')
-                        if (b) {
-                            b.textContent = Swal.getTimerLeft()
+        if(this.state.config.isActive) {
+            // Swal.fire(
+            //     'Withdrawals can only do the days below!.',
+            //     'Testtt',
+            //     'error'
+            // )
+            let days = this.state.config.schedule
+            let time = this.state.config.schedule_time
+            Swal.fire({
+                title: 'Invest can only do the days below!',
+                html:`<div class="card"><div class="card-body"><h5>${days}</h5><h5>${time}</h5></div></div>`,
+                icon: 'info',
+                confirmButtonColor: '#ff9800',
+                confirmButtonText: 'Okay',
+            }).then((result) => {
+    
+            })
+        } else {
+
+            let timerInterval;
+            Swal.fire({
+                title: 'Please wait',
+                html: 'data is sending to server',
+                timer: 1000,
+                timerProgressBar: true,
+                onBeforeOpen: () => {
+                    Swal.showLoading()
+                    timerInterval = setInterval(() => {
+                        const content = Swal.getContent()
+                        if (content) {
+                            const b = content.querySelector('b')
+                            if (b) {
+                                b.textContent = Swal.getTimerLeft()
+                            }
                         }
-                    }
-                }, 100)
-            },
-            onClose: () => {
-                clearInterval(timerInterval)
-            }
-        }).then((result) => {
-            if (result.dismiss === Swal.DismissReason.timer) {
-                this.props.dispatch(storeInvest(parsedata));
-            }
-        })
+                    }, 100)
+                },
+                onClose: () => {
+                    clearInterval(timerInterval)
+                }
+            }).then((result) => {
+                if (result.dismiss === Swal.DismissReason.timer) {
+                    this.props.dispatch(storeInvest(parsedata));
+                }
+            })
+        }
     }
 
     onClickNext() {

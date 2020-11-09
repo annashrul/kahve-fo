@@ -13,8 +13,8 @@ export const TOKEN = {
 }
 
 export const HEADERS ={
-  URL: "http://ptnetindo.com:6701/",
-  // URL: "http://localhost:3000/"
+  // URL: "http://ptnetindo.com:6701/",
+  URL: "http://192.168.100.10:3000/"
 }
 
 /****************

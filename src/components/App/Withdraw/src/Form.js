@@ -93,6 +93,7 @@ class Form extends Component {
     }
     handleSubmit(e){
         e.preventDefault();
+        console.log("this.state.config.isActive",this.state.config.isActive)
         if(!this.state.verif){
             this.setState({verif:true})
         } else if(this.state.myPassword==='') {
@@ -100,6 +101,23 @@ class Form extends Component {
                 myPassword: "Password cannot be null!"
             });
             this.setState({error:err})
+        } else if(this.state.config.isActive) {
+            // Swal.fire(
+            //     'Withdrawals can only do the days below!.',
+            //     'Testtt',
+            //     'error'
+            // )
+            let days = this.state.config.schedule
+            let time = this.state.config.schedule_time
+            Swal.fire({
+                title: 'Withdrawals can only do the days below!',
+                html:`<div class="card"><div class="card-body"><h5>${days}</h5><h5>${time}</h5></div></div>`,
+                icon: 'info',
+                confirmButtonColor: '#ff9800',
+                confirmButtonText: 'Okay',
+            }).then((result) => {
+      
+            })
         } else {
             this.setState({isLoading:true})
             let userData = {}
