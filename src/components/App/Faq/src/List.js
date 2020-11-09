@@ -30,7 +30,10 @@ class List extends Component {
                                     data.map((v,i)=>{
                                         return(
                                             <ListGroupItem key={i} tag="kahve" style={{cursor:'pointer'}} id={'collapse'+v.id}>
-                                                <h5>{v.question}</h5>
+                                                <div className="d-flex align-items-center justify-content-between">
+                                                    <h5>{v.question}</h5>
+                                                    <h5><i class="fa fa-angle-down"></i></h5>
+                                                </div>
                                                 <UncontrolledCollapse toggler={'#collapse'+v.id}>
                                                 <Card>
                                                     <CardBody>

@@ -9,8 +9,8 @@ class Card extends Component {
                     <div className="card-body">
                         <h3>You can easily transfer your active balance to someone you want to share</h3>
                         <p></p>
-                        <p className="font-20">Write the wallet id destination that you will send coins correctly!</p>
-                        <small className="text-danger">We are not responsible for transfer errors due to your mistake in writing your wallet id!</small>
+                        <p className="font-20">Write the wallet address destination that you will send coins correctly!</p>
+                        <small className="text-danger">We are not responsible for transfer errors due to your mistake in writing your wallet address!</small>
                     </div>
                 </div>
             </div>
