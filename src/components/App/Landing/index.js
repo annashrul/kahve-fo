@@ -139,7 +139,7 @@ class Login extends Component {
                     <div className="card-body p-4">
                         <div className="row align-items-center">
                         <div className="col-md-6">
-                            <div className="xs-d-none mb-50-xs break-320-576-none">
+                            <div className="xs-d-none mb-50-xs">
                             <img src={this.state.logo} alt="kahve" />
                             </div>
                         </div>

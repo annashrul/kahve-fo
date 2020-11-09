@@ -166,7 +166,7 @@ class Register extends Component {
                         <div className="card-body p-4">
                             <div className="row align-items-center">
                             <div className="col-md-6">
-                                <div className="xs-d-none mb-50-xs break-320-576-none">
+                                <div className="xs-d-none mb-50-xs">
                                 <img src={this.state.logo} alt="kahve" />
                                 </div>
                             </div>
@@ -182,7 +182,7 @@ class Register extends Component {
                                     </div>
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="kd_referral">Refferal</label>
+                                    <label htmlFor="kd_referral">Referral</label>
                                     <input className="form-control" type="text" id="kd_referral" name="kd_referral" value={this.state.kd_referral} onChange={(e) => this.handleChange(e)} placeholder="Enter your Refferal" required readOnly />
                                     <div className="invalid-feedback"
                                         style={this.state.error.kd_referral !== "" ? {display: 'block'} : {display: 'none'}}>
@@ -198,15 +198,15 @@ class Register extends Component {
                                     </div>
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="wallet_address">Wallet Address</label>
-                                    <input className="form-control" type="text" id="wallet_address" name="wallet_address" value={this.state.wallet_address} onChange={(e) => this.handleChange(e)} placeholder="Enter Wallet Address" required />
+                                    <label htmlFor="wallet_address">Bitcoin Wallet Address</label>
+                                    <input className="form-control" type="text" id="wallet_address" name="wallet_address" value={this.state.wallet_address} onChange={(e) => this.handleChange(e)} placeholder="Enter Bitcoin Wallet Address" required />
                                     <div className="invalid-feedback"
                                         style={this.state.error.wallet_address !== "" ? {display: 'block'} : {display: 'none'}}>
                                         {this.state.error.wallet_address}
                                     </div>
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="email">Email address</label>
+                                    <label htmlFor="email">Email Address</label>
                                     <input className="form-control" type="email" id="email" name="email" value={this.state.email} onChange={(e) => this.handleChange(e)} required placeholder="Enter your Email" />
                                     <div className="invalid-feedback"
                                         style={this.state.error.email !== "" ? {display: 'block'} : {display: 'none'}}>
