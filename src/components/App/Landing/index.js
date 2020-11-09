@@ -29,8 +29,15 @@ class Login extends Component {
         return document.getElementById("favicon");
     }
 
-    componentDidMount (){
-        if(this.props.auth.isAuthenticated){
+    // componentDidMount (){
+    //     if(this.props.auth.isAuthenticated){
+    //         this.props.history.push('/dashboard')
+    //     }
+    //     this.initFetch(false);
+    // }
+    
+    componentDidUpdate(prevState) {
+        if (this.props.auth.isAuthenticated) {
             this.props.history.push('/dashboard')
         }
         this.initFetch(false);
