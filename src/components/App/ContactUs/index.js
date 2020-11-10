@@ -32,12 +32,29 @@ class Contact extends Component {
         if(!this.props.auth.isAuthenticated){
             this.props.history.push('/')
         }
-    }
-    componentWillReceiveProps(nextProps){
-        
         this.setState({
-            email:nextProps.auth.user.email,
+            email:this.props.auth.user.email,
         })
+    }
+
+    // componentDidUpdate(prevState){
+    //     if(this.props.auth.user.email===prevState.auth.user.email){
+    //         this.setState({
+    //             email:this.props.auth.user.email,
+    //         })
+    //     }
+    // }
+    componentWillReceiveProps(nextProps){
+        if (nextProps.auth.user) {
+            if (nextProps.auth.user!==this.props.auth.user){
+
+                if (nextProps.auth.user.email!==undefined){
+                    this.setState({
+                        email:nextProps.auth.user.email,
+                    })
+                }
+            }
+        }
     }
 
     handleChange = (event) => {

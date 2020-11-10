@@ -29,7 +29,8 @@ class Form extends Component {
          this.handleChange = this.handleChange.bind(this)
          this.handleSubmit = this.handleSubmit.bind(this)
          this.HandleChangeCoin = this.HandleChangeCoin.bind(this)
-         this.textInput = React.createRef();
+        //  this.focus = this.focus.bind(this);
+        this.textInput = React.createRef();
     }
     componentWillReceiveProps = (nextProps) => {
         this.setState({config:nextProps.config})
@@ -100,7 +101,13 @@ class Form extends Component {
         console.log("this.state.config.isActive",this.state.config.isActive)
         if(!this.state.verif){
             this.setState({verif:true})
-            this.textInput.current.focus();
+            if (this.searchInput) {
+                setTimeout(() => {
+        
+                    this.searchInput.focus();
+        
+                }, 100);
+            }
         } else if(this.state.myPassword==='') {
             let err = Object.assign({}, this.state.error, {
                 myPassword: "Password cannot be null!"
@@ -153,7 +160,9 @@ class Form extends Component {
         }
     }
 
-    
+    // focus() {
+    //     this.textInput.current.focus();
+    // }
 
     postWd(){
         let parsedata=[];
@@ -286,8 +295,7 @@ class Form extends Component {
                                             <h4><strong>Input your password</strong></h4>
                                             <div className="form-group">
                                                 <input
-                                                    // ref={(input) => { this.nameInput = input; }}
-                                                    ref={this.textInput}
+                                                    ref={(input) => { this.searchInput = input; }}
                                                     autoFocus 
                                                     type="password"
                                                     readOnly={false}
