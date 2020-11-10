@@ -210,6 +210,7 @@ class Register extends Component {
                                 <div className="form-group">
                                     <label htmlFor="wallet_address">Bitcoin Wallet Address</label>
                                     <input className="form-control" type="text" id="wallet_address" name="wallet_address" value={this.state.wallet_address} onChange={(e) => this.handleChange(e)} placeholder="Enter Bitcoin Wallet Address" required />
+                                    <small className="text-info">Wallet address cannot be changed after registration is complete</small>
                                     <div className="invalid-feedback"
                                         style={this.state.error.wallet_address !== "" ? {display: 'block'} : {display: 'none'}}>
                                         {this.state.error.wallet_address}

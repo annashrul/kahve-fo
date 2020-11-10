@@ -29,6 +29,7 @@ class Form extends Component {
          this.handleChange = this.handleChange.bind(this)
          this.handleSubmit = this.handleSubmit.bind(this)
          this.HandleChangeCoin = this.HandleChangeCoin.bind(this)
+         this.textInput = React.createRef();
     }
     componentWillReceiveProps = (nextProps) => {
         this.setState({config:nextProps.config})
@@ -45,12 +46,15 @@ class Form extends Component {
                     return true;
                 })
                 this.setState({
-                    coin_type: this.state.coin_type===''?{"value":coin[0].id,"label":coin[0].title+"|"+coin[0].symbol}:this.state.coin_type,
+                    coin_type: this.state.coin_type===''?{"value":coin[0].id,"label":coin[0].title+" | "+coin[0].symbol}:this.state.coin_type,
                     coin_type_data: c,
                 })
             }
         }
     }
+    // componentDidMount(){
+    //     this.nameInput.focus();
+    // }
     componentDidUpdate(prevProps) {
         if (this.props.coin !== prevProps.coin) {
             this.props.dispatch(FetchWithdrawConfig(this.props.coin.data[0].symbol))
@@ -96,12 +100,13 @@ class Form extends Component {
         console.log("this.state.config.isActive",this.state.config.isActive)
         if(!this.state.verif){
             this.setState({verif:true})
+            this.textInput.current.focus();
         } else if(this.state.myPassword==='') {
             let err = Object.assign({}, this.state.error, {
                 myPassword: "Password cannot be null!"
             });
             this.setState({error:err})
-        } else if(this.state.config.isActive) {
+        } else if(!this.state.config.isActive) {
             // Swal.fire(
             //     'Withdrawals can only do the days below!.',
             //     'Testtt',
@@ -154,7 +159,7 @@ class Form extends Component {
         let parsedata=[];
         parsedata = {
             amount: this.state.config.active_balance === undefined ? 0 : this.state.config.active_balance,
-            id_wallet: this.state.config.wallet.address === undefined ? '-' : this.state.config.wallet.address,
+            id_wallet: this.state.config.wallet.id === undefined ? '-' : this.state.config.wallet.id,
             coin_type: this.state.coin_type.value === undefined ? 'BTC' : this.state.coin_type.value,
         };
 
@@ -196,120 +201,145 @@ class Form extends Component {
                     <div className="card-header bg-transparent">
                         <h3>Withdraw</h3>
                     </div>
-                    <div className="card-body">
-                        <div className="row">
-                            <div className="col-md-12">
-                                <div className="form-group">
-                                    <label className="control-label font-12">
-                                        Coin Type
-                                    </label>
-                                    <Select
-                                        options={this.state.coin_type_data}
-                                        placeholder="Coin type"
-                                        onChange={this.HandleChangeCoin}
-                                        value={this.state.coin_type}
+                    {this.state.config.isActive?
+                        <div className="card-body">
+                            <div className="row">
+                                <div className="col-md-12">
+                                    <div className="form-group">
+                                        <label className="control-label font-12">
+                                            Coin Type
+                                        </label>
+                                        <Select
+                                            options={this.state.coin_type_data}
+                                            placeholder="Coin type"
+                                            onChange={this.HandleChangeCoin}
+                                            value={this.state.coin_type}
 
-                                    />
-                                    <div className="invalid-feedback"
-                                            style={this.state.error.coin_type !== "" ? {display: 'block'} : {display: 'none'}}>
-                                        {this.state.error.coin_type}
+                                        />
+                                        <div className="invalid-feedback"
+                                                style={this.state.error.coin_type !== "" ? {display: 'block'} : {display: 'none'}}>
+                                            {this.state.error.coin_type}
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-6">Total Active Balance</div>
+                                        <div className="col-6">{String(this.state.config.active_balance===undefined?0:this.state.config.active_balance).substr(0,10)}</div>
+                                        <div className="col-6">Number of payments</div>
+                                        <div className="col-6">{this.state.config.num_trx===undefined?0:this.state.config.num_trx}</div>
                                     </div>
                                 </div>
-                                <div className="row">
-                                    <div className="col-6">Total Active Balance</div>
-                                    <div className="col-6">{this.state.config.active_balance===undefined?0:this.state.config.active_balance}</div>
-                                    <div className="col-6">Number of payments</div>
-                                    <div className="col-6">{this.state.config.num_trx===undefined?0:this.state.config.num_trx}</div>
-                                </div>
-                            </div>
-                            
-                            <div className="col-md-12" style={{display:this.state.verif?'none':''}}>
-                                <div className="card mt-3">
-                                    <div className="card-body">
-                                        <h4><strong>Important</strong></h4>
-                                        <ul>
-                                            <li>* You can only 1x withdraw/24h</li>
-                                        </ul>
-                                        <div className="col-md-12">
-                                            <div className="form-group">
-                                                <label className="control-label font-12">
-                                                    Amount
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    maxLength="8"
-                                                    readOnly={true}
-                                                    className="form-control"
-                                                    id="amount"
-                                                    name="amount"
-                                                    onChange={(e) => this.handleChange(e)}
-                                                    value={this.state.config.active_balance===undefined?0:this.state.config.active_balance}
-                                                />
-                                                <div className="invalid-feedback"
-                                                        style={this.state.error.amount !== "" ? {display: 'block'} : {display: 'none'}}>
-                                                    {this.state.error.amount}
+                                
+                                <div className="col-md-12" style={{display:this.state.verif?'none':''}}>
+                                    <div className="card mt-3">
+                                        <div className="card-body">
+                                            <h4><strong>Important</strong></h4>
+                                            <ul>
+                                                <li>* You can only 1x withdraw/24h</li>
+                                            </ul>
+                                            <div className="col-md-12">
+                                                <div className="form-group">
+                                                    <label className="control-label font-12">
+                                                        Amount
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        maxLength="8"
+                                                        readOnly={true}
+                                                        className="form-control"
+                                                        id="amount"
+                                                        name="amount"
+                                                        // onChange={(e) => this.handleChange(e)}
+                                                        value={String(this.state.config.active_balance===undefined?0:this.state.config.active_balance).substr(0,10)}
+                                                    />
+                                                    <div className="invalid-feedback"
+                                                            style={this.state.error.amount !== "" ? {display: 'block'} : {display: 'none'}}>
+                                                        {this.state.error.amount}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-12">
+                                                <div className="form-group">
+                                                    <label className="control-label font-12">
+                                                        Your Wallet Address
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        readOnly={true}
+                                                        className="form-control"
+                                                        id="id_wallet"
+                                                        name="id_wallet"
+                                                        // onChange={(e) => this.handleChange(e)}
+                                                        value={this.state.config.length<=0?'-':this.state.config.wallet.address}
+                                                    />
+                                                    <div className="invalid-feedback"
+                                                            style={this.state.error.id_wallet !== "" ? {display: 'block'} : {display: 'none'}}>
+                                                        {this.state.error.id_wallet}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="col-md-12">
+                                    </div>
+                                </div>
+                                <div className="col-md-12" style={{display:this.state.verif?'':'none'}}>
+                                    <div className="card mt-3">
+                                        <div className="card-body login-area">
+                                            <h4><strong>Input your password</strong></h4>
                                             <div className="form-group">
-                                                <label className="control-label font-12">
-                                                    Wallet Address
-                                                </label>
                                                 <input
-                                                    type="text"
-                                                    readOnly={true}
+                                                    // ref={(input) => { this.nameInput = input; }}
+                                                    ref={this.textInput}
+                                                    autoFocus 
+                                                    type="password"
+                                                    readOnly={false}
                                                     className="form-control"
-                                                    id="id_wallet"
-                                                    name="id_wallet"
+                                                    id="myPassword"
+                                                    name="myPassword"
                                                     onChange={(e) => this.handleChange(e)}
-                                                    value={this.state.config.length<=0?'-':this.state.config.wallet.address}
+                                                    value={this.state.myPassword}
                                                 />
                                                 <div className="invalid-feedback"
-                                                        style={this.state.error.id_wallet !== "" ? {display: 'block'} : {display: 'none'}}>
-                                                    {this.state.error.id_wallet}
+                                                        style={this.state.error.myPassword !== "" ? {display: 'block'} : {display: 'none'}}>
+                                                    {this.state.error.myPassword}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div className="col-md-12">
+                                    <div class="form-group">
+                                        <label>&nbsp;</label>
+                                        <button type="button" className="btn btn-primary btn-block" onClick={(e) => this.handleSubmit(e)}>PROCESS</button>
+                                    </div>
+                                </div>
+                                {/* <div className="col-md-6">
+                                    <div class="form-group">
+                                        <label>&nbsp;</label>
+                                        <button type="button" className="btn btn-danger btn-block" onClick={(e) => this.HandleReset(e)}>RESET</button>
+                                    </div>
+                                </div> */}
                             </div>
-                            <div className="col-md-12" style={{display:this.state.verif?'':'none'}}>
-                                <div className="card mt-3">
-                                    <div className="card-body login-area">
-                                        <h4><strong>Input your password</strong></h4>
-                                        <div className="form-group">
-                                            <input
-                                                type="password"
-                                                readOnly={false}
-                                                className="form-control"
-                                                id="myPassword"
-                                                name="myPassword"
-                                                onChange={(e) => this.handleChange(e)}
-                                                value={this.state.myPassword}
-                                            />
-                                            <div className="invalid-feedback"
-                                                    style={this.state.error.myPassword !== "" ? {display: 'block'} : {display: 'none'}}>
-                                                {this.state.error.myPassword}
+                        </div>
+                        :
+                        <div className="card-body">
+                            <div className="row">
+                                <div className="col-md-12">
+                                    <div className="ribbon-wrapper card">
+                                        <div className="ribbon ribbon-info">INFORMATION</div>
+                                        <div class="alert alert-danger text-center" role="alert">
+                                            <h4 className="text-light">Withdrawals can only be made on the schedule below!</h4>
+                                            <br/>
+                                            <div className="card">
+                                                <div className="card-body">
+                                                    <h5>{this.state.config.schedule}</h5>
+                                                    <h5>{this.state.config.schedule_time}</h5>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div className="col-md-6">
-                                <div class="form-group">
-                                    <label>&nbsp;</label>
-                                    <button type="button" className="btn btn-primary btn-block" onClick={(e) => this.handleSubmit(e)}>PROCESS</button>
-                                </div>
-                            </div>
-                            <div className="col-md-6">
-                                <div class="form-group">
-                                    <label>&nbsp;</label>
-                                    <button type="button" className="btn btn-danger btn-block" onClick={(e) => this.HandleReset(e)}>RESET</button>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    }
                 </div>
                 :
                 <Preloader/>

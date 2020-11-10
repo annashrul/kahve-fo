@@ -49,13 +49,13 @@ class List extends Component {
                                                         <td style={ centerStyle}>{v.slot_no}</td>
                                                         <td style={ centerStyle}>{v.coin}</td>
                                                         <td style={ leftStyle}>{v.amount}</td>
-                                                        <td style={ centerStyle}>{statusQ(v.status===0?'warning':v.status===1?'success':'danger',v.status===0?'Process':v.status===1?'Success':'Void')}</td>
+                                                        <td style={ centerStyle}>{statusQ(v.status===0?'warning':v.status===1?'success':'danger',v.status===0?'Pending':v.status===1?'Success':'Void')}</td>
                                                         {/* <td style={ centerStyle}>{v.kd_trx}</td> */}
 
                                                     </tr>
                                                 )
                                             })
-                                            : "No data." : "No data."
+                                            : <tr><td colSpan="5" style={ centerStyle}>No data.</td></tr> : <tr><td colSpan="5" style={ centerStyle}>No data.</td></tr>
                                     )
                                 }
                                 </tbody>

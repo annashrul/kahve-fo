@@ -40,6 +40,7 @@ class Form extends Component {
             currentStep: 0,
         };
         this.onClickNext = this.onClickNext.bind(this);
+        this.onClickPrev = this.onClickPrev.bind(this);
          this.handleChange = this.handleChange.bind(this)
          this.handleSlider = this.handleSlider.bind(this)
          this.getUpload = this.getUpload.bind(this)
@@ -96,6 +97,7 @@ class Form extends Component {
                 this.setState({
                     coin_type: this.state.coin_type===''?{"value":coin[0].id,"label":coin[0].title+"|"+coin[0].symbol}:this.state.coin_type,
                     coin_type_data: c,
+                    amount: nextProps.config.min,
                 })
             }
         }
@@ -169,7 +171,7 @@ class Form extends Component {
             coin_type: this.state.config.coin.id===undefined?"c2f9fc02-5193-466e-acd8-8d69069d3fbb":this.state.config.coin.id,
         };
 
-        if(this.state.config.isActive) {
+        if(!this.state.config.isActive) {
             // Swal.fire(
             //     'Withdrawals can only do the days below!.',
             //     'Testtt',
@@ -227,18 +229,35 @@ class Form extends Component {
             });
         } 
         else if(currentStep>0&&this.state.amount!==''){
-            this.setState({
-                currentStep: currentStep + 1,
-            });
+            if(this.state.amount===0){
+                let err = Object.assign({}, this.state.error, {
+                    amount: "Amount error"
+                });
+                this.setState({
+                    error:err
+                });
+            } else {
+                this.setState({
+                    currentStep: currentStep + 1,
+                });
+            }
         }
-        else if(this.state.amount===''){
+        else if(this.state.amount===''&&(this.state.amount<this.props.config.min&&this.state.amount>this.props.config.max)){
             let err = Object.assign({}, this.state.error, {
-                amount: "Amount can't be null"
+                amount: "Amount error"
             });
             this.setState({
                 error:err
             });
         }
+    }
+    onClickPrev() {
+        const { 
+            // steps,
+        currentStep } = this.state;
+        this.setState({
+            currentStep: currentStep - 1,
+        });
     }
     render(){
         const { steps, currentStep } = this.state;
@@ -247,35 +266,98 @@ class Form extends Component {
             <div className="card">
                 <div className="card-header bg-transparent">
                     <h3 style={{display:this.props.config.active_invest===1?'none':''}}>Invest Available for Slot Number #{this.props.config.slot===undefined?0:this.props.config.slot.slot_no}</h3>
-                    <h3 style={{display:this.props.config.active_invest===1?'':'none'}}>You have made an investment, wait for confirmation from the admin. </h3>
+                    <h3 style={{display:this.props.config.active_invest===1?'':'none'}}>Your investment will be processed immediately, we'll send a message to your email address. </h3>
                 </div>
                 {
                     this.props.config.active_invest===1||this.props.isLoading?
                     <div className="card-body pl-5">
                         <h3>Summary</h3>
-                        <div className="row">
-                            <div className="col-md-3">
+                        <table border="0">
+                            <thead>
+                                <tr>
+                                    <th width="35%"></th>
+                                    <th width="65%"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <label>Invoice</label>
+                                    </td>
+                                    <td>
+                                        <label>: {this.props.config.invest_detail===undefined?'':this.props.config.invest_detail.kd_trx}</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label>Amount</label>
+                                    </td>
+                                    <td>
+                                        <label>: {this.props.config.invest_detail===undefined?'':this.props.config.invest_detail.amount}</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label>Date</label>
+                                    </td>
+                                    <td>
+                                        <label>: {moment(this.props.config.invest_detail===undefined?'':this.props.config.invest_detail.created_at).format('YYYY-MM-DD')}</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label>Your Wallet Addres</label>
+                                    </td>
+                                    <td>
+                                        <label>: {this.props.config.wallet_address}</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Coin type
+                                    </td>
+                                    <td>
+                                        <label>: {this.props.config.coin}</label>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        {/* <div className="row">
+                            <div className="col-md-3 col-sm-3">
                                 <label>Invoice</label>
                             </div>
-                            <div className="col-md-9">
+                            <div className="col-md-9 col-sm-9">
                                 <label>: {this.props.config.invest_detail===undefined?'':this.props.config.invest_detail.kd_trx}</label>
                             </div>
-                            <div className="col-md-3">
+                            <div className="col-md-3 col-sm-3">
                                 <label>Amount</label>
                             </div>
-                            <div className="col-md-9">
+                            <div className="col-md-9 col-sm-9">
                                 <label>: {this.props.config.invest_detail===undefined?'':this.props.config.invest_detail.amount}</label>
                             </div>
-                            <div className="col-md-3">
+                            <div className="col-md-3 col-sm-3">
                                 <label>Date</label>
                             </div>
-                            <div className="col-md-9">
+                            <div className="col-md-9 col-sm-9">
                                 <label>: {moment(this.props.config.invest_detail===undefined?'':this.props.config.invest_detail.created_at).format('YYYY-MM-DD')}</label>
                             </div>
-                        </div>
+                            <div className="col-md-3 col-sm-3">
+                                <label>Your Wallet Addres</label>
+                            </div>
+                            <div className="col-md-9 col-sm-9">
+                                <label>: {this.props.config.wallet_address}</label>
+                            </div>
+                            <div className="col-md-3 col-sm-3">
+                                <label>Coin type</label>
+                            </div>
+                            <div className="col-md-9 col-sm-9">
+                                <label>: {this.props.config.coin}</label>
+                            </div>
+                        </div> */}
                     
                     </div>
                     :
+                    this.state.config.isActive?
                     <div className="card-body">
                         <div className="row">
                             <div className="col-md-12 mb-4">
@@ -353,7 +435,12 @@ class Form extends Component {
                                     </div>
                                     <div className="card-footer bg-transparent">
                                         <div className="row">
-                                            <div className="col-md-6 offset-6">
+                                            <div className="col-md-6">
+                                                <div class="form-group">
+                                                    <button type="button" className="btn btn-info btn-block" onClick={(e) => this.onClickPrev(e)}>BACK</button>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-6">
                                                 <div class="form-group">
                                                     <button type="button" className="btn btn-info btn-block" onClick={(e) => this.onClickNext(e)}>NEXT</button>
                                                 </div>
@@ -366,6 +453,7 @@ class Form extends Component {
                                 <div className="card mt-3">
                                     <div className="card-body">
                                         {/* <div className="col-md-12"> */}
+                                        <h4>The amount you wish to invest : {this.state.amount +" "+ this.props.config.coin}</h4>
                                             <div className="card p-4 img-thumbnail">
                                                 <div className="text-center" style={{display:this.state.confirm?'none':''}}>
                                                     <h4 className="mb-10 font-24">Information</h4>
@@ -392,15 +480,40 @@ class Form extends Component {
                                     </div>
                                     <div className="card-footer bg-transparent">
                                         <div className="row">
-                                            <div className="col-md-6">
+                                            <div className="col-md-4">
+                                                <div class="form-group">
+                                                    <button type="button" className="btn btn-info btn-block" onClick={(e) => this.onClickPrev(e)}>BACK</button>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-4">
                                                 <div class="form-group">
                                                     <button type="button" className="btn btn-danger btn-block" onClick={(e) => this.HandleReset(e)}>RESET</button>
                                                 </div>
                                             </div>
-                                            <div className="col-md-6">
+                                            <div className="col-md-4">
                                                 <div class="form-group">
                                                     <button type="button" className="btn btn-primary btn-block" onClick={(e) => this.handleSubmit(e)} disabled={!this.state.isUpload}>PROCESS</button>
                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    :
+                    <div className="card-body">
+                        <div className="row">
+                            <div className="col-md-12">
+                                <div className="ribbon-wrapper card">
+                                    <div className="ribbon ribbon-info">INFORMATION</div>
+                                    <div class="alert alert-danger text-center" role="alert">
+                                        <h4 className="text-light">Investments can only be made on the schedule below!</h4>
+                                        <br/>
+                                        <div className="card">
+                                            <div className="card-body">
+                                                <h5>{this.state.config.schedule}</h5>
+                                                <h5>{this.state.config.schedule_time}</h5>
                                             </div>
                                         </div>
                                     </div>

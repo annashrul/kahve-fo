@@ -1,4 +1,6 @@
 import React, {Component} from 'react'
+import { statusQ } from '../../../../helper';
+import moment from 'moment'
 class Charts extends Component {
   render(){
         return(
@@ -21,14 +23,14 @@ class Charts extends Component {
                                     {
                                       this.props.data !== undefined ?
                                         this.props.data.map(item=>{
-                                          const label=item.status===1?<span class="badge badge-success">Paid</span>:(item.status===2?<span class="149	badge badge-danger">Cancel</span>:<span class="badge badge-secondary">Pending Payment</span>)
+                                          // const label=item.status===1?<span class="badge badge-success">Pending</span>:(item.status===2?<span class="149	badge badge-danger">Cancel</span>:<span class="badge badge-secondary">Pending Payment</span>)
 
                                           return(
                                             <tr>
                                               <td>{item.kd_trx}</td>
-                                              <td>{item.amount} {item.symbol}</td>
-                                              <td>{label}</td>
-                                              <td>{item.created_at}</td>
+                                              <td>{String(item.amount).substr(0,10)} {item.symbol}</td>
+                                              <td>{statusQ(item.status===0?'warning':item.status===1?'success':'danger',item.status===0?'Pending':item.status===1?'Success':'Void')}</td>
+                                              <td>{moment(item.created_at).format('YYYY-MM-DD HH:mm')}</td>
                                             </tr>
                                           )
                                         }):""
@@ -41,7 +43,7 @@ class Charts extends Component {
                                     <tr>
                                       <th scope="col">Name</th>
                                       <th scope="col">Join Date</th>
-                                      <th scope="col">Profit</th>
+                                      <th scope="col">Bonus Referral</th>
                                     </tr>
                                   </thead>
                                   <tbody>
@@ -53,7 +55,7 @@ class Charts extends Component {
                                           return(
                                             <tr>
                                               <td>{item.name}</td>
-                                              <td>{item.created_at}</td>
+                                              <td>{moment(item.created_at).format('YYYY-MM-DD HH:mm')}</td>
                                               <td>0</td>
                                             </tr>
                                           )

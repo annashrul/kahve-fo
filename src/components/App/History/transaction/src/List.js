@@ -88,8 +88,8 @@ class List extends Component {
                                                                         <h6 className="mb-1">{v.kd_trx}</h6>
                                                                     </td>
                                                                     <td style={ leftStyle}>
-                                                                        <h6 className="mb-1 text-success">+ {v.amount_in}</h6>
-                                                                        <p className="mb-0 text-danger">- {v.amount_out}</p>
+                                                                        <h6 className="mb-1 text-success">+ {String(v.amount_in).substr(0,10)}</h6>
+                                                                        <p className="mb-0 text-danger">- {String(v.amount_out).substr(0,10)}</p>
                                                                     </td>
                                                                 </tr>
                                                             )

@@ -127,7 +127,7 @@ class Dashboard extends Component {
                         counter={this.setMiner}/>
                 </div>
                 <div className="row">
-                    <Box title="5 Last Withdraw" isWd={true} data={this.state.recent_wd}/>
+                    <Box title="Summary of the last 5 payments you received" isWd={true} data={this.state.recent_wd}/>
                     <Box title="Referral" isWd={false} data={this.state.referral_user}/>
                 </div>
                 <div className="row">
