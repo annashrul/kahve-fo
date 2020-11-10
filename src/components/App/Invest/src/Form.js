@@ -309,7 +309,7 @@ class Form extends Component {
                                         <label>Your Wallet Addres</label>
                                     </td>
                                     <td>
-                                        <label>: {this.props.config.wallet_address}</label>
+                                        <label>: {this.props.config.invest_detail===undefined?'':this.props.config.invest_detail.wallet_address}</label>
                                     </td>
                                 </tr>
                                 <tr>

@@ -36,16 +36,22 @@ class Dashboard extends Component {
             this.props.history.push('/')
         }
     }
-    componentWillReceiveProps = (nextProps) => {
-        if (nextProps.auth.user) {
-            console.log("AUTH", nextProps.auth.user);
-            if (nextProps.auth.user!==this.props.auth.user){
 
-                if (nextProps.auth.user.reff!==undefined){
-                    this.props.dispatch(FetchDashboard(nextProps.auth.user.reff));
-                }
-            }
+    componentDidUpdate(prevState){
+        if (this.props.auth.user.reff!==prevState.auth.user.reff){
+            this.props.dispatch(FetchDashboard(this.props.auth.user.reff));
         }
+    }
+    componentWillReceiveProps = (nextProps) => {
+        // if (nextProps.auth.user) {
+        //     console.log("AUTH", nextProps.auth.user);
+        //     if (nextProps.auth.user!==this.props.auth.user){
+
+        //         if (nextProps.auth.user.reff!==undefined){
+        //             this.props.dispatch(FetchDashboard(nextProps.auth.user.reff));
+        //         }
+        //     }
+        // }
         if (nextProps.data!==undefined){
             if (nextProps.data !== this.props.data) {
                 // const newData = [];

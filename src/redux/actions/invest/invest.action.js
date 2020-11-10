@@ -105,7 +105,7 @@ export const storeAppove = (id,data) => {
                 Swal.fire({
                     title: 'Failed',
                     type: 'error',
-                    text: error.response.data.msg,
+                    text: "Something when wrong with your request",
                 });
                 if (error.response) {
                     
