@@ -12,7 +12,10 @@ class Charts extends Component {
             weekly:0,
             twoMonths:0,
             totals:0,
-            err:false
+            err:false,
+            threeMonths:0,
+            fourMonths: 0,
+            fiveMonths:0
         };
         this.handleChange = this.handleChange.bind(this)
     }
@@ -29,8 +32,9 @@ class Charts extends Component {
             this.setState({
                 monthly: (monthly),
                 daily: (monthly/30),
-                weekly: (monthly/4),
                 twoMonths: (monthly*2),
+                threeMonths: (monthly*3),
+                fourMonths: (monthly*4),
                 totals: (monthly*5),
                 err: parseFloat(value)<this.state.min?true:false
             })
@@ -87,17 +91,22 @@ class Charts extends Component {
                                             <td style={{border:'none'}}>{this.state.daily.toFixed(8)} ₿</td>
                                         </tr>
                                         <tr>
-                                            <th style={{border:'none',width:"30%"}}>Weekly Earnings</th>
-                                            <td style={{border:'none'}}>:</td>
-                                            <td style={{border:'none'}}>{this.state.weekly.toFixed(8)} ₿</td>
-                                        </tr>
-                                        <tr>
                                             <th style={{border:'none',width:"30%"}}>2 Months Earnings</th>
                                             <td style={{border:'none'}}>:</td>
                                             <td style={{border:'none'}}>{this.state.twoMonths.toFixed(8)} ₿</td>
                                         </tr>
                                         <tr>
-                                            <th style={{border:'none',width:"30%"}}>Total Earnings <br/>({parseInt(this.props.number_of_month,10)*parseInt(this.props.contract,10)} days)</th>
+                                            <th style={{border:'none',width:"30%"}}>3 Months Earnings</th>
+                                            <td style={{border:'none'}}>:</td>
+                                            <td style={{border:'none'}}>{this.state.threeMonths.toFixed(8)} ₿</td>
+                                        </tr>
+                                        <tr>
+                                            <th style={{border:'none',width:"30%"}}>4 Months Earnings</th>
+                                            <td style={{border:'none'}}>:</td>
+                                            <td style={{border:'none'}}>{this.state.fourMonths.toFixed(8)} ₿</td>
+                                        </tr>
+                                        <tr>
+                                            <th style={{border:'none',width:"30%"}}>5 Months Earnings</th>
                                             <td style={{border:'none'}}>:</td>
                                             <td style={{border:'none'}}>{this.state.totals.toFixed(8)} ₿</td>
                                         </tr>
