@@ -19,6 +19,7 @@ class Form extends Component {
             verif:false,
             myPassword:'',
             isLoading:false,
+            isWrong:false,
             error:{
                 amount: "",
                 id_wallet: "",
@@ -72,9 +73,52 @@ class Form extends Component {
         })
     }
 
-    handleChange = (event) => {
+    handleChange = (event,param) => {
         let column=event.target.name;
         let value=event.target.value;
+        if (column === 'amount'){
+            // if(param==='blur'){
+                // if(value>this.state.config.active_balance){
+                //     value=this.state.config.active_balance;
+                //     this.setState({isWrong:true});
+                //     if(this.state.config.active_balance>this.state.config.max_wd) {
+                //         value=this.state.config.max_wd;
+                //     }
+                // } else if(value<this.state.config.min_wd) {
+                //     value=this.state.config.min_wd;
+                //     this.setState({isWrong:true});
+                // } else{
+                //     this.setState({isWrong:false});
+                // }
+            // }
+            if(value>this.state.config.active_balance&&value<this.state.config.min_wd){
+                this.setState({isWrong:true});
+            } else if(value>this.state.config.active_balance) {
+                this.setState({isWrong:true});
+            } else if(value>this.state.config.max_wd) {
+                this.setState({isWrong:true});
+            } else if(value<this.state.config.min_wd) {
+                this.setState({isWrong:true});
+            } else {
+                this.setState({isWrong:false});
+            }
+            if(value===''){
+                value=0;
+                let err = Object.assign({}, this.state.error, {
+                    amount: "Wrong Amount!"
+                });
+                this.setState({
+                    error: err
+                })
+            } else {
+                let err = Object.assign({}, this.state.error, {
+                    amount: ""
+                });
+                this.setState({
+                    error: err
+                })
+            }
+        }
         let err = Object.assign({}, this.state.error, {
             [column]: ""
         });
@@ -137,7 +181,7 @@ class Form extends Component {
             userData['password'] = this.state.myPassword
             Axios.post(HEADERS.URL+'auth', userData)
             .then(res=>{
-                this.postWd()
+                if(!this.state.isWrong) this.postWd()
                 this.setState({isLoading:false})
             }).catch(err =>{
                 this.setState({isLoading:false})
@@ -210,7 +254,7 @@ class Form extends Component {
                     <div className="card-header bg-transparent">
                         <h3>Withdraw</h3>
                     </div>
-                    {this.state.config.isActive?
+                    {!this.state.config.isActive?
                         <div className="card-body">
                             <div className="row">
                                 <div className="col-md-12">
@@ -247,18 +291,28 @@ class Form extends Component {
                                             </ul>
                                             <div className="col-md-12">
                                                 <div className="form-group">
+                                                    {/* {(this.state.amount>this.state.config.active_balance)?(this.state.config.active_balance>this.state.config.max_wd)?true:false:(this.state.amount<this.state.config.min_wd)? */}
+                                                    {this.state.isWrong?
+                                                        <div class="alert alert-danger alert-dismissible bg-danger text-white border-0 fade show mt-2" role="alert">
+                                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                                <span aria-hidden="true">×</span>
+                                                            </button>
+                                                            <strong>Error - </strong> The Amount field must contain a number greater than {String(this.state.config.min_wd===undefined?0:this.state.config.min_wd).substr(0,10)} and max to {String(this.state.config.active_balance===undefined?0:this.state.config.active_balance).substr(0,10)} and also cannot exceed a value of {this.state.config.max_wd}
+                                                        </div>:''
+                                                    }
                                                     <label className="control-label font-12">
                                                         Amount
                                                     </label>
                                                     <input
                                                         type="text"
-                                                        maxLength="8"
-                                                        readOnly={true}
+                                                        maxLength="10"
+                                                        readOnly={false}
                                                         className="form-control"
                                                         id="amount"
                                                         name="amount"
-                                                        // onChange={(e) => this.handleChange(e)}
-                                                        value={String(this.state.config.active_balance===undefined?0:this.state.config.active_balance).substr(0,10)}
+                                                        onChange={(e) => this.handleChange(e)}
+                                                        onBlur={(e) => this.handleChange(e,'blur')}
+                                                        value={this.state.amount}
                                                     />
                                                     <div className="invalid-feedback"
                                                             style={this.state.error.amount !== "" ? {display: 'block'} : {display: 'none'}}>
@@ -316,7 +370,7 @@ class Form extends Component {
                                 <div className="col-md-12">
                                     <div class="form-group">
                                         <label>&nbsp;</label>
-                                        <button type="button" className="btn btn-primary btn-block" onClick={(e) => this.handleSubmit(e)}>PROCESS</button>
+                                        <button type="button" className="btn btn-primary btn-block" disabled={this.state.isWrong} onClick={(e) => this.handleSubmit(e)}>PROCESS</button>
                                     </div>
                                 </div>
                                 {/* <div className="col-md-6">

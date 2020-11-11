@@ -14,7 +14,8 @@ export const TOKEN = {
 
 export const HEADERS ={
   // URL: "https://kahvebit.com:2096/",
-  URL: "http://192.168.100.10:3000/"
+  // URL: "http://192.168.100.10:3000/"
+  URL: "https://kahvebit.com:2096/"
 }
 
 /****************
