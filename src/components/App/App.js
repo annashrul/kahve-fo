@@ -17,8 +17,8 @@ axios.defaults.headers.common['identities'] = `netindo`;
 axios.defaults.headers.common['sercet-id'] = `$2b$08$hLMU6rEvNILCMaQbthARK.iCmDRO7jNbUB8CcvyRStqsHD4UQxjDO`;
 axios.defaults.headers.common['connectifity-agent'] = `apps`;
 // Check token in localStorage
-  if (localStorage.npos) {
-    setAuthToken(atob(localStorage.npos));
+  if (localStorage.kahvebit) {
+    setAuthToken(atob(localStorage.kahvebit));
     store.dispatch(setLoggedin(true))
     const sess = get('sess');
       sess.then(res => {
@@ -41,7 +41,7 @@ axios.defaults.headers.common['connectifity-agent'] = `apps`;
           // }
         }else{
           store.dispatch(logoutUser());
-          localStorage.removeItem('npos')
+          localStorage.removeItem('kahvebit')
           // TODO: Clear current profile
           // Redirect to login
           window.location.href = '/login';
