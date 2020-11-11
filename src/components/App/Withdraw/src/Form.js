@@ -20,6 +20,7 @@ class Form extends Component {
             myPassword:'',
             isLoading:false,
             isWrong:false,
+            isOkay:false,
             error:{
                 amount: "",
                 id_wallet: "",
@@ -53,6 +54,18 @@ class Form extends Component {
                 })
             }
         }
+        // if(value>this.state.config.active_balance){
+        //     value=this.state.config.active_balance;
+        //     this.setState({isWrong:true});
+        //     if(this.state.config.active_balance>this.state.config.max_wd) {
+        //         value=this.state.config.max_wd;
+        //     }
+        // } else if(value<this.state.config.min_wd) {
+        //     value=this.state.config.min_wd;
+        //     this.setState({isWrong:true});
+        // } else{
+        //     this.setState({isWrong:false});
+        // }
     }
     // componentDidMount(){
     //     this.nameInput.focus();
@@ -60,6 +73,22 @@ class Form extends Component {
     componentDidUpdate(prevProps) {
         if (this.props.coin !== prevProps.coin) {
             this.props.dispatch(FetchWithdrawConfig(this.props.coin.data[0].symbol))
+        }
+        if(prevProps.config.active_balance!==this.props.config.active_balance){
+            if(this.state.config.active_balance<this.state.config.min_wd){
+                this.setState({amount:parseFloat(this.state.config.active_balance).toFixed(8),isWrong:true});
+            } else if(this.state.config.active_balance>this.state.config.max_wd){
+                this.setState({amount:parseFloat(this.state.config.max_wd).toFixed(8),isOkay:true})
+            } else if(this.state.config.active_balance<this.state.config.max_wd){
+                if(this.state.config.active_balance<this.state.config.min_wd){
+                    this.setState({amount:parseFloat(this.state.config.active_balance).toFixed(8),isWrong:true});
+                } else {
+                    this.setState({amount:parseFloat(this.state.config.active_balance).toFixed(8),isOkay:true})
+                }
+            } else {
+                this.setState({isWrong:false})
+            }
+            
         }
     }
     HandleChangeCoin(cn){
@@ -73,52 +102,9 @@ class Form extends Component {
         })
     }
 
-    handleChange = (event,param) => {
+    handleChange = (event) => {
         let column=event.target.name;
         let value=event.target.value;
-        if (column === 'amount'){
-            // if(param==='blur'){
-                // if(value>this.state.config.active_balance){
-                //     value=this.state.config.active_balance;
-                //     this.setState({isWrong:true});
-                //     if(this.state.config.active_balance>this.state.config.max_wd) {
-                //         value=this.state.config.max_wd;
-                //     }
-                // } else if(value<this.state.config.min_wd) {
-                //     value=this.state.config.min_wd;
-                //     this.setState({isWrong:true});
-                // } else{
-                //     this.setState({isWrong:false});
-                // }
-            // }
-            if(value>this.state.config.active_balance&&value<this.state.config.min_wd){
-                this.setState({isWrong:true});
-            } else if(value>this.state.config.active_balance) {
-                this.setState({isWrong:true});
-            } else if(value>this.state.config.max_wd) {
-                this.setState({isWrong:true});
-            } else if(value<this.state.config.min_wd) {
-                this.setState({isWrong:true});
-            } else {
-                this.setState({isWrong:false});
-            }
-            if(value===''){
-                value=0;
-                let err = Object.assign({}, this.state.error, {
-                    amount: "Wrong Amount!"
-                });
-                this.setState({
-                    error: err
-                })
-            } else {
-                let err = Object.assign({}, this.state.error, {
-                    amount: ""
-                });
-                this.setState({
-                    error: err
-                })
-            }
-        }
         let err = Object.assign({}, this.state.error, {
             [column]: ""
         });
@@ -142,7 +128,7 @@ class Form extends Component {
     }
     handleSubmit(e){
         e.preventDefault();
-        console.log("this.state.config.isActive",this.state.config.isActive)
+        
         if(!this.state.verif){
             this.setState({verif:true})
             if (this.searchInput) {
@@ -158,11 +144,6 @@ class Form extends Component {
             });
             this.setState({error:err})
         } else if(!this.state.config.isActive) {
-            // Swal.fire(
-            //     'Withdrawals can only do the days below!.',
-            //     'Testtt',
-            //     'error'
-            // )
             let days = this.state.config.schedule
             let time = this.state.config.schedule_time
             Swal.fire({
@@ -185,7 +166,6 @@ class Form extends Component {
                 this.setState({isLoading:false})
             }).catch(err =>{
                 this.setState({isLoading:false})
-            // Swal.close() 
                 if (err.message === 'Network Error') {
                     Swal.fire(
                         'Server cannot connected!.',
@@ -204,14 +184,10 @@ class Form extends Component {
         }
     }
 
-    // focus() {
-    //     this.textInput.current.focus();
-    // }
-
     postWd(){
         let parsedata=[];
         parsedata = {
-            amount: this.state.config.active_balance === undefined ? 0 : this.state.config.active_balance,
+            amount: this.state.amount,
             id_wallet: this.state.config.wallet.id === undefined ? '-' : this.state.config.wallet.id,
             coin_type: this.state.coin_type.value === undefined ? 'BTC' : this.state.coin_type.value,
         };
@@ -254,7 +230,7 @@ class Form extends Component {
                     <div className="card-header bg-transparent">
                         <h3>Withdraw</h3>
                     </div>
-                    {!this.state.config.isActive?
+                    {this.state.config.isActive?
                         <div className="card-body">
                             <div className="row">
                                 <div className="col-md-12">
@@ -297,7 +273,7 @@ class Form extends Component {
                                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                                 <span aria-hidden="true">×</span>
                                                             </button>
-                                                            <strong>Error - </strong> The Amount field must contain a number greater than {String(this.state.config.min_wd===undefined?0:this.state.config.min_wd).substr(0,10)} and max to {String(this.state.config.active_balance===undefined?0:this.state.config.active_balance).substr(0,10)} and also cannot exceed a value of {this.state.config.max_wd}
+                                                            The Amount field must contain a number greater than {String(this.state.config.min_wd===undefined?0:this.state.config.min_wd).substr(0,10)} and max to {String(this.state.config.active_balance===undefined?0:this.state.config.active_balance).substr(0,10)} and also cannot exceed a value of {this.state.config.max_wd}
                                                         </div>:''
                                                     }
                                                     <label className="control-label font-12">
@@ -306,7 +282,7 @@ class Form extends Component {
                                                     <input
                                                         type="text"
                                                         maxLength="10"
-                                                        readOnly={false}
+                                                        readOnly={true}
                                                         className="form-control"
                                                         id="amount"
                                                         name="amount"
@@ -370,7 +346,7 @@ class Form extends Component {
                                 <div className="col-md-12">
                                     <div class="form-group">
                                         <label>&nbsp;</label>
-                                        <button type="button" className="btn btn-primary btn-block" disabled={this.state.isWrong} onClick={(e) => this.handleSubmit(e)}>PROCESS</button>
+                                        <button type="button" className="btn btn-primary btn-block" disabled={this.state.isOkay} onClick={(e) => this.handleSubmit(e)}>PROCESS</button>
                                     </div>
                                 </div>
                                 {/* <div className="col-md-6">

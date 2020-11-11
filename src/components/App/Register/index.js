@@ -6,7 +6,7 @@ import { storeRegister } from '../../../redux/actions/register/register.action';
 import { Link } from 'react-router-dom';
 import Preloader from 'Preloader'
 import { HEADERS } from '../../../redux/actions/_constants';
-import ReCAPTCHA from 'react-google-recaptcha';
+import SliderCaptcha from '@slider-captcha/react'
 
 class Register extends Component {
     constructor(props) {
@@ -241,10 +241,11 @@ class Register extends Component {
                                     </div>
                                 </div>
                                 <div className="form-group">
-                                    <ReCAPTCHA
-                                        size="normal"
-                                        sitekey="6Lfex-AZAAAAADYVuKH3o_uCU4TtxjT14b8R-Jj9"
-                                        onChange={this.onValid}
+                                <SliderCaptcha
+                                    create={HEADERS.URL+"auth/captcha/get"}
+                                    verify={HEADERS.URL+"auth/captcha"}
+                                    callback={this.onValid}
+                                    text={{anchor:'I\'m not robot',challenge:'Slide to continue'}}
                                     />
                                 </div>
                                 <div className="form-group mb-0 mt-15">

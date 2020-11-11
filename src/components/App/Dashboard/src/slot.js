@@ -1,7 +1,18 @@
 import React, {Component} from 'react'
 import moment from 'moment'
 import {Link} from "react-router-dom"
-
+import Swal from 'sweetalert2'
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 1000,
+  timerProgressBar: true,
+  onOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
 class Charts extends Component {
 
   constructor(props) {
@@ -150,9 +161,9 @@ class Charts extends Component {
                                   return (
                                     <tr style={item.status===0?{background:'#eeeeee'}:{}}>
                                       <th scope="row">Slot {item.slot_no}</th>
-                                      <td>{item.amount===null?'-':parseFloat(item.amount).toFixed(8)} <small>{item.symbol===null?'-':"("+item.symbol+")"}</small></td>
+                                      <td onClick={(e) => {e.preventDefault();navigator.clipboard.writeText(item.amount===null?'-':parseFloat(item.amount).toFixed(8));Toast.fire({icon: 'success',title: `Data has been copied.`})}}><i class="zmdi zmdi-copy"/> {item.amount===null?'-':parseFloat(item.amount).toFixed(8)} <small>{item.symbol===null?'-':"("+item.symbol+")"}</small></td>
                                       <td>{item.contract===null?'-':contract+' Days'} </td>
-                                      <td>{item.daily_earning===null?'-':parseFloat(item.daily_earning).toFixed(8)} <small>{item.symbol===null?'-':"("+item.symbol+")"}</small></td>
+                                      <td onClick={(e) => {e.preventDefault();navigator.clipboard.writeText(item.daily_earning===null?'-':parseFloat(item.daily_earning).toFixed(8));Toast.fire({icon: 'success',title: `Data has been copied.`})}}><i class="zmdi zmdi-copy"/> {item.daily_earning===null?'-':parseFloat(item.daily_earning).toFixed(8)} <small>{item.symbol===null?'-':"("+item.symbol+")"}</small></td>
                                       <td>{item.start_date===null?'-':moment(item.start_date).format('Y-M-D HH:mm:ss')}</td>
                                       <td>{
                                         this.state.date[index]!==undefined?
