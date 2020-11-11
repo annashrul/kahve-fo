@@ -215,11 +215,41 @@ class Profile extends Component {
                                 </div>
                                 <div className="personal-information mt-30">
                                     <div className="name-text">
-                                    <h6 className="font-14"><span className="text-muted">Active Balace :</span> {active_balance}</h6>
-                                    <h6 className="font-14"><span className="text-muted">Investment :</span> {investment}</h6>
-                                    <h6 className="font-14"><span className="text-muted">Payment :</span> {payment}</h6>
-                                    <h6 className="font-14"><span className="text-muted">Referral Code :</span> {kd_referral}</h6>
-                                    <h6 className="font-14"><span className="text-muted">Address :</span> {address}</h6>
+                                        <table border="0" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <td width="35%"></td>
+                                                    <td width="65%"></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><h6 className="font-14"><span className="text-muted">Active Balace</span></h6></td>
+                                                    <td><h6 className="font-14">: {parseFloat(active_balance).toFixed(8)}</h6></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><h6 className="font-14"><span className="text-muted">Investment</span></h6></td>
+                                                    <td><h6 className="font-14">: {parseFloat(investment).toFixed(8)}</h6></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><h6 className="font-14"><span className="text-muted">Payment</span></h6></td>
+                                                    <td><h6 className="font-14">: {parseFloat(payment).toFixed(8)}</h6></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><h6 className="font-14"><span className="text-muted">Referral Code</span></h6></td>
+                                                    <td><h6 className="font-14">: {kd_referral}</h6></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><h6 className="font-14"><span className="text-muted">Wallet Address</span></h6></td>
+                                                    <td><h6 className="font-14">: {address}</h6></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        {/* <h6 className="font-14"><span className="text-muted">Active Balace :</span> {parseFloat(active_balance).toFixed(8)}</h6>
+                                        <h6 className="font-14"><span className="text-muted">Investment :</span> {parseFloat(investment).toFixed(8)}</h6>
+                                        <h6 className="font-14"><span className="text-muted">Payment :</span> {parseFloat(payment).toFixed(8)}</h6>
+                                        <h6 className="font-14"><span className="text-muted">Referral Code :</span> {kd_referral}</h6>
+                                        <h6 className="font-14"><span className="text-muted">Address :</span> {address}</h6> */}
                                     </div>
                                 </div>
                                 </div>
@@ -232,7 +262,7 @@ class Profile extends Component {
                                 <div className="card-body text-center">
                                 <h2>Your Referral Link</h2>
                                     <p>Click link to Copy</p>
-                                        <a href="!#" className="font-20" onClick={(e) => {e.preventDefault();navigator.clipboard.writeText(link);Toast.fire({icon: 'success',title: `Link has been copied.`})}} style={{wordBreak:"break-all"}} data-toggle="tooltip" data-placement="top" title="Click to copy">{link}</a><br/>
+                                        <a href="!#" className="font-20" onClick={(e) => {e.preventDefault();navigator.clipboard.writeText(link);Toast.fire({icon: 'success',title: `Link has been copied.`})}} style={{wordBreak:"break-all"}} data-toggle="tooltip" data-placement="top" title="Click to copy"><i class="zmdi zmdi-copy"/> {link}</a><br/>
                                 </div>
                             </div>
                         </div>

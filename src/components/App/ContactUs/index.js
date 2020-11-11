@@ -5,8 +5,8 @@ import Swal from 'sweetalert2';
 import { storeContact } from '../../../redux/actions/site.action';
 import Preloader from 'Preloader'
 import Layout from 'components/Layout'
-import ReCAPTCHA from 'react-google-recaptcha';
-// import SliderCaptcha from '@slider-captcha/react'
+import SliderCaptcha from '@slider-captcha/react'
+import { HEADERS } from '../../../redux/actions/_constants';
 
 class Contact extends Component {
     constructor(props) {
@@ -33,6 +33,7 @@ class Contact extends Component {
             this.props.history.push('/')
         }
         this.setState({
+            name:this.props.auth.user.name,
             email:this.props.auth.user.email,
         })
     }
@@ -50,6 +51,7 @@ class Contact extends Component {
 
                 if (nextProps.auth.user.email!==undefined){
                     this.setState({
+                        name:nextProps.auth.user.name,
                         email:nextProps.auth.user.email,
                     })
                 }
@@ -155,7 +157,7 @@ class Contact extends Component {
                                 <form className="login-area">
                                 <div className="form-group">
                                     <label htmlFor="name">Full Name</label>
-                                    <input className="form-control" type="text" id="name" name="name" value={this.state.name} onChange={(e) => this.handleChange(e)} placeholder="Enter your Name" required />
+                                    <input className="form-control" type="text" readOnly id="name" name="name" value={this.state.name} onChange={(e) => this.handleChange(e)} placeholder="Enter your Name" required />
                                     <div className="invalid-feedback"
                                         style={this.state.error.name !== "" ? {display: 'block'} : {display: 'none'}}>
                                         {this.state.error.name}
@@ -188,18 +190,12 @@ class Contact extends Component {
                                     </div>
                                 </div>
                                 <div className="form-group">
-                                    <ReCAPTCHA
-                                        style={{ display: "inline-block" }}
-                                        size="normal"
-                                        sitekey="6Lfex-AZAAAAADYVuKH3o_uCU4TtxjT14b8R-Jj9"
-                                        onChange={this.onValid}
-                                    />
-
-                                    {/* <SliderCaptcha
-                                        create="https://example.com/captcha/create"
-                                        verify="https://example.com/captcha/verify"
-                                        callback={this.verifiedCallback}
-                                        /> */}
+                                    <SliderCaptcha
+                                        create={HEADERS.URL+"auth/captcha/get"}
+                                        verify={HEADERS.URL+"auth/captcha"}
+                                        callback={this.onValid}
+                                        text={{anchor:'I\'m not robot',challenge:'Slide to continue'}}
+                                        />
                                 </div>
                                 <div className="form-group mb-0 mt-15">
                                     <button className="btn btn-primary btn-block" type="submit" onClick={(e)=>this.handleSubmit(e)}>SEND</button>

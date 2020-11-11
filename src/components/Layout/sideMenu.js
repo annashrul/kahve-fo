@@ -40,13 +40,13 @@ class SideMenu extends Component {
     handleLogout = (e) => {
         e.preventDefault();
         Swal.fire({
-            title: 'Apakah anda yakin akan logout aplikasi?',
+            title: 'Are you sure?',
             text: "",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya!'
+            confirmButtonText: 'Yes!'
         }).then((result) => {
             if (result.value) {
                 this.props.logoutUser();

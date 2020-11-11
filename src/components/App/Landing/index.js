@@ -7,7 +7,6 @@ import imgThumb from 'assets/kahve.png';
 import {loginUser} from 'redux/actions/authActions';
 import Swal from 'sweetalert2'
 import {HEADERS} from 'redux/actions/_constants'
-import ReCAPTCHA from 'react-google-recaptcha';
 import SliderCaptcha from '@slider-captcha/react'
 class Login extends Component {
     constructor(props) {
@@ -83,8 +82,7 @@ class Login extends Component {
          }
      }
 
-    submitHandelar = (event)=>{
-        event.preventDefault();
+     postData(){
         const {email,password} = this.state;
         if(email!==''&&password!==''){
             if(this.state.captcha){
@@ -107,6 +105,11 @@ class Login extends Component {
                 'error'
             )
         }
+     }
+
+    submitHandelar = (event)=>{
+        event.preventDefault();
+        this.postData()
     }
 
     handleInputChange =(event)=> {
@@ -121,7 +124,11 @@ class Login extends Component {
 
     onValid(value){
         // console.log("Captcha value:", value);
-        this.setState({captcha:value!==''?true:false})
+        const {email,password} = this.state;
+        if(email!==''&&password!==''){
+            this.setState({captcha:value!==''?true:false})
+            this.postData()
+        }
     }
     
     verifiedCallback(token) {
@@ -159,16 +166,11 @@ class Login extends Component {
                                 {errors.password && (<div className="invalid-feedback">{errors.password}</div>)}
                             </div>
                             <div className="form-group">
-                                <ReCAPTCHA
-                                    size="normal"
-                                    sitekey="6Lfex-AZAAAAADYVuKH3o_uCU4TtxjT14b8R-Jj9"
-                                    onChange={this.onValid}
-                                />
-                                <br/>
                                 <SliderCaptcha
                                     create={HEADERS.URL+"auth/captcha/get"}
                                     verify={HEADERS.URL+"auth/captcha"}
-                                    callback={this.verifiedCallback}
+                                    callback={this.onValid}
+                                    text={{anchor:'I\'m not robot',challenge:'Slide to continue'}}
                                     />
                             </div>
                             <div className="form-group mb-0">

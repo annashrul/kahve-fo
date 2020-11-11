@@ -272,7 +272,7 @@ class Form extends Component {
                     this.props.config.active_invest===1||this.props.isLoading?
                     <div className="card-body pl-5">
                         <h3>Summary</h3>
-                        <table border="0">
+                        <table border="0" width="100%">
                             <thead>
                                 <tr>
                                     <th width="35%"></th>
