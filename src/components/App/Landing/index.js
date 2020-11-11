@@ -8,6 +8,7 @@ import {loginUser} from 'redux/actions/authActions';
 import Swal from 'sweetalert2'
 import {HEADERS} from 'redux/actions/_constants'
 import ReCAPTCHA from 'react-google-recaptcha';
+import SliderCaptcha from '@slider-captcha/react'
 class Login extends Component {
     constructor(props) {
         super(props);
@@ -122,6 +123,10 @@ class Login extends Component {
         // console.log("Captcha value:", value);
         this.setState({captcha:value!==''?true:false})
     }
+    
+    verifiedCallback(token) {
+        console.log('Captcha token: ' + token);
+    }
 
     render() {
         const {email,password, errors} = this.state;
@@ -159,6 +164,12 @@ class Login extends Component {
                                     sitekey="6Lfex-AZAAAAADYVuKH3o_uCU4TtxjT14b8R-Jj9"
                                     onChange={this.onValid}
                                 />
+                                <br/>
+                                <SliderCaptcha
+                                    create={HEADERS.URL+"auth/captcha/get"}
+                                    verify={HEADERS.URL+"auth/captcha"}
+                                    callback={this.verifiedCallback}
+                                    />
                             </div>
                             <div className="form-group mb-0">
                                 <button className="btn btn-primary btn-block" type="submit" onClick={this.submitHandelar}> Log In </button>
