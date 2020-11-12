@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import Preloader from 'Preloader'
 import { HEADERS } from '../../../redux/actions/_constants';
 import SliderCaptcha from '@slider-captcha/react'
+import Footer from '../../Layout/footer';
 
 class Register extends Component {
     constructor(props) {
@@ -56,7 +57,7 @@ class Register extends Component {
         .then(res => res.json())
         .then(
             (data) => {
-                document.title = `${data.result.title===undefined?'Kahve - Register':data.result.title}`;
+                document.title = `${data.result.title===undefined?'KahveBit - Register':data.result.title}`;
                 this.setState({
                     logo: data.result.logo,
                     register_limit: data.result.register_limit,
@@ -268,6 +269,8 @@ class Register extends Component {
                 :
                 <Preloader/>
                 }
+                
+                <Footer/>
                 </div>
         );
     }

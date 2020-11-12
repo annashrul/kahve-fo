@@ -273,7 +273,7 @@ class Form extends Component {
                                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                                 <span aria-hidden="true">×</span>
                                                             </button>
-                                                            The Amount field must contain a number greater than {String(this.state.config.min_wd===undefined?0:this.state.config.min_wd).substr(0,10)} and max to {String(this.state.config.active_balance===undefined?0:this.state.config.active_balance).substr(0,10)} and also cannot exceed a value of {this.state.config.max_wd}
+                                                            The Amount field must contain a number greater than {String(this.state.config.min_wd===undefined?0:this.state.config.min_wd).substr(0,10)} and cannot exceed a value of {this.state.config.max_wd}
                                                         </div>:''
                                                     }
                                                     <label className="control-label font-12">

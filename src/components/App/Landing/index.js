@@ -8,6 +8,7 @@ import {loginUser} from 'redux/actions/authActions';
 import Swal from 'sweetalert2'
 import {HEADERS} from 'redux/actions/_constants'
 import SliderCaptcha from '@slider-captcha/react'
+import Footer from '../../Layout/footer';
 class Login extends Component {
     constructor(props) {
         super(props);
@@ -15,6 +16,7 @@ class Login extends Component {
             email: '',
             password: '',
             captcha: false,
+            isActive: false,
             // disableButton:false,
             // server_price:0,
             // acc_name:"",
@@ -48,10 +50,11 @@ class Login extends Component {
                 localStorage.setItem("logos",data.result.logo)
                 localStorage.setItem("site_title", data.result.site_name)   
                 localStorage.setItem("site_url", data.result.site_url)
-                document.title = `${data.result.title===undefined?'Kahve - Log In':data.result.title}`;
+                document.title = `${data.result.title===undefined?'KahveBit - Log In':data.result.title}`;
                 this.setState({
                     logo: data.result.logo,
-                    width:data.result.width
+                    width:data.result.width,
+                    isActive:data.result.isActive
                 })
                 const favicon = this.getFaviconEl(); // Accessing favicon element
                 favicon.href = data.result.fav_icon;
@@ -84,24 +87,32 @@ class Login extends Component {
 
      postData(){
         const {email,password} = this.state;
-        if(email!==''&&password!==''){
-            if(this.state.captcha){
-                const user = {
-                    email: email,
-                    password: password
+        if(!this.state.isActive){
+            if(email!==''&&password!==''){
+                if(this.state.captcha){
+                    const user = {
+                        email: email,
+                        password: password
+                    }
+                    this.props.loginUser(user);
+                } else {
+                    Swal.fire(
+                        'Captcha is required!',
+                        'Checked captcha first!',
+                        'error'
+                    )
                 }
-                this.props.loginUser(user);
-            } else {
+            }else{
                 Swal.fire(
-                    'Captcha is required!',
-                    'Checked captcha first!',
+                    'Fill Username and Password! ',
+                    'Form cannot be null.',
                     'error'
                 )
             }
         }else{
             Swal.fire(
-                'Fill Username and Password! ',
-                'Form cannot be null.',
+                'Login bloked by server for this time!',
+                'Comeback again later.',
                 'error'
             )
         }
@@ -128,6 +139,8 @@ class Login extends Component {
         if(email!==''&&password!==''){
             this.setState({captcha:value!==''?true:false})
             this.postData()
+        } else {
+            this.setState({captcha:value!==''?true:false})
         }
     }
     
@@ -138,54 +151,67 @@ class Login extends Component {
     render() {
         const {email,password, errors} = this.state;
         return (
-        <div className="container h-100 login-area" style={{marginTop:'8rem'}}>
-            <div className="row h-100 align-items-center justify-content-center">
-                <div className="col-12">
-                {/* Middle Box */}
-                <div className="middle-box">
-                    <div className="card">
-                    <div className="card-body p-4">
-                        <div className="row align-items-center">
-                        <div className="col-md-6">
-                            <div className="xs-d-none mb-50-xs">
-                            <img src={this.state.logo}  onError={(e)=>{e.target.onerror = null; e.target.src=`${imgThumb}`}} alt="kahve" />
-                            </div>
+            this.state.isActive?
+                <div className="error-page-area">
+                    <div className="error-content text-center">
+                        {/* Error Thumb */}
+                        <div className="error-thumb">
+                        <img src={this.state.logo} alt="kahve" />
                         </div>
-                        <div className="col-md-6">
-                            {/* Logo */}
-                            <h4 className="font-18 mb-30">Welcome back! Log in to your account.</h4>
-                            <form action="#">
-                            <div className="form-group">
-                                <label className="float-left" htmlFor="emailaddress">Email address</label>
-                                <input className="form-control" type="email" id="emailaddress" name="email" value={email} onChange={this.handleInputChange} required placeholder="Enter your email" />
-                                {errors.email && (<div className="invalid-feedback">{errors.email}</div>)}
+                        <h2>Opps! You can't login at this time</h2>
+                        <p>Sorry, the page you requested cannot be opened. Please try again later.</p>
+                    </div>
+                </div>
+            :
+            <div className="container h-100 login-area" style={{marginTop:'8rem'}}>
+                <div className="row h-100 align-items-center justify-content-center">
+                    <div className="col-12">
+                    {/* Middle Box */}
+                    <div className="middle-box">
+                        <div className="card">
+                        <div className="card-body p-4">
+                            <div className="row align-items-center">
+                            <div className="col-md-6">
+                                <div className="xs-d-none mb-50-xs">
+                                <img src={this.state.logo}  onError={(e)=>{e.target.onerror = null; e.target.src=`${imgThumb}`}} alt="kahve" />
+                                </div>
                             </div>
-                            <div className="form-group">
-                                <label className="float-left" htmlFor="password">Password</label>
-                                <input className="form-control" type="password" required id="password" name="password" value={password} onChange={this.handleInputChange} placeholder="Enter your password" />
-                                {errors.password && (<div className="invalid-feedback">{errors.password}</div>)}
+                            <div className="col-md-6">
+                                {/* Logo */}
+                                <h4 className="font-18 mb-30">Welcome back! Log in to your account.</h4>
+                                <form action="#">
+                                <div className="form-group">
+                                    <label className="float-left" htmlFor="emailaddress">Email address</label>
+                                    <input className="form-control" type="email" id="emailaddress" name="email" value={email} onChange={this.handleInputChange} required placeholder="Enter your email" />
+                                    {errors.email && (<div className="invalid-feedback">{errors.email}</div>)}
+                                </div>
+                                <div className="form-group">
+                                    <label className="float-left" htmlFor="password">Password</label>
+                                    <input className="form-control" type="password" required id="password" name="password" value={password} onChange={this.handleInputChange} placeholder="Enter your password" />
+                                    {errors.password && (<div className="invalid-feedback">{errors.password}</div>)}
+                                </div>
+                                <div className="form-group">
+                                    <SliderCaptcha
+                                        create={HEADERS.URL+"auth/captcha/get"}
+                                        verify={HEADERS.URL+"auth/captcha"}
+                                        callback={this.onValid}
+                                        text={{anchor:'I\'m not robot',challenge:'Slide to continue'}}
+                                        />
+                                </div>
+                                <div className="form-group mb-0">
+                                    <button className="btn btn-primary btn-block" type="submit" onClick={this.submitHandelar}> Log In </button>
+                                </div>
+                                </form>
+                            </div> {/* end card-body */}
                             </div>
-                            <div className="form-group">
-                                <SliderCaptcha
-                                    create={HEADERS.URL+"auth/captcha/get"}
-                                    verify={HEADERS.URL+"auth/captcha"}
-                                    callback={this.onValid}
-                                    text={{anchor:'I\'m not robot',challenge:'Slide to continue'}}
-                                    />
-                            </div>
-                            <div className="form-group mb-0">
-                                <button className="btn btn-primary btn-block" type="submit" onClick={this.submitHandelar}> Log In </button>
-                            </div>
-                            </form>
-                        </div> {/* end card-body */}
+                            {/* end card */}
                         </div>
-                        {/* end card */}
+                        </div>
                     </div>
                     </div>
                 </div>
-                </div>
+                <Footer/>
             </div>
-        </div>
         );
     }
 }

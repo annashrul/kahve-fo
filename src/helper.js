@@ -144,13 +144,13 @@ export const ToastQ = Swal.mixin({
 })
 export const statusQ = (lbl,txt) => {
     if(lbl === 'success'){
-        return <button className="btn btn-success btn-sm btn-status" style={{fontSize:'8px'}}>{txt}</button>
+        return <button className="btn badge-success btn-sm btn-status" style={{fontSize:'12px', padding:'2px'}}>{txt}</button>
     }else if(lbl==='danger'){
-        return <button className="btn btn-danger btn-sm btn-status" style={{fontSize:'8px'}}>{txt}</button>
+        return <button className="btn badge-danger btn-sm btn-status" style={{fontSize:'12px', padding:'2px'}}>{txt}</button>
     }else if(lbl==='warning'){
-        return <button className="btn btn-warning btn-sm btn-status" style={{fontSize:'8px',color:'white'}}>{txt}</button>
+        return <button className="btn badge-warning btn-sm btn-status" style={{fontSize:'12px', padding:'2px',color:'white'}}>{txt}</button>
     }else if(lbl==='info'){
-        return <button className="btn btn-info btn-sm btn-status" style={{fontSize:'8px'}}>{txt}</button>
+        return <button className="btn badge-info btn-sm btn-status" style={{fontSize:'12px', padding:'2px'}}>{txt}</button>
     }
 
 };
