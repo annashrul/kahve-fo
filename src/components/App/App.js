@@ -10,6 +10,7 @@ import { DBConfig } from 'DBConfig';
 import { initDB } from 'react-indexed-db';
  import {get} from "components/model/app.model";
 import axios from 'axios';
+import moment from 'moment'
 
 initDB(DBConfig);
 
@@ -50,6 +51,63 @@ axios.defaults.headers.common['connectifity-agent'] = `apps`;
   }
 
 class App extends Component {
+
+  setTime(){
+
+    let currentdate = new Date();
+    let hours = currentdate.getHours();    
+
+      // correct for number over 24, and negatives
+    if( hours >= 24 ){ hours -= 24; }
+    if( hours < 0   ){ hours += 12; }
+
+    // add leading zero, first convert hours to string
+    hours = hours + "";
+    if( hours.length === 1 ){ hours = "0" + hours; }
+
+    // minutes are the same on every time zone
+    let minutes = currentdate.getMinutes();
+
+    // add leading zero, first convert hours to string
+    minutes = minutes + "";
+    if( minutes.length === 1 ){ minutes = "0" + minutes; }
+
+    let seconds = currentdate.getSeconds();
+    // console.log(window.location.href)
+    // console.log(moment(currentdate).format('HH:mm:ss'))
+    // console.log("cek statis",moment('15:59:59', 'HH:mm:ss')+" "+moment('16:59:59', 'HH:mm:ss'))
+    // console.log("cek isBetween",moment(currentdate).isBetween(moment('15:59:59', 'HH:mm:ss'),moment('16:59:59', 'HH:mm:ss'),null,'[]'))
+    // console.log("cek isAfter",moment(currentdate).isAfter(moment('15:59:59').format('HH:mm:ss')))
+    // console.log("cek isBefore",moment(currentdate).isBefore(moment('15:59:59').format('HH:mm:ss')))
+    if(String(hours+minutes+seconds)==="235959"||(moment(currentdate).isBetween(moment('23:59:59', 'HH:mm:ss'),moment('00:59:59', 'HH:mm:ss'),null,'[]'))){
+      if(window.location.pathname!=='/'){
+        store.dispatch(logoutUser());
+        localStorage.removeItem('npos')
+        // TODO: Clear current profile
+        // Redirect to login
+        window.location.href = '/';
+      }
+    } 
+    // else if(moment(currentdate).isBetween(moment('15:59:59', 'HH:mm:ss'),moment('16:59:59', 'HH:mm:ss'),null,'[]')) {
+    //   store.dispatch(logoutUser());
+    //   localStorage.removeItem('npos')
+    //   // TODO: Clear current profile
+    //   // Redirect to login
+    //   window.location.href = '/';
+    // }
+  }
+
+  
+  componentDidMount(){
+    window.setInterval(function () {
+        this.setTime();
+    }.bind(this), 1000);
+  }
+
+  componentWillMount(){
+      this.setTime()
+  }
+
   render() {
     return (
       <Router>

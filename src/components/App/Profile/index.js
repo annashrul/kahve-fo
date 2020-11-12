@@ -262,7 +262,7 @@ class Profile extends Component {
                                 <div className="card-body text-center">
                                 <h2>Your Referral Link</h2>
                                     <p>Click link to Copy</p>
-                                        <a href="!#" className="font-20" onClick={(e) => {e.preventDefault();navigator.clipboard.writeText(link);Toast.fire({icon: 'success',title: `Link has been copied.`})}} style={{wordBreak:"break-all"}} data-toggle="tooltip" data-placement="top" title="Click to copy"><i class="zmdi zmdi-copy"/> {link}</a><br/>
+                                        <a href="!#" className="font-20" onClick={(e) => {e.preventDefault();navigator.clipboard.writeText(link);Toast.fire({icon: 'success',title: `Link has been copied.`})}} style={{wordBreak:"break-all"}} data-toggle="tooltip" data-placement="top" title="Click to copy"><small><i class="zmdi zmdi-copy"/></small> {link}</a><br/>
                                 </div>
                             </div>
                         </div>

@@ -163,14 +163,14 @@ class Header extends Component {
                                         </div>
                                         <div className="profile-text">
                                             <h6>{this.props.auth.user.name}</h6>
-                                            <span>{this.props.auth.user.lvl}</span>
+                                            <span>{this.props.auth.user.email}</span>
                                         </div>
                                     </div>
                                     <DropdownItem  >
-                                    <i className="fa fa-user profile-icon bg-warning" aria-hidden="true"/> My Profile
+                                    <i className="fa fa-user profile-icon bg-warning text-light" aria-hidden="true"/> My Profile
                                     </DropdownItem>
                                     <DropdownItem  onClick={this.handleLogout}>
-                                    <i className="fa fa-chain-broken profile-icon bg-warning" aria-hidden="true"/> Sign-out
+                                    <i className="fa fa-chain-broken profile-icon bg-warning text-light" aria-hidden="true"/> Sign-out
                                     </DropdownItem>
                                 </div>
                             </DropdownMenu>
@@ -185,7 +185,7 @@ class Header extends Component {
 
                   <li className="nav-item dropdown">
                         <UncontrolledButtonDropdown nav inNavbar>
-                                <DropdownToggle caret inNavbar className="nohover">
+                                <DropdownToggle caret inNavbar className="nohover text-left">
                                     <img src={this.props.auth.user.foto} onError={(e)=>{e.target.onerror = null; e.target.src=`${Default}`}}  alt=""/>
                                     <div className="user-name">
                                         <table>
@@ -209,19 +209,19 @@ class Header extends Component {
                                 <div className="user-profile-area">
                                     <div className="user-profile-heading">
                                         <div className="profile-img">
-                                            <img className="chat-img mr-2" src={this.props.auth.user.foto} onError={(e)=>{e.target.onerror = null; e.target.src=`${Default}`}}  alt=""/>
+                                            <img className="chat-img" src={this.props.auth.user.foto} onError={(e)=>{e.target.onerror = null; e.target.src=`${Default}`}}  alt=""/>
                                         </div>
                                         <div className="profile-text">
-                                            <h6>{this.props.auth.user.name}</h6>
-                                            <span>{this.props.auth.user.email}</span>
+                                            <h6>&nbsp;{this.props.auth.user.name}</h6>
+                                            <span>&nbsp;{this.props.auth.user.email}</span>
                                         </div>
                                     </div>
                                     <Link to={'/profile'}><DropdownItem  >
-                                    <i className="fa fa-user profile-icon bg-warning" aria-hidden="true"/> My Profile
+                                    <i className="fa fa-user profile-icon bg-warning text-light" aria-hidden="true"/> My Profile
                                     </DropdownItem>
                                     </Link>
                                     <DropdownItem  onClick={this.handleLogout}>
-                                    <i className="fa fa-chain-broken profile-icon bg-warning" aria-hidden="true"/> Sign-out
+                                    <i className="fa fa-chain-broken profile-icon bg-warning text-light" aria-hidden="true"/> Sign-out
                                     </DropdownItem>
                                 </div>
                             </DropdownMenu>

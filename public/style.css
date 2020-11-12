@@ -125,6 +125,8 @@ Last Updated: Oct 24, 2019
 * {
   margin: 0;
   padding: 0;
+  /* transform: none !important;
+  animation: none !important; */
 }
 
 body {
@@ -1428,6 +1430,7 @@ div.tagsinput span.tag a {
   width: 220px;
   height: 100%;
   background-color: #ffffff;
+  transition-property: none !important;
   -webkit-transition-duration: 500ms;
   -o-transition-duration: 500ms;
   transition-duration: 500ms;

@@ -73,44 +73,45 @@ class Charts extends Component {
                                     </div>
                                     <label id="password-error" className="error mt-2 text-danger" style={this.state.err?{fontSize:'.8em',display:'block'}:{fontSize:'.8em',display:'none'}} for="password">Min invest {this.state.min} and Max invest {this.state.max}.</label>
                                 </div>
-                                <div className="table-responsive">
-                                    <table className="table table-borderless">
-                                        <tr>
-                                            <th style={{border:'none',width:"30%"}}>Contract Period</th>
-                                            <td style={{border:'none'}}>:</td>
-                                            <td style={{border:'none'}}>{parseInt(this.props.number_of_month,10)*parseInt(this.props.contract,10)} Days</td>
-                                        </tr>
-                                        <tr>
-                                            <th style={{border:'none',width:"30%"}}>Monthly income</th>
-                                            <td style={{border:'none'}}>:</td>
-                                            <td style={{border:'none'}}>{this.state.monthly.toFixed(8)} ₿</td>
-                                        </tr>
-                                        <tr>
-                                            <th style={{border:'none',width:"30%"}}>Daily Earnings</th>
-                                            <td style={{border:'none'}}>:</td>
-                                            <td style={{border:'none'}}>{this.state.daily.toFixed(8)} ₿</td>
-                                        </tr>
-                                        <tr>
-                                            <th style={{border:'none',width:"30%"}}>2 Months Earnings</th>
-                                            <td style={{border:'none'}}>:</td>
-                                            <td style={{border:'none'}}>{this.state.twoMonths.toFixed(8)} ₿</td>
-                                        </tr>
-                                        <tr>
-                                            <th style={{border:'none',width:"30%"}}>3 Months Earnings</th>
-                                            <td style={{border:'none'}}>:</td>
-                                            <td style={{border:'none'}}>{this.state.threeMonths.toFixed(8)} ₿</td>
-                                        </tr>
-                                        <tr>
-                                            <th style={{border:'none',width:"30%"}}>4 Months Earnings</th>
-                                            <td style={{border:'none'}}>:</td>
-                                            <td style={{border:'none'}}>{this.state.fourMonths.toFixed(8)} ₿</td>
-                                        </tr>
-                                        <tr>
-                                            <th style={{border:'none',width:"30%"}}>5 Months Earnings</th>
-                                            <td style={{border:'none'}}>:</td>
-                                            <td style={{border:'none'}}>{this.state.totals.toFixed(8)} ₿</td>
-                                        </tr>
-
+                                <div className="">
+                                    <table className="table">
+                                        <tbody>
+                                            <tr>
+                                                <th style={{width:"30%"}}><label className="text-dark font-14">Contract Period</label></th>
+                                                <td ><label className="text-dark font-14">:</label></td>
+                                                <td ><label className="text-dark font-14">{parseInt(this.props.number_of_month,10)*parseInt(this.props.contract,10)} Days</label></td>
+                                            </tr>
+                                            <tr>
+                                                <th style={{width:"30%"}}><label className="text-dark font-14">Monthly income</label></th>
+                                                <td ><label className="text-dark font-14">:</label></td>
+                                                <td ><label className="text-dark font-14">{this.state.monthly.toFixed(8)}<br/>BTC</label></td>
+                                            </tr>
+                                            <tr>
+                                                <th style={{width:"30%"}}><label className="text-dark font-14">Daily Earnings</label></th>
+                                                <td ><label className="text-dark font-14">:</label></td>
+                                                <td ><label className="text-dark font-14">{this.state.daily.toFixed(8)}<br/>BTC</label></td>
+                                            </tr>
+                                            <tr>
+                                                <th style={{width:"30%"}}><label className="text-dark font-14">2 Months Earnings</label></th>
+                                                <td ><label className="text-dark font-14">:</label></td>
+                                                <td ><label className="text-dark font-14">{this.state.twoMonths.toFixed(8)}<br/>BTC</label></td>
+                                            </tr>
+                                            <tr>
+                                                <th style={{width:"30%"}}><label className="text-dark font-14">3 Months Earnings</label></th>
+                                                <td ><label className="text-dark font-14">:</label></td>
+                                                <td ><label className="text-dark font-14">{this.state.threeMonths.toFixed(8)}<br/>BTC</label></td>
+                                            </tr>
+                                            <tr>
+                                                <th style={{width:"30%"}}><label className="text-dark font-14">4 Months Earnings</label></th>
+                                                <td ><label className="text-dark font-14">:</label></td>
+                                                <td ><label className="text-dark font-14">{this.state.fourMonths.toFixed(8)}<br/>BTC</label></td>
+                                            </tr>
+                                            <tr>
+                                                <th style={{width:"30%"}}><label className="text-dark font-14">5 Months Earnings</label></th>
+                                                <td ><label className="text-dark font-14">:</label></td>
+                                                <td ><label className="text-dark font-14">{this.state.totals.toFixed(8)}<br/>BTC</label></td>
+                                            </tr>
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>

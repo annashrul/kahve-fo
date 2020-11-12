@@ -154,25 +154,25 @@ class Charts extends Component {
                               {
                                 this.props.data!==undefined?
                                 this.props.data.map((item,index)=>{
-                                  const label=item.status===1?<span class="badge badge-success">Active</span>:(item.status===2?<span class="149	badge badge-danger">Done</span>:<span class="badge badge-secondary">Not Active</span>)
+                                  const label=item.status===1?<span class="badge badge-success font-13 mb-2">Active</span>:(item.status===2?<span class="149	badge badge-danger font-13 mb-2">Done</span>:<span class="badge badge-secondary font-13 mb-2">Not Active</span>)
                                   if(item.status>0) active=item.slot_no
                                   // console.log(item.status);
                                   const contract = item.contract * this.props.number_of_month;
                                   return (
                                     <tr style={item.status===0?{background:'#eeeeee'}:{}}>
-                                      <th scope="row">Slot {item.slot_no}</th>
-                                      <td onClick={(e) => {e.preventDefault();navigator.clipboard.writeText(item.amount===null?'-':parseFloat(item.amount).toFixed(8));Toast.fire({icon: 'success',title: `Data has been copied.`})}}><i class="zmdi zmdi-copy"/> {item.amount===null?'-':parseFloat(item.amount).toFixed(8)} <small>{item.symbol===null?'-':"("+item.symbol+")"}</small></td>
-                                      <td>{item.contract===null?'-':contract+' Days'} </td>
-                                      <td onClick={(e) => {e.preventDefault();navigator.clipboard.writeText(item.daily_earning===null?'-':parseFloat(item.daily_earning).toFixed(8));Toast.fire({icon: 'success',title: `Data has been copied.`})}}><i class="zmdi zmdi-copy"/> {item.daily_earning===null?'-':parseFloat(item.daily_earning).toFixed(8)} <small>{item.symbol===null?'-':"("+item.symbol+")"}</small></td>
-                                      <td>{item.start_date===null?'-':moment(item.start_date).format('Y-M-D HH:mm:ss')}</td>
-                                      <td>{
+                                      <th style={{whiteSpace:'nowrap'}} scope="row">Slot {item.slot_no}</th>
+                                      <td style={{whiteSpace:'nowrap'}} onClick={(e) => {e.preventDefault();navigator.clipboard.writeText(item.amount===null?'-':parseFloat(item.amount).toFixed(8));Toast.fire({icon: 'success',title: `Data has been copied.`})}}><small><i class="zmdi zmdi-copy"/> </small> {item.amount===null?'-':parseFloat(item.amount).toFixed(8)} <small>{item.symbol===null?'-':"("+item.symbol+")"}</small></td>
+                                      <td style={{whiteSpace:'nowrap'}}>{item.contract===null?'-':contract+' Days'} </td>
+                                      <td style={{whiteSpace:'nowrap'}} onClick={(e) => {e.preventDefault();navigator.clipboard.writeText(item.daily_earning===null?'-':parseFloat(item.daily_earning).toFixed(8));Toast.fire({icon: 'success',title: `Data has been copied.`})}}><small><i class="zmdi zmdi-copy"/> </small> {item.daily_earning===null?'-':parseFloat(item.daily_earning).toFixed(8)} <small>{item.symbol===null?'-':"("+item.symbol+")"}</small></td>
+                                      <td style={{whiteSpace:'nowrap'}}>{item.start_date===null?'-':moment(item.start_date).format('Y-M-D HH:mm:ss')}</td>
+                                      <td style={{whiteSpace:'nowrap'}}>{
                                         this.state.date[index]!==undefined?
                                         this.addLeadingZeros(this.state.date[index].days)+" D "+
                                         this.addLeadingZeros(this.state.date[index].hours)+" H "+
                                         this.addLeadingZeros(this.state.date[index].min)+" M "+
                                         this.addLeadingZeros(this.state.date[index].sec)+" S":'-'
                                       }</td>
-                                      <td>{label} {item.status===0 && active+1===item.slot_no?<Link to="/invest"> <span className="badge badge-warning"> Invest</span></Link>:""} {item.status===1&&item.mining_active===0 && active===item.slot_no?<abbr title="Mining will start automatically after start date."><span class="">Mining off <i className="fa fa-warning"/></span></abbr>:""}</td>
+                                      <td>{label} {item.status===0 && active+1===item.slot_no?<Link to="/invest"> <span className="badge badge-warning font-13 mb-2"> Invest</span></Link>:""} {item.status===1&&item.mining_active===0 && active===item.slot_no?<abbr title="Mining will start automatically after start date."><span class="font-13 mb-2">Mining off <i className="fa fa-warning"/></span></abbr>:""}</td>
 
                                     </tr>
                                   )

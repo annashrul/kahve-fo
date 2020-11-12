@@ -6,10 +6,11 @@ class Charts extends Component {
         return(
              <div className="col-md-6 col-sm-6 box-margin">
                 <div className="card">
-                    <div className="card-body" >
+                    <div className="card-body" style={{overflowX: 'auto'}}>
                         <h4 className="card-title">{this.props.title}</h4>
                           {
                             this.props.isWd?(
+                              <div className="table-responsive">
                               <table class="table">
                                   <thead>
                                     <tr>
@@ -27,17 +28,19 @@ class Charts extends Component {
 
                                           return(
                                             <tr>
-                                              <td>{item.kd_trx}</td>
-                                              <td>{String(item.amount).substr(0,10)} {item.symbol}</td>
-                                              <td>{statusQ(item.status===0?'warning':item.status===1?'success':'danger',item.status===0?'Pending':item.status===1?'Success':'Void')}</td>
-                                              <td>{moment(item.created_at).format('YYYY-MM-DD HH:mm')}</td>
+                                              <td style={{whiteSpace:'nowrap'}}>{item.kd_trx}</td>
+                                              <td style={{whiteSpace:'nowrap'}}>{String(item.amount).substr(0,10)} {item.symbol}</td>
+                                              <td style={{whiteSpace:'nowrap'}}>{statusQ(item.status===0?'warning':item.status===1?'success':'danger',item.status===0?'Pending':item.status===1?'Success':'Void')}</td>
+                                              <td style={{whiteSpace:'nowrap'}}>{moment(item.created_at).format('YYYY-MM-DD HH:mm')}</td>
                                             </tr>
                                           )
                                         }):""
                                     }
                                   </tbody>
                             </table>
+                            </div>
                             ):(
+                              <div className="table-responsive">
                               <table class="table">
                                   <thead>
                                     <tr>
@@ -54,15 +57,16 @@ class Charts extends Component {
 
                                           return(
                                             <tr>
-                                              <td>{item.name}</td>
-                                              <td>{moment(item.created_at).format('YYYY-MM-DD HH:mm')}</td>
-                                              <td>0</td>
+                                              <td style={{whiteSpace:'nowrap'}}>{item.name}</td>
+                                              <td style={{whiteSpace:'nowrap'}}>{moment(item.created_at).format('YYYY-MM-DD HH:mm')}</td>
+                                              <td style={{whiteSpace:'nowrap'}}>0</td>
                                             </tr>
                                           )
                                         }):""
                                     }
                                   </tbody>
                             </table>
+                            </div>
                             )
                           }
                           

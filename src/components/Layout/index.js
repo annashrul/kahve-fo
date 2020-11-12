@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import Header from './header'
 import SideMenu from './sideMenu'
+import Footer from './footer'
 import {connect} from 'react-redux'
 import FreeScrollbar from 'react-free-scrollbar';
 import Default from 'assets/default.png';
@@ -103,7 +104,7 @@ class Layout extends Component {
                                     </div>
                                 </div>
                                 {/* Page Footer*/}
-                                {/* <Footer/>        */}
+                                <Footer/>       
                             </div>
                         </div>
         

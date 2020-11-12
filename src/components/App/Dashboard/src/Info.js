@@ -7,7 +7,7 @@ class Info extends Component {
             <div className="col-6">
                 <div className="dashboard-infor-mation d-flex flex-wrap align-items-center mb-3">
                     <div className="dashboard-clock">
-                        <div id="dashboardDate" style={{marginBottom:'10px'}}>Active Balance <Link to="/Withdraw"> <span className="badge badge-success"> Withdraw</span></Link></div>
+                        <div id="dashboardDate" style={{marginBottom:'10px'}}><h5>Active Balance</h5></div>
                         {
                             this.props.data!==undefined?
                                         this.props.data.length>0?
@@ -21,6 +21,7 @@ class Info extends Component {
                                    
                             :""
                         }
+                        <Link to="/Withdraw"> <span className="badge badge-success font-14"> Withdraw</span></Link>
                     </div>
                     {/* <div className="dashboard-btn-group d-flex align-items-center">
                         <button type="button" onClick={(e)=>this.props.handleSubmit(e)} className="btn btn-primary ml-1 float-right"><i className="fa fa-refresh"></i></button>
