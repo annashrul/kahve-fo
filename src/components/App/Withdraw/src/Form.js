@@ -76,17 +76,17 @@ class Form extends Component {
         }
         if(prevProps.config.active_balance!==this.props.config.active_balance){
             if(this.state.config.active_balance<this.state.config.min_wd){
-                this.setState({amount:parseFloat(this.state.config.active_balance).toFixed(8),isWrong:true});
+                this.setState({amount:parseFloat(this.state.config.active_balance).toFixed(8),isWrong:true,isOkay:false});
             } else if(this.state.config.active_balance>this.state.config.max_wd){
                 this.setState({amount:parseFloat(this.state.config.max_wd).toFixed(8),isOkay:true})
             } else if(this.state.config.active_balance<this.state.config.max_wd){
                 if(this.state.config.active_balance<this.state.config.min_wd){
-                    this.setState({amount:parseFloat(this.state.config.active_balance).toFixed(8),isWrong:true});
+                    this.setState({amount:parseFloat(this.state.config.active_balance).toFixed(8),isWrong:true,isOkay:false});
                 } else {
-                    this.setState({amount:parseFloat(this.state.config.active_balance).toFixed(8),isOkay:true})
+                    this.setState({amount:parseFloat(this.state.config.active_balance).toFixed(8),isOkay:true,isWrong:false})
                 }
             } else {
-                this.setState({isWrong:false})
+                this.setState({isWrong:false,isOkay:false})
             }
             
         }
@@ -286,8 +286,8 @@ class Form extends Component {
                                                         className="form-control"
                                                         id="amount"
                                                         name="amount"
-                                                        onChange={(e) => this.handleChange(e)}
-                                                        onBlur={(e) => this.handleChange(e,'blur')}
+                                                        // onChange={(e) => this.handleChange(e)}
+                                                        // onBlur={(e) => this.handleChange(e,'blur')}
                                                         value={this.state.amount}
                                                     />
                                                     <div className="invalid-feedback"
@@ -346,7 +346,7 @@ class Form extends Component {
                                 <div className="col-md-12">
                                     <div class="form-group">
                                         <label>&nbsp;</label>
-                                        <button type="button" className="btn btn-primary btn-block" disabled={this.state.isOkay} onClick={(e) => this.handleSubmit(e)}>PROCESS</button>
+                                        <button type="button" className="btn btn-primary btn-block" disabled={!this.state.isOkay} onClick={(e) => this.handleSubmit(e)}>PROCESS</button>
                                     </div>
                                 </div>
                                 {/* <div className="col-md-6">
