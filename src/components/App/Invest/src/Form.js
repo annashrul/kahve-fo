@@ -71,7 +71,25 @@ class Form extends Component {
             
                 
         reader.onloadend = () => {
-            this.setState({files:reader.result, isUpload:true})
+            console.log(data[0])
+            const fileAllow = /(\.jpg|\.jpeg|\.png)$/i;
+            if (!fileAllow.exec(data[0].name)) {
+                Swal.fire({
+                    title:'Error',
+                    text:'File extension not allowed!',
+                    icon:'error'
+                });
+            } else {
+                if(data[0].size>=1000000){
+                    Swal.fire({
+                        title:'Error',
+                        text:'File size must be 1MB or less!',
+                        icon:'error'
+                    });
+                } else {
+                    this.setState({files:reader.result, isUpload:true})
+                }
+            }
         }
     }
 
@@ -467,9 +485,10 @@ class Form extends Component {
                                                     {({getRootProps, getInputProps}) => (
                                                         <div className="container text-center" style={{padding: '0.5rem',cursor: 'pointer'}}>
                                                             <div {...getRootProps()}>
-                                                                <input {...getInputProps()} accept="image/*" />
+                                                                <input {...getInputProps()} accept=".jpg,.jpeg,.png" />
                                                                 <img className="card-img-top img-responsive mb-3" src={this.state.files===''?imgUpload:this.state.files} alt="" style={{width:'200px',borderRadius: '30px',padding: '2rem', borderStyle: 'dashed'}} />
                                                                 <p>Drag 'n' drop some files images here, or click to select files</p>
+                                                                <small>Accepted file are .JPG and .PNG. Maximum file size 1MB</small>
                                                             </div>
                                                         </div>
                                                     )}

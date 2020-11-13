@@ -72,14 +72,16 @@ class App extends Component {
     minutes = minutes + "";
     if( minutes.length === 1 ){ minutes = "0" + minutes; }
 
-    let seconds = currentdate.getSeconds();
+    // let seconds = currentdate.getSeconds();
     // console.log(window.location.href)
     // console.log(moment(currentdate).format('HH:mm:ss'))
     // console.log("cek statis",moment('15:59:59', 'HH:mm:ss')+" "+moment('16:59:59', 'HH:mm:ss'))
     // console.log("cek isBetween",moment(currentdate).isBetween(moment('15:59:59', 'HH:mm:ss'),moment('16:59:59', 'HH:mm:ss'),null,'[]'))
     // console.log("cek isAfter",moment(currentdate).isAfter(moment('15:59:59').format('HH:mm:ss')))
     // console.log("cek isBefore",moment(currentdate).isBefore(moment('15:59:59').format('HH:mm:ss')))
-    if(String(hours+minutes+seconds)==="235959"||(moment(currentdate).isBetween(moment('23:59:59', 'HH:mm:ss'),moment('00:59:59', 'HH:mm:ss'),null,'[]'))){
+    // console.log("cek",moment('14', 'HH'))
+    // console.log("cek between",moment(currentdate).isBetween(moment('14', 'HH'),moment('15', 'HH'),null,'[]'))
+    if(String(hours)==="00"||(moment(currentdate).isBetween(moment('00', 'HH'),moment('01', 'HH'),null,'[]'))){
       if(window.location.pathname!=='/'){
         store.dispatch(logoutUser());
         localStorage.removeItem('npos')
