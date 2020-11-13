@@ -70,6 +70,21 @@ class Form extends Component {
     // componentDidMount(){
     //     this.nameInput.focus();
     // }
+    componentWillMount(){
+        if(this.props.config.active_balance<this.props.config.min_wd){
+            this.setState({amount:parseFloat(this.props.config.active_balance).toFixed(8),isWrong:true,isOkay:false});
+        } else if(this.props.config.active_balance>this.props.config.max_wd){
+            this.setState({amount:parseFloat(this.props.config.max_wd).toFixed(8),isOkay:true})
+        } else if(this.props.config.active_balance<this.props.config.max_wd){
+            if(this.props.config.active_balance<this.props.config.min_wd){
+                this.setState({amount:parseFloat(this.props.config.active_balance).toFixed(8),isWrong:true,isOkay:false});
+            } else {
+                this.setState({amount:parseFloat(this.props.config.active_balance).toFixed(8),isOkay:true,isWrong:false})
+            }
+        } else {
+            this.setState({amount:parseFloat(this.props.config.active_balance),isWrong:false,isOkay:false})
+        }
+    }
     componentDidUpdate(prevProps) {
         if (this.props.coin !== prevProps.coin) {
             this.props.dispatch(FetchWithdrawConfig(this.props.coin.data[0].symbol))
@@ -86,7 +101,7 @@ class Form extends Component {
                     this.setState({amount:parseFloat(this.state.config.active_balance).toFixed(8),isOkay:true,isWrong:false})
                 }
             } else {
-                this.setState({isWrong:false,isOkay:false})
+                this.setState({amount:parseFloat(this.state.config.active_balance),isWrong:false,isOkay:false})
             }
             
         }
@@ -222,7 +237,7 @@ class Form extends Component {
 
     render(){
         
-        
+        console.log("this.state.amount",this.state.amount)
         return(
             <div className="card">
                 {!this.state.isLoading?
