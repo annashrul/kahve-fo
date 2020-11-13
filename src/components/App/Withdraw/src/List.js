@@ -77,7 +77,7 @@ class List extends Component {
                                                     <tr key={i}>
                                                         <td style={ centerStyle}>{v.users}</td>
                                                         <td style={ centerStyle}>{v.coin}</td>
-                                                        <td style={ leftStyle}>{String(v.amount).substr(0,10)}</td>
+                                                        <td style={ leftStyle}>{parseFloat(v.amount).toFixed(8)}</td>
                                                         <td style={ centerStyle}>{statusQ(v.status===0?'warning':v.status===1?'success':'danger',v.status===0?'Pending':v.status===1?'Success':'Void')}</td>
                                                         <td style={ centerStyle}>{v.kd_trx}</td>
 

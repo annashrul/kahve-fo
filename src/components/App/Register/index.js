@@ -162,7 +162,7 @@ class Register extends Component {
     }
     
     onValid(value){
-        // console.log("Captcha value:", value);
+        // 
         this.setState({captcha:value!==''?true:false})
     }
     render() {

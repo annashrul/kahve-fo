@@ -134,12 +134,12 @@ class Contact extends Component {
     }
     
     onValid(value){
-        // console.log("Captcha value:", value);
+        // 
         this.setState({captcha:value!==''?true:false})
     }
 
     verifiedCallback(token) {
-        console.log('Captcha token: ' + token);
+        
     }
     render() {
         return (

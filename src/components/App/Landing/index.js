@@ -134,7 +134,7 @@ class Login extends Component {
     }
 
     onValid(value){
-        // console.log("Captcha value:", value);
+        // 
         const {email,password} = this.state;
         if(email!==''&&password!==''){
             this.setState({captcha:value!==''?true:false})
@@ -145,7 +145,7 @@ class Login extends Component {
     }
     
     verifiedCallback(token) {
-        console.log('Captcha token: ' + token);
+        
     }
 
     render() {
