@@ -166,9 +166,10 @@ class Header extends Component {
                                             <span>{this.props.auth.user.email}</span>
                                         </div>
                                     </div>
-                                    <DropdownItem  >
+                                    <Link to={'/profile'}><DropdownItem  >
                                     <i className="fa fa-user profile-icon bg-warning text-light" aria-hidden="true"/> My Profile
                                     </DropdownItem>
+                                    </Link>
                                     <DropdownItem  onClick={this.handleLogout}>
                                     <i className="fa fa-chain-broken profile-icon bg-warning text-light" aria-hidden="true"/> Sign-out
                                     </DropdownItem>
