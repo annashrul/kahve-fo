@@ -37,11 +37,6 @@ class Dashboard extends Component {
         }
     }
 
-    componentDidUpdate(prevState){
-        if (this.props.auth.user.reff!==prevState.auth.user.reff){
-            this.props.dispatch(FetchDashboard(this.props.auth.user.reff));
-        }
-    }
     componentWillReceiveProps = (nextProps) => {
         // if (nextProps.auth.user) {
         //     console.log("AUTH", nextProps.auth.user);
@@ -76,8 +71,7 @@ class Dashboard extends Component {
     }
 
     componentWillMount(){
-        this.props.dispatch(FetchDashboard(this.props.auth.user.reff));
-
+        this.props.dispatch(FetchDashboard(atob(localStorage.getItem('kahvelink'))));
     }
 
     componentWillUnmount(){
