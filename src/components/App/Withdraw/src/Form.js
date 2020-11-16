@@ -237,7 +237,7 @@ class Form extends Component {
 
     render(){
         
-        console.log("this.state.amount",this.state.amount)
+        
         return(
             <div className="card">
                 {!this.state.isLoading?
@@ -267,7 +267,7 @@ class Form extends Component {
                                     </div>
                                     <div className="row">
                                         <div className="col-6">Total Active Balance</div>
-                                        <div className="col-6">{String(this.state.config.active_balance===undefined?0:this.state.config.active_balance).substr(0,10)}</div>
+                                        <div className="col-6">{parseFloat(this.state.config.active_balance===undefined?0:this.state.config.active_balance).toFixed(8)}</div>
                                         <div className="col-6">Number of payments</div>
                                         <div className="col-6">{this.state.config.num_trx===undefined?0:this.state.config.num_trx}</div>
                                     </div>
@@ -288,7 +288,7 @@ class Form extends Component {
                                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                                 <span aria-hidden="true">×</span>
                                                             </button>
-                                                            The Amount field must contain a number greater than {String(this.state.config.min_wd===undefined?0:this.state.config.min_wd).substr(0,10)} and cannot exceed a value of {this.state.config.max_wd}
+                                                            The Amount field must contain a number greater than {parseFloat(this.state.config.min_wd===undefined?0:this.state.config.min_wd).toFixed(8)} and cannot exceed a value of {this.state.config.max_wd}
                                                         </div>:''
                                                     }
                                                     <label className="control-label font-12">

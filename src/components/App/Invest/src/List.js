@@ -48,7 +48,7 @@ class List extends Component {
                                                         <td style={ centerStyle}>{i+1 + (10 * (parseInt(current_page,10)-1))}</td>
                                                         <td style={ centerStyle}>{v.slot_no}</td>
                                                         <td style={ centerStyle}>{v.coin}</td>
-                                                        <td style={ leftStyle}>{v.amount}</td>
+                                                        <td style={ leftStyle}>{parseFloat(v.amount).toFixed(8)}</td>
                                                         <td style={ centerStyle}>{statusQ(v.status===0?'warning':v.status===1?'success':'danger',v.status===0?'Pending':v.status===1?'Success':'Void')}</td>
                                                         {/* <td style={ centerStyle}>{v.kd_trx}</td> */}
 

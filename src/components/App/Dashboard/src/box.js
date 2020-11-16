@@ -29,7 +29,7 @@ class Charts extends Component {
                                           return(
                                             <tr>
                                               <td style={{whiteSpace:'nowrap'}}>{item.kd_trx}</td>
-                                              <td style={{whiteSpace:'nowrap'}}>{String(item.amount).substr(0,10)} {item.symbol}</td>
+                                              <td style={{whiteSpace:'nowrap'}}>{parseFloat(item.amount).toFixed(8)} {item.symbol}</td>
                                               <td style={{whiteSpace:'nowrap'}}>{statusQ(item.status===0?'warning':item.status===1?'success':'danger',item.status===0?'Pending':item.status===1?'Success':'Void')}</td>
                                               <td style={{whiteSpace:'nowrap'}}>{moment(item.created_at).format('YYYY-MM-DD HH:mm')}</td>
                                             </tr>
@@ -59,7 +59,7 @@ class Charts extends Component {
                                             <tr>
                                               <td style={{whiteSpace:'nowrap'}}>{item.name}</td>
                                               <td style={{whiteSpace:'nowrap'}}>{moment(item.created_at).format('YYYY-MM-DD HH:mm')}</td>
-                                              <td style={{whiteSpace:'nowrap'}}>{item.profit}</td>
+                                              <td style={{whiteSpace:'nowrap'}}>{parseFloat(item.profit).toFixed(8)}</td>
                                             </tr>
                                           )
                                         }):""

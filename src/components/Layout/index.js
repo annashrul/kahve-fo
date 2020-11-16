@@ -8,6 +8,7 @@ import {connect} from 'react-redux'
 import FreeScrollbar from 'react-free-scrollbar';
 import Default from 'assets/default.png';
 import { logoutUser } from "redux/actions/authActions";
+import {setMobileEcaps} from 'redux/actions/site.action'
 import PropTypes from "prop-types";
 
 class Layout extends Component {
@@ -15,6 +16,7 @@ class Layout extends Component {
         super(props);
         this.mouseEnterHandle = this.mouseEnterHandle.bind(this);
         this.mouseOutHandle = this.mouseOutHandle.bind(this);
+        this.handleAny = this.handleAny.bind(this);
         this.state = {
             sideHover:'deactive'
         }
@@ -54,6 +56,11 @@ class Layout extends Component {
         })
     }
 
+    handleAny(){
+        if(this.props.triggerMobileEcaps){
+            this.props.setMobileEcaps(false);
+        }
+    }
     render() {
 
         return (
@@ -64,7 +71,7 @@ class Layout extends Component {
             //         {idle &&rawtime!==0
             //         ? this.handleLogout()
             //         : (
-                        <div className={this.props.triggerEcaps?"ecaps-page-wrapper sidemenu-hover-" + this.state.sideHover + " menu-collasped-active":"ecaps-page-wrapper " + (this.props.triggerMobileEcaps?"mobile-menu-active":"")}>
+                        <div className={this.props.triggerEcaps?"ecaps-page-wrapper sidemenu-hover-" + this.state.sideHover + " menu-collasped-active":"ecaps-page-wrapper " + (this.props.triggerMobileEcaps?"mobile-menu-active":"")} onClick={this.handleAny}>
                         {/* Side Menu */}
                             <div className="ecaps-sidemenu-area" onMouseEnter={this.mouseEnterHandle} onMouseLeave={this.mouseOutHandle}>
                                 {/* Desktop Logo */}
@@ -119,6 +126,8 @@ class Layout extends Component {
 }
 Layout.propTypes = {
     logoutUser: PropTypes.func.isRequired,
+    setMobileEcaps: PropTypes.func.isRequired,
+    triggerMobileEcaps: PropTypes.bool,
 };
 
 const mapStateToProps = ({auth,siteReducer}) =>{
@@ -128,4 +137,4 @@ const mapStateToProps = ({auth,siteReducer}) =>{
        triggerMobileEcaps: siteReducer.triggerMobileEcaps
      }
 }
-export default connect(mapStateToProps,{logoutUser})(Layout);
+export default connect(mapStateToProps,{logoutUser,setMobileEcaps})(Layout);

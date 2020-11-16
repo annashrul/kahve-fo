@@ -71,7 +71,7 @@ class Form extends Component {
             
                 
         reader.onloadend = () => {
-            console.log(data[0])
+            
             const fileAllow = /(\.jpg|\.jpeg|\.png)$/i;
             if (!fileAllow.exec(data[0].name)) {
                 Swal.fire({
