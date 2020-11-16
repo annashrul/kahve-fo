@@ -59,7 +59,7 @@ class Charts extends Component {
                                             <tr>
                                               <td style={{whiteSpace:'nowrap'}}>{item.name}</td>
                                               <td style={{whiteSpace:'nowrap'}}>{moment(item.created_at).format('YYYY-MM-DD HH:mm')}</td>
-                                              <td style={{whiteSpace:'nowrap'}}>0</td>
+                                              <td style={{whiteSpace:'nowrap'}}>{item.profit}</td>
                                             </tr>
                                           )
                                         }):""
