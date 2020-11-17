@@ -156,7 +156,7 @@ class Profile extends Component {
             // upline_reff,
         } = this.props.detail
 
-        const link = window.location.origin.toString()+'/register/'+this.props.auth.user.reff;
+        const link = window.location.origin.toString() + '/register/' + (this.props.auth.user.reff ? atob(localStorage.getItem('kahvelink')):this.props.auth.user.reff)
 
         // const centerStyle = {verticalAlign: "middle", textAlign: "center"};
         // const leftStyle = {verticalAlign: "middle", textAlign: "left"};

@@ -429,13 +429,21 @@ export const importTable = (data) => {
                             title: 'Success',
                             type: 'success',
                             text: data.msg,
-                        });
+                        }).then((result) => {
+                            if (result.value) {
+                                window.location.reload();
+                            }
+                        })
                     } else {
                         Swal.fire({
                             title: 'failed',
                             type: 'error',
                             text: data.msg,
-                        });
+                        }).then((result) => {
+                            if (result.value) {
+                                window.location.reload();
+                            }
+                        })
                     }
                     dispatch(setLoading(false));
                 })

@@ -267,7 +267,7 @@ class Form extends Component {
                                     </div>
                                     <div className="row">
                                         <div className="col-6">Total Active Balance</div>
-                                        <div className="col-6">{parseFloat(this.state.config.active_balance===undefined?0:this.state.config.active_balance).toFixed(8)}</div>
+                                        <div className="col-6">{parseFloat(this.state.config.active_balance===undefined?0:Math.abs(this.state.config.active_balance)).toFixed(8)}</div>
                                         <div className="col-6">Number of payments</div>
                                         <div className="col-6">{this.state.config.num_trx===undefined?0:this.state.config.num_trx}</div>
                                     </div>
@@ -303,7 +303,7 @@ class Form extends Component {
                                                         name="amount"
                                                         // onChange={(e) => this.handleChange(e)}
                                                         // onBlur={(e) => this.handleChange(e,'blur')}
-                                                        value={this.state.amount}
+                                                        value={Math.abs(this.state.amount)}
                                                     />
                                                     <div className="invalid-feedback"
                                                             style={this.state.error.amount !== "" ? {display: 'block'} : {display: 'none'}}>

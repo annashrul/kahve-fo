@@ -111,7 +111,7 @@ class Dashboard extends Component {
 
                 {/* Dashboard Widget Area */}
                 <div className="row">
-                    <Cards title="Referral" data={this.state.reff} isobj={false} link={window.location.origin.toString()+'/register/'+this.props.auth.user.reff} 
+                    <Cards title="Referral" data={this.state.reff} isobj={false} link={window.location.origin.toString()+'/register/'+(this.props.auth.user.reff ? atob(localStorage.getItem('kahvelink')):this.props.auth.user.reff)} 
                     referral_profit={this.state.referral_profit} icon="fa fa-users text-primary"/>
                     <Cards title="Your Balance" data={this.state.data} isobj={true} miner={true} icon="fa fa-dollar text-primary"/>
                     <Cards title="Total Investment You Made" data={this.state.assets} isobj={true} icon="fa fa-money text-primary"/>                    
