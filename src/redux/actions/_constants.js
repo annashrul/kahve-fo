@@ -14,7 +14,7 @@ export const TOKEN = {
 
 export const HEADERS ={
   // URL: "http://kahvebit.com:6701/",
-    // URL: "http://localhost:3000/"
+    // URL: "http://localhost:3010/"
  URL: "https://api.kahvebit.com:2096/"
 }
 

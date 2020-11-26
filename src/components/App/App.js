@@ -72,31 +72,15 @@ class App extends Component {
     minutes = minutes + "";
     if( minutes.length === 1 ){ minutes = "0" + minutes; }
 
-    // let seconds = currentdate.getSeconds();
-    // console.log(window.location.href)
-    // console.log(moment(currentdate).format('HH:mm:ss'))
-    // console.log("cek statis",moment('15:59:59', 'HH:mm:ss')+" "+moment('16:59:59', 'HH:mm:ss'))
-    // console.log("cek isBetween",moment(currentdate).isBetween(moment('15:59:59', 'HH:mm:ss'),moment('16:59:59', 'HH:mm:ss'),null,'[]'))
-    // console.log("cek isAfter",moment(currentdate).isAfter(moment('15:59:59').format('HH:mm:ss')))
-    // console.log("cek isBefore",moment(currentdate).isBefore(moment('15:59:59').format('HH:mm:ss')))
-    // console.log("cek",moment('14', 'HH'))
-    // console.log("cek between",moment(currentdate).isBetween(moment('14', 'HH'),moment('15', 'HH'),null,'[]'))
     if(String(hours)==="00"||(moment(currentdate).isBetween(moment('00', 'HH'),moment('01', 'HH'),null,'[]'))){
       if(window.location.pathname!=='/'){
         store.dispatch(logoutUser());
-        localStorage.removeItem('npos')
+        localStorage.removeItem('kahvebit')
         // TODO: Clear current profile
         // Redirect to login
         window.location.href = '/';
       }
     } 
-    // else if(moment(currentdate).isBetween(moment('15:59:59', 'HH:mm:ss'),moment('16:59:59', 'HH:mm:ss'),null,'[]')) {
-    //   store.dispatch(logoutUser());
-    //   localStorage.removeItem('npos')
-    //   // TODO: Clear current profile
-    //   // Redirect to login
-    //   window.location.href = '/';
-    // }
   }
 
   
@@ -108,6 +92,27 @@ class App extends Component {
 
   componentWillMount(){
       this.setTime()
+      this.initFetch()
+  }
+
+  initFetch() {
+    fetch(HEADERS.URL + `site/get`)
+      .then(res => res.json())
+      .then(
+        (data) => {
+          if(data.result.isActive){
+            if (window.location.pathname !== '/') {
+              store.dispatch(logoutUser());
+              localStorage.removeItem('kahvebit')
+              // TODO: Clear current profile
+              // Redirect to login
+              window.location.href = '/';
+            }
+          }
+        },
+        (error) => {
+        }
+      )
   }
 
   render() {

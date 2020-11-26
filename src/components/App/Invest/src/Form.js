@@ -393,6 +393,8 @@ class Form extends Component {
                                                 </li>
                                             <li style={{listStyle:'outside'}}>Minimum Invest {this.props.config.min +" "+ this.props.config.coin}</li>
                                             <li style={{listStyle:'outside'}}>Maximum Invest {this.props.config.max +" "+ this.props.config.coin}</li>
+                                            <li style={{listStyle:'outside'}}>Fee Transaction {this.props.config.deposit_fee +" "+ this.props.config.coin} <small>(will be deducted from your total investment)</small></li>
+
                                             <li className="text-center"><br/><h5 className="text-light">DO NOT CONTINUE THE NEXT STEP, BEFORE YOU ARE SUCCESSFUL SENDING THE COIN FROM INDODAX TO OUR WALLET</h5></li>
                                         </ul>
                                     </div>
