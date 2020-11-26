@@ -4,6 +4,7 @@ import { BrowserRouter as Router} from 'react-router-dom';
 import store from '../../redux/store';
 import setAuthToken from '../../utils/setAuthToken';
 import {setCurrentUser, setLoggedin,logoutUser} from '../../redux/actions/authActions';
+import {HEADERS} from 'redux/actions/_constants'
 
 import Routes from 'components/Routes/Routes';
 import { DBConfig } from 'DBConfig';
@@ -104,7 +105,6 @@ class App extends Component {
             if (window.location.pathname !== '/') {
               store.dispatch(logoutUser());
               localStorage.removeItem('kahvebit')
-              // TODO: Clear current profile
               // Redirect to login
               window.location.href = '/';
             }
